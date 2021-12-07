@@ -13,5 +13,6 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+    "strictPropertyInitialization": false
   }
 }
