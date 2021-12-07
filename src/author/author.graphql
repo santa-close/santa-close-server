@@ -1,0 +1,27 @@
+type Author {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateAuthorInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateAuthorInput {
+  id: Int!
+}
+
+type Query {
+  author(id: Int!): Author
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
+  updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
+  removeAuthor(id: Int!): Author
+}
+
+type User {
+  id: Int!
+}
