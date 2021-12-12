@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { Field, GraphQLModule } from '@nestjs/graphql';
+import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { AuthorModule } from './author/author.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -22,6 +23,16 @@ import { AuthorModule } from './author/author.module';
           strField: 'testtest',
         }),
       },
+    }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'test',
+      database: 'test',
+      entities: [],
+      synchronize: true,
     }),
     AuthorModule,
   ],
