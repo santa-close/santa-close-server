@@ -6,6 +6,7 @@ import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { AuthorModule } from './author/author.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import mocks from './mock/mock';
 
 @Module({
   imports: [
@@ -15,14 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       debug: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault],
-      mocks: {
-        String: () => 'test',
-        Int: () => 123,
-        Authors: () => ({
-          exampleField: 3333,
-          strField: 'testtest',
-        }),
-      },
+      mocks,
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
