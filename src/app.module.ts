@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
+import { Field, GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
@@ -14,6 +14,14 @@ import { AuthorModule } from './author/author.module';
       debug: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault],
+      mocks: {
+        String: () => 'test',
+        Int: () => 123,
+        Authors: () => ({
+          exampleField: 3333,
+          strField: 'testtest',
+        }),
+      },
     }),
     AuthorModule,
   ],
