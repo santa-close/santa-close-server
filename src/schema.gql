@@ -7,7 +7,17 @@ type Coordinate {
   longitude: Float!
 }
 
-type Mountain {
+input CoordinateInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+input MountainCountInput {
+  nw: CoordinateInput!
+  se: CoordinateInput!
+}
+
+type MountainItem {
   address: String!
   bookmarkCount: Int!
   coordinates: Coordinate!
@@ -19,7 +29,7 @@ type Mountain {
 }
 
 type Query {
-  mountain(id: ID!): Mountain!
-  mountainCount: Int!
-  mountains: [Mountain!]!
+  mountain(id: ID!): MountainItem!
+  mountainCount(input: MountainCountInput!): Int!
+  mountains: [MountainItem!]!
 }
