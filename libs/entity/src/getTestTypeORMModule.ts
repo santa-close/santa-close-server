@@ -1,6 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConstraintSnakeNamingStrategy } from '@app/entity/ConstraintSnakeNamingStrategy';
 import { DynamicModule } from '@nestjs/common';
+import { EntityModule } from '@app/entity/entity.module';
 
 export function getTestTypeORMModule(): DynamicModule {
   return TypeOrmModule.forRoot({
@@ -10,6 +11,7 @@ export function getTestTypeORMModule(): DynamicModule {
     username: 'test',
     password: 'test',
     database: 'test',
+    entities: [EntityModule],
     autoLoadEntities: true,
     synchronize: true,
     logging: false,

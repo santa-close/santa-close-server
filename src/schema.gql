@@ -2,27 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateMountainAppInput {
+type AppMountain {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-type MountainApp {
+input CreateAppMountainInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
 type Mutation {
-  createMountainApp(createMountainAppInput: CreateMountainAppInput!): MountainApp!
-  removeMountainApp(id: Int!): MountainApp!
-  updateMountainApp(updateMountainAppInput: UpdateMountainAppInput!): MountainApp!
+  createAppMountain(createAppMountainInput: CreateAppMountainInput!): AppMountain!
+  removeAppMountain(id: Int!): AppMountain!
+  updateAppMountain(updateAppMountainInput: UpdateAppMountainInput!): AppMountain!
 }
 
 type Query {
-  mountainApp(id: Int!): MountainApp!
+  appMountain(id: Int!): AppMountain!
 }
 
-input UpdateMountainAppInput {
+input UpdateAppMountainInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
