@@ -1,5 +1,4 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as path from 'path';
 import { ConstraintSnakeNamingStrategy } from '@app/entity/ConstraintSnakeNamingStrategy';
 import { DynamicModule } from '@nestjs/common';
 
@@ -11,7 +10,7 @@ export function getTestTypeORMModule(): DynamicModule {
     username: 'test',
     password: 'test',
     database: 'test',
-    entities: [path.join(__dirname, './**/*.entity.ts')],
+    autoLoadEntities: true,
     synchronize: true,
     logging: false,
     namingStrategy: new ConstraintSnakeNamingStrategy(),
