@@ -20,6 +20,12 @@
       ],
       "@app/entity/*": [
         "libs/entity/src/*"
+      ],
+      "@app/web-common": [
+        "libs/web-common/src"
+      ],
+      "@app/web-common/*": [
+        "libs/web-common/src/*"
       ]
     }
   }
