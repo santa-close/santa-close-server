@@ -1,44 +1,23 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, ID } from '@nestjs/graphql';
 import { AppMountainService } from './app-mountain.service';
-import { AppMountain } from './entities/app-mountain.entity';
-import { CreateAppMountainInput } from './dto/create-app-mountain.input';
-import { UpdateAppMountainInput } from './dto/update-app-mountain.input';
+import { Mountain } from './object/mountain.object';
 
-@Resolver(() => AppMountain)
+@Resolver(() => Mountain)
 export class AppMountainResolver {
   constructor(private readonly appMountainService: AppMountainService) {}
 
-  @Mutation(() => AppMountain)
-  createAppMountain(
-    @Args('createAppMountainInput')
-    createAppMountainInput: CreateAppMountainInput,
-  ) {
-    return this.appMountainService.create(createAppMountainInput);
-  }
-
-  @Query(() => [AppMountain], { name: 'appMountain' })
+  @Query(() => [Mountain], { name: 'mountains' })
   findAll() {
     return this.appMountainService.findAll();
   }
 
-  @Query(() => AppMountain, { name: 'appMountain' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Mountain, { name: 'mountain' })
+  findOne(@Args('id', { type: () => ID }) id: number) {
     return this.appMountainService.findOne(id);
   }
 
-  @Mutation(() => AppMountain)
-  updateAppMountain(
-    @Args('updateAppMountainInput')
-    updateAppMountainInput: UpdateAppMountainInput,
-  ) {
-    return this.appMountainService.update(
-      updateAppMountainInput.id,
-      updateAppMountainInput,
-    );
-  }
-
-  @Mutation(() => AppMountain)
-  removeAppMountain(@Args('id', { type: () => Int }) id: number) {
-    return this.appMountainService.remove(id);
+  @Query(() => Int, { name: 'mountainCount' })
+  count() {
+    return 0;
   }
 }
