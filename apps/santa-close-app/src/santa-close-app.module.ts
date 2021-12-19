@@ -7,6 +7,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import mocks from './mock/mock';
 import { getTestTypeORMModule } from '@app/entity/getTestTypeORMModule';
 import { EmptyModule } from '@app/web-common/empty.module';
+import { AppMountainModule } from './app-mountain/app-mountain.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { EmptyModule } from '@app/web-common/empty.module';
       plugins: [ApolloServerPluginLandingPageLocalDefault],
       mocks: process.env.NODE_ENV === 'mock' ? mocks : undefined,
     }),
-    process.env.NODE_ENV === 'mock' ? getTestTypeORMModule() : EmptyModule,
+    process.env.NODE_ENV === 'mock' ? EmptyModule : getTestTypeORMModule(),
+    AppMountainModule,
   ],
   controllers: [SantaCloseAppController],
   providers: [SantaCloseAppService],
