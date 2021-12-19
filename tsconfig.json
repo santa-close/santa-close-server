@@ -14,6 +14,13 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
-    "paths": {}
+    "paths": {
+      "@app/entity": [
+        "libs/entity/src"
+      ],
+      "@app/entity/*": [
+        "libs/entity/src/*"
+      ]
+    }
   }
 }

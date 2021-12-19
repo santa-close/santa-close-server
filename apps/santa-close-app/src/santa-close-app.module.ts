@@ -15,7 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       debug: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault],
-      mocks,
+      mocks: process.env.NODE_ENV === 'mock' ? mocks : undefined,
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
