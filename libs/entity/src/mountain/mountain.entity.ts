@@ -1,10 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '@app/entity/base.entity';
 
 @Entity()
-export class Mountain {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Mountain extends BaseEntity {
   @Column()
   name: string;
 }
