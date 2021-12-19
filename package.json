@@ -86,7 +86,8 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/entity(|/.*)$": "<rootDir>/libs/entity/src/$1"
+      "^@app/entity(|/.*)$": "<rootDir>/libs/entity/src/$1",
+      "^@app/web-common(|/.*)$": "<rootDir>/libs/web-common/src/$1"
     }
   },
   "lint-staged": {
