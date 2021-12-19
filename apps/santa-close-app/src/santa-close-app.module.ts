@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
+import { SantaCloseAppController } from './santa-close-app.controller';
+import { SantaCloseAppService } from './santa-close-app.service';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { AuthorModule } from './author/author.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import mocks from './mock/mock';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -28,9 +27,8 @@ import mocks from './mock/mock';
       entities: [],
       synchronize: true,
     }),
-    AuthorModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [SantaCloseAppController],
+  providers: [SantaCloseAppService],
 })
-export class AppModule {}
+export class SantaCloseAppModule {}
