@@ -1,4 +1,21 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/santa-close-app/src",
+  "monorepo": true,
+  "root": "apps/santa-close-app",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/santa-close-app/tsconfig.app.json"
+  },
+  "projects": {
+    "santa-close-app": {
+      "type": "application",
+      "root": "apps/santa-close-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/santa-close-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/santa-close-app/tsconfig.app.json"
+      }
+    }
+  }
 }
