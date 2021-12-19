@@ -2,28 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AppMountain {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type Coordinate {
+  latitude: Float!
+  longitude: Float!
 }
 
-input CreateAppMountainInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-type Mutation {
-  createAppMountain(createAppMountainInput: CreateAppMountainInput!): AppMountain!
-  removeAppMountain(id: Int!): AppMountain!
-  updateAppMountain(updateAppMountainInput: UpdateAppMountainInput!): AppMountain!
+type Mountain {
+  address: String!
+  bookmarkCount: Int!
+  coordinates: Coordinate!
+  id: ID!
+  name: String!
+  rate: Float!
+  reviewCount: Int!
+  viewCount: Int!
 }
 
 type Query {
-  appMountain(id: Int!): AppMountain!
-}
-
-input UpdateAppMountainInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  mountain(id: ID!): Mountain!
+  mountainCount: Int!
+  mountains: [Mountain!]!
 }
