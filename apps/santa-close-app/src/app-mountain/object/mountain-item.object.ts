@@ -2,7 +2,7 @@ import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 import { Coordinate } from './coordinate.object';
 
 @ObjectType()
-export class Mountain {
+export class MountainItem {
   @Field(() => ID)
   id: string;
 
