@@ -8,6 +8,6 @@ class AppApplicationTests {
 
     @Test
     fun contextLoads() {
+        assert(true)
     }
-
 }

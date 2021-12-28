@@ -4,9 +4,6 @@ import com.expediagroup.graphql.server.operations.Query
 import org.springframework.stereotype.Component
 
 @Component
-class SampleAppQueryResolver: Query {
-
-    fun foo(): String {
-        return "bar"
-    }
+class SampleAppQueryResolver : Query {
+    fun foo(): String = "bar"
 }
