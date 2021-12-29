@@ -31,12 +31,19 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("io.kotest:kotest-assertions-core:5.0.3")
 }
 
 graphql {
     schema {
         packages = listOf("com.santaclose.app.api")
     }
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
 }
 
 tasks.withType<KotlinCompile> {
