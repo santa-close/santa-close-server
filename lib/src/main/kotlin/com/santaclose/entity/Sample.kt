@@ -1,6 +1,5 @@
-package com.santaclose.entity.sample
+package com.santaclose.entity
 
-import com.santaclose.entity.BaseEntity
 import javax.persistence.Entity
 
 @Entity
