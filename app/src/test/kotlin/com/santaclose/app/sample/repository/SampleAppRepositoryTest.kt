@@ -1,4 +1,4 @@
-package com.santaclose.api.sample.repository
+package com.santaclose.app.sample.repository
 
 import com.santaclose.entity.Sample
 import io.kotest.matchers.shouldBe
@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
 @EntityScan(basePackages = ["com.santaclose.entity"])
-class SampleApiRepositoryTest @Autowired constructor(
-    val sampleApiRepository: SampleApiRepository,
+class SampleAppRepositoryTest @Autowired constructor(
+    val sampleAppRepository: SampleAppRepository,
 ) {
 
     @Test
@@ -19,10 +19,10 @@ class SampleApiRepositoryTest @Autowired constructor(
         val sample = Sample(name = "name", price = 123)
 
         // when
-        sampleApiRepository.save(sample)
+        sampleAppRepository.save(sample)
 
         // then
-        val count = sampleApiRepository.count()
+        val count = sampleAppRepository.count()
         count shouldBe 1
     }
 }

@@ -1,10 +1,10 @@
-package com.santaclose.api
+package com.santaclose.app
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class ApiApplicationTests {
+class AppApplicationTests {
 
     @Test
     fun contextLoads() {
