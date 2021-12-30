@@ -25,10 +25,8 @@ subprojects {
         mavenCentral()
     }
 
-    apply {
-        plugin("kotlin")
-        plugin("org.jlleitschuh.gradle.ktlint")
-    }
+    apply(plugin = "kotlin")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     dependencies {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
