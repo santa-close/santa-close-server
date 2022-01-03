@@ -1,7 +1,7 @@
 package com.santaclose.app.sample.repository
 
 import com.santaclose.entity.Sample
-import io.kotest.matchers.shouldBe
+import io.kotest.assertions.arrow.core.shouldBeSome
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -22,7 +22,7 @@ class SampleAppRepositoryTest @Autowired constructor(
         sampleAppRepository.save(sample)
 
         // then
-        val count = sampleAppRepository.count()
-        count shouldBe 1
+        val findSample = sampleAppRepository.findByPrice(sample.price)
+        findSample shouldBeSome sample
     }
 }
