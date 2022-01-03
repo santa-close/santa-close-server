@@ -81,3 +81,11 @@
 파일 저장 시 자동 포맷팅 하려면 `save actions` 플러그인 설치 후 아래처럼 설정
 
 ![image](./image/save-action.png)
+
+## querydsl
+
+### QEntity 생성
+
+```shell
+./gradlew :lib:compileKotlin 
+```
