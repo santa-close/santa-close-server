@@ -17,8 +17,6 @@ repositories {
     mavenCentral()
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
-
 subprojects {
     group = "com.santaclose"
     version = "0.0.1-SNAPSHOT"
@@ -27,9 +25,12 @@ subprojects {
         mavenCentral()
     }
 
+    apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "com.diffplug.spotless")
+
+    java.sourceCompatibility = JavaVersion.VERSION_11
 
     dependencies {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
