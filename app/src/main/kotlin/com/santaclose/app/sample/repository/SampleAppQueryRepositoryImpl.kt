@@ -12,7 +12,7 @@ class SampleAppQueryRepositoryImpl : QuerydslRepositorySupport(Sample::class.jav
     override fun findByPrice(price: Int): Option<SampleDto> {
         return from(sample)
             .where(sample.price.eq(price))
-            .select(QSampleDto(sample.name, sample.price))
+            .select(QSampleDto(sample.name, sample.price, sample.status))
             .fetchOne()
             .toOption()
     }

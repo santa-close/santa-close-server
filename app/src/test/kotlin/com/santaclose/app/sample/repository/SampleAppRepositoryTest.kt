@@ -1,6 +1,8 @@
 package com.santaclose.app.sample.repository
 
+import com.santaclose.app.sample.resolver.dto.SampleDto
 import com.santaclose.lib.entity.sample.Sample
+import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.assertions.arrow.core.shouldBeSome
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,13 +15,15 @@ internal class SampleAppRepositoryTest @Autowired constructor(
     @Test
     fun `정상적으로 데이터를 생성한다`() {
         // given
-        val sample = Sample(name = "name", price = 123)
+        val sample = Sample(name = "name", price = 123, status = SampleStatus.CLOSE)
 
         // when
         sampleAppRepository.save(sample)
 
         // then
         val findSample = sampleAppRepository.findByPrice(sample.price)
-        findSample shouldBeSome sample
+        findSample shouldBeSome with(sample) {
+            SampleDto(name, price, status)
+        }
     }
 }
