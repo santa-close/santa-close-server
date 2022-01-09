@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
     id("com.expediagroup.graphql") version "5.3.1" apply false
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1" apply false
+    id("com.diffplug.spotless") version "6.1.2"
 
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.spring") version "1.6.10" apply false
@@ -28,6 +29,7 @@ subprojects {
 
     apply(plugin = "kotlin")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "com.diffplug.spotless")
 
     dependencies {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -39,6 +41,15 @@ subprojects {
         testImplementation("io.projectreactor:reactor-test")
         testImplementation("io.kotest:kotest-assertions-core:5.0.3")
         testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
+    }
+
+    spotless {
+        kotlin {
+            targetExclude("$buildDir/**/*.kt")
+            ktlint()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
     }
 
     tasks.withType<KotlinCompile> {

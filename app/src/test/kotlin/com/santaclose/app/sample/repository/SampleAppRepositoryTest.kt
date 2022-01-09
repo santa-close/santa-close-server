@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-class SampleAppRepositoryTest @Autowired constructor(
-    val sampleAppRepository: SampleAppRepository,
+internal class SampleAppRepositoryTest @Autowired constructor(
+    val sampleAppRepository: SampleAppRepository
 ) {
-
     @Test
     fun `정상적으로 데이터를 생성한다`() {
         // given
