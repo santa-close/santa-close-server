@@ -1,6 +1,6 @@
 package com.santaclose.app.sample.repository
 
-import com.santaclose.entity.Sample
+import com.santaclose.lib.entity.sample.Sample
 import io.kotest.assertions.arrow.core.shouldBeSome
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

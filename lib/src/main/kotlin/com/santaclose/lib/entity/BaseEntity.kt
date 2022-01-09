@@ -1,4 +1,4 @@
-package com.santaclose.entity
+package com.santaclose.lib.entity
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
