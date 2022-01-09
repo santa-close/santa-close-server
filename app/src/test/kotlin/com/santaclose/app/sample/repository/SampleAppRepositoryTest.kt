@@ -4,11 +4,9 @@ import com.santaclose.lib.entity.sample.Sample
 import io.kotest.assertions.arrow.core.shouldBeSome
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-@EntityScan(basePackages = ["com.santaclose.entity"])
 class SampleAppRepositoryTest @Autowired constructor(
     val sampleAppRepository: SampleAppRepository,
 ) {

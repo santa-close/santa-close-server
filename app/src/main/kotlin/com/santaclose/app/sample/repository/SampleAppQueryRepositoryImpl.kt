@@ -1,7 +1,7 @@
 package com.santaclose.app.sample.repository
 
 import arrow.core.Option
-import com.santaclose.lib.entity.QSample.sample
+import com.santaclose.lib.entity.sample.QSample.sample
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.extension.fetchOption
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport

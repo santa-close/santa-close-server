@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EntityScan(basePackages = ["com.santaclose.entity"])
+@EntityScan(basePackages = ["com.santaclose.lib.entity"])
 class AppApplication
 
 fun main(args: Array<String>) {
