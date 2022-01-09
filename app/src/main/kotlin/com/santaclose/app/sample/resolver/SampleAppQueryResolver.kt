@@ -3,6 +3,7 @@ package com.santaclose.app.sample.resolver
 import arrow.core.getOrElse
 import com.expediagroup.graphql.server.operations.Query
 import com.santaclose.app.sample.repository.SampleAppRepository
+import com.santaclose.app.sample.resolver.dto.CategoryDto
 import com.santaclose.app.sample.resolver.dto.SampleDto
 import com.santaclose.app.sample.resolver.dto.SampleInput
 import com.santaclose.lib.entity.sample.type.SampleStatus
@@ -15,4 +16,6 @@ class SampleAppQueryResolver(val repository: SampleAppRepository) : Query {
             .findByPrice(input.price)
             .getOrElse { SampleDto("", 0, SampleStatus.CLOSE) }
     }
+
+    fun categories() = CategoryDto()
 }

@@ -1,6 +1,6 @@
 package com.santaclose.lib.entity.sample.type
 
-enum class SampleStatus(val code: String, val text: String) {
-    OPEN("OPEN", "열림"),
-    CLOSE("CLOSE", "닫힘")
+enum class SampleStatus(val text: String) {
+    OPEN("열림"),
+    CLOSE("닫힘"),
 }
