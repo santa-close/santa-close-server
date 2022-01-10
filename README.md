@@ -61,7 +61,6 @@
 
 ```shell
 ./gradlew addKtlintCheckGitPreCommitHook
-./gradlew ktlintApplyToIdea
 ```
 
 ### check

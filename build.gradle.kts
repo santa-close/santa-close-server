@@ -4,7 +4,7 @@ plugins {
     id("org.springframework.boot") version "2.6.2" apply false
     id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
     id("com.expediagroup.graphql") version "5.3.1" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.diffplug.spotless") version "6.1.2"
 
     kotlin("jvm") version "1.6.10"
