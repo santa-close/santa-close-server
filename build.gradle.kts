@@ -45,6 +45,7 @@ subprojects {
         testImplementation("io.kotest:kotest-assertions-core:5.0.3")
         testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
         testImplementation("com.ninja-squad:springmockk:3.1.0")
+        testImplementation("com.navercorp.fixturemonkey:fixture-monkey-kotlin:0.3.1")
     }
 
     spotless {
