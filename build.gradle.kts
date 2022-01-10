@@ -38,10 +38,13 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("io.arrow-kt:arrow-core:1.0.1")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.springframework.boot:spring-boot-starter-test") {
+            exclude(module = "mockito-core")
+        }
         testImplementation("io.projectreactor:reactor-test")
         testImplementation("io.kotest:kotest-assertions-core:5.0.3")
         testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
+        testImplementation("com.ninja-squad:springmockk:3.1.0")
     }
 
     spotless {
