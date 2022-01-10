@@ -7,8 +7,6 @@ plugins {
     kotlin("kapt")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.h2database:h2")

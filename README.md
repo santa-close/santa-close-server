@@ -61,7 +61,6 @@
 
 ```shell
 ./gradlew addKtlintCheckGitPreCommitHook
-./gradlew ktlintApplyToIdea
 ```
 
 ### check
@@ -78,9 +77,15 @@
 
 ### IntelliJ IDEA 설정
 
-파일 저장 시 자동 포맷팅 하려면 `save actions` 플러그인 설치 후 아래처럼 설정
+파일 저장 시 자동 포맷팅 하려면 `save actions`, `ktlint` 플러그인 설치 후 아래처럼 설정
 
-![image](./image/save-action.png)
+- ktlint
+
+![ktlint](./image/ktlint.png)
+
+- save action
+
+![save-action](./image/save-action.png)
 
 ## querydsl
 
