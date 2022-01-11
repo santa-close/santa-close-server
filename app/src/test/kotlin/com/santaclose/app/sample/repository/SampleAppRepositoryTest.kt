@@ -16,12 +16,12 @@ internal class SampleAppRepositoryTest @Autowired constructor(
     fun `정상적으로 데이터를 생성한다`() {
         // given
         val sample = Sample(name = "name", price = 123, status = SampleStatus.CLOSE)
-
-        // when
         sampleAppRepository.save(sample)
 
-        // then
+        // when
         val findSample = sampleAppRepository.findByPrice(sample.price)
+
+        // then
         findSample shouldBeSome with(sample) {
             SampleDto(name, price, status)
         }

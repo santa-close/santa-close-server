@@ -43,13 +43,13 @@
 * 상세에서 좋아요 / 별로에요(=추천) 선택할 수 있다.
     * 본인의 좋아요 / 별로에요는 본인만 취소 가능
 * 후기를 작성할 수 있다.
-  * 본인의 후기만 수정할 수 있다.
-  * 본인의 후기만 삭제할 수 있다.
+    * 본인의 후기만 수정할 수 있다.
+    * 본인의 후기만 삭제할 수 있다.
 
 ## 프로필
 
 * 나의 프로필 사진을 업로드 할 수 있다.
-  * 기본 이미지 존재
+    * 기본 이미지 존재
 * 나의 닉네임을 설정할 수 있다.
 * 나의 소개를 설정할 수 있다.
 
@@ -77,20 +77,21 @@
 
 ### IntelliJ IDEA 설정
 
-파일 저장 시 자동 포맷팅 하려면 `save actions`, `ktlint` 플러그인 설치 후 아래처럼 설정
+파일 저장 시 자동 포맷팅 하려면 `ktlint` 플러그인 설치 후 아래처럼 설정
 
-- ktlint
+- Preferences -> Tools -> ktlint
 
 ![ktlint](./image/ktlint.png)
 
-- save action
+- Preferences -> Tools -> Actions on Save
 
-![save-action](./image/save-action.png)
+![actions-on-save](./image/actions-on-save.png)
 
 ## querydsl
 
-### QEntity 생성
+### QClass 생성
 
 ```shell
-./gradlew :lib:compileKotlin 
+./gradlew :lib:compileKotlin // 엔티티
+./gradlew :app:compileKotlin // dto
 ```
