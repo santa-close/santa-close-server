@@ -1,11 +1,11 @@
 package com.santaclose.app.sample.service
 
-import arrow.core.toOption
+import arrow.core.right
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
 import com.santaclose.app.sample.resolver.dto.SampleDto
-import io.kotest.assertions.arrow.core.shouldBeSome
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,12 +23,12 @@ internal class SampleAppQueryServiceTest @Autowired constructor(
     fun `정상적으로 데이터를 가져온다`() {
         // given
         val sampleDto = sut.giveMeOne(SampleDto::class.java)
-        every { sampleAppQueryRepository.findByPrice(sampleDto.price) } returns sampleDto.toOption()
+        every { sampleAppQueryRepository.findByPrice(sampleDto.price) } returns sampleDto.right()
 
         // when
         val result = sampleAppQueryService.findByPrice(sampleDto.price)
 
         // then
-        result shouldBeSome sampleDto
+        result shouldBeRight sampleDto
     }
 }

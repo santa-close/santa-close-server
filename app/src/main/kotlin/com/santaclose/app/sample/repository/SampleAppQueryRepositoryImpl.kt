@@ -1,7 +1,7 @@
 package com.santaclose.app.sample.repository
 
-import arrow.core.Option
-import arrow.core.toOption
+import arrow.core.Either
+import arrow.core.Either.Companion.catch
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
@@ -13,11 +13,12 @@ import org.springframework.stereotype.Repository
 class SampleAppQueryRepositoryImpl(
     private val springDataQueryFactory: SpringDataQueryFactory,
 ) : SampleAppQueryRepository {
-    override fun findByPrice(price: Int): Option<SampleDto> {
-        return springDataQueryFactory.singleQuery<SampleDto> {
+
+    override fun findByPrice(price: Int): Either<Throwable, SampleDto> = catch {
+        springDataQueryFactory.singleQuery {
             selectMulti(col(Sample::name), col(Sample::price), col(Sample::status))
             from(Sample::class)
             where(col(Sample::price).equal(price))
-        }.toOption()
+        }
     }
 }

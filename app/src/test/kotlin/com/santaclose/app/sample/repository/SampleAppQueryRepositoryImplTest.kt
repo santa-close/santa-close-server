@@ -4,7 +4,7 @@ import com.santaclose.app.sample.resolver.dto.SampleDto
 import com.santaclose.app.util.TestQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
-import io.kotest.assertions.arrow.core.shouldBeSome
+import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
@@ -24,7 +24,7 @@ internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
         val result = sampleAppQueryRepository.findByPrice(123)
 
         // then
-        result shouldBeSome sample.run {
+        result shouldBeRight sample.run {
             SampleDto(name, price, status)
         }
     }
