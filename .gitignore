@@ -38,3 +38,6 @@ out/
 
 ### Fixture Monkey
 .jqwik-database
+
+## Node.js ###
+node_modules

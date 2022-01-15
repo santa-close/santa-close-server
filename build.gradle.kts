@@ -10,7 +10,6 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.spring") version "1.6.10" apply false
     kotlin("plugin.jpa") version "1.6.10" apply false
-    kotlin("kapt") version "1.6.10" apply false
 }
 
 repositories {
@@ -46,6 +45,7 @@ subprojects {
         testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
         testImplementation("com.ninja-squad:springmockk:3.1.0")
         testImplementation("com.navercorp.fixturemonkey:fixture-monkey-kotlin:0.3.1")
+        testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
     }
 
     spotless {

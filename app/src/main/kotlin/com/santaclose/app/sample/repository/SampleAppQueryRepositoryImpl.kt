@@ -1,19 +1,24 @@
 package com.santaclose.app.sample.repository
 
-import arrow.core.Option
-import arrow.core.toOption
-import com.santaclose.app.sample.resolver.dto.QSampleDto
+import arrow.core.Either
+import arrow.core.Either.Companion.catch
+import com.linecorp.kotlinjdsl.querydsl.expression.col
+import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
+import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.santaclose.app.sample.resolver.dto.SampleDto
-import com.santaclose.lib.entity.sample.QSample.sample
 import com.santaclose.lib.entity.sample.Sample
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+import org.springframework.stereotype.Repository
 
-class SampleAppQueryRepositoryImpl : QuerydslRepositorySupport(Sample::class.java), SampleAppQueryRepository {
-    override fun findByPrice(price: Int): Option<SampleDto> {
-        return from(sample)
-            .where(sample.price.eq(price))
-            .select(QSampleDto(sample.name, sample.price, sample.status))
-            .fetchOne()
-            .toOption()
+@Repository
+class SampleAppQueryRepositoryImpl(
+    private val springDataQueryFactory: SpringDataQueryFactory,
+) : SampleAppQueryRepository {
+
+    override fun findByPrice(price: Int): Either<Throwable, SampleDto> = catch {
+        springDataQueryFactory.singleQuery {
+            selectMulti(col(Sample::name), col(Sample::price), col(Sample::status))
+            from(Sample::class)
+            where(col(Sample::price).equal(price))
+        }
     }
 }
