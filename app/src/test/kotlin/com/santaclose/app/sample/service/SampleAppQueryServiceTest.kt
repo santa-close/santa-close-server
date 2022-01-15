@@ -2,21 +2,24 @@ package com.santaclose.app.sample.service
 
 import arrow.core.right
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
-import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
 import com.santaclose.app.sample.resolver.dto.SampleDto
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import org.junit.jupiter.api.extension.ExtendWith
 
-@SpringBootTest(classes = [SampleAppQueryService::class])
-internal class SampleAppQueryServiceTest @Autowired constructor(
-    private val sampleAppQueryService: SampleAppQueryService,
-    @MockkBean
-    private val sampleAppQueryRepository: SampleAppQueryRepository,
-) {
+@ExtendWith(MockKExtension::class)
+internal class SampleAppQueryServiceTest {
+    @InjectMockKs
+    private lateinit var sampleAppQueryService: SampleAppQueryService
+
+    @MockK
+    private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
+
     private val sut = KFixtureMonkey.create()
 
     @Test
