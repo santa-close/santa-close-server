@@ -86,12 +86,3 @@
 - Preferences -> Tools -> Actions on Save
 
 ![actions-on-save](./image/actions-on-save.png)
-
-## querydsl
-
-### QClass 생성
-
-```shell
-./gradlew :lib:compileKotlin // 엔티티
-./gradlew :app:compileKotlin // dto
-```
