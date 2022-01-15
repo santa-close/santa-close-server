@@ -3,20 +3,19 @@ package com.santaclose.app.sample.service
 import arrow.core.toOption
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.ninjasquad.springmockk.MockkBean
-import com.santaclose.app.sample.repository.SampleAppRepository
+import com.santaclose.app.sample.repository.SampleAppQueryRepository
 import com.santaclose.app.sample.resolver.dto.SampleDto
 import io.kotest.assertions.arrow.core.shouldBeSome
 import io.mockk.every
-import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes = [SampleAppService::class])
-internal class SampleAppServiceTest @Autowired constructor(
-    private val sampleAppService: SampleAppService,
+@SpringBootTest(classes = [SampleAppQueryService::class])
+internal class SampleAppQueryServiceTest @Autowired constructor(
+    private val sampleAppQueryService: SampleAppQueryService,
     @MockkBean
-    private val sampleAppRepository: SampleAppRepository
+    private val sampleAppQueryRepository: SampleAppQueryRepository,
 ) {
     private val sut = KFixtureMonkey.create()
 
@@ -24,13 +23,12 @@ internal class SampleAppServiceTest @Autowired constructor(
     fun `정상적으로 데이터를 가져온다`() {
         // given
         val sampleDto = sut.giveMeOne(SampleDto::class.java)
-        every { sampleAppRepository.findByPrice(sampleDto.price) } returns sampleDto.toOption()
+        every { sampleAppQueryRepository.findByPrice(sampleDto.price) } returns sampleDto.toOption()
 
         // when
-        val findByPrice = sampleAppService.findByPrice(sampleDto.price)
+        val result = sampleAppQueryService.findByPrice(sampleDto.price)
 
         // then
-        findByPrice shouldBeSome sampleDto
-        verify { sampleAppRepository.findByPrice(sampleDto.price) }
+        result shouldBeSome sampleDto
     }
 }
