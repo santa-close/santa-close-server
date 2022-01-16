@@ -1,6 +1,6 @@
 package com.santaclose.app.sample.repository
 
-import com.santaclose.app.sample.resolver.dto.SampleDto
+import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import com.santaclose.app.util.TestQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
@@ -28,7 +28,7 @@ internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
 
             // then
             result shouldBeRight sample.run {
-                SampleDto(name, price, status)
+                SampleAppDetail(name, price, status)
             }
         }
     }

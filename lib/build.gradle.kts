@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.1")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
 

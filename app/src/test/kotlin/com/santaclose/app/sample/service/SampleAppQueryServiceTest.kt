@@ -3,7 +3,7 @@ package com.santaclose.app.sample.service
 import arrow.core.right
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
-import com.santaclose.app.sample.resolver.dto.SampleDto
+import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -25,13 +25,13 @@ internal class SampleAppQueryServiceTest {
     @Test
     fun `정상적으로 데이터를 가져온다`() {
         // given
-        val sampleDto = sut.giveMeOne(SampleDto::class.java)
-        every { sampleAppQueryRepository.findByPrice(sampleDto.price) } returns sampleDto.right()
+        val sampleAppDetail = sut.giveMeOne(SampleAppDetail::class.java)
+        every { sampleAppQueryRepository.findByPrice(sampleAppDetail.price) } returns sampleAppDetail.right()
 
         // when
-        val result = sampleAppQueryService.findByPrice(sampleDto.price)
+        val result = sampleAppQueryService.findByPrice(sampleAppDetail.price)
 
         // then
-        result shouldBeRight sampleDto
+        result shouldBeRight sampleAppDetail
     }
 }
