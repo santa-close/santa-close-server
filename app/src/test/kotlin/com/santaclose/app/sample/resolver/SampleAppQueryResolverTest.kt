@@ -3,7 +3,7 @@ package com.santaclose.app.sample.resolver
 import arrow.core.left
 import arrow.core.right
 import com.ninjasquad.springmockk.MockkBean
-import com.santaclose.app.sample.resolver.dto.SampleDto
+import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import com.santaclose.app.sample.service.SampleAppQueryService
 import com.santaclose.app.util.query
 import com.santaclose.app.util.success
@@ -58,7 +58,7 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 status
             }}"""
 
-            val dto = SampleDto("name", 1000, SampleStatus.OPEN).right()
+            val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
             every { sampleAppQueryService.findByPrice(123) } returns dto
 
             // when

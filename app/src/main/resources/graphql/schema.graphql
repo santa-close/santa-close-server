@@ -26,21 +26,12 @@ directive @specifiedBy(
     url: String!
   ) on SCALAR
 
-type CategoryDto {
-  sampleStatus: [ECode!]!
-}
-
-type ECode {
-  code: SampleStatus!
-  name: String!
-}
-
 type Query {
-  categories: CategoryDto!
-  sample(input: SampleInput!): SampleDto!
+  "샘플 데이터"
+  sample(input: SampleAppItemInput!): SampleAppDetail!
 }
 
-type SampleDto {
+type SampleAppDetail {
   name: String!
   price: Int!
   status: SampleStatus!
@@ -51,7 +42,7 @@ enum SampleStatus {
   OPEN
 }
 
-input SampleInput {
+input SampleAppItemInput {
   name: String
   price: Int!
 }
