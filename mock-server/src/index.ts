@@ -1,6 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { mocks } from './mocks';
 
 const typeDefs = gql`
   ${readFileSync(
@@ -10,7 +11,7 @@ const typeDefs = gql`
 
 const server = new ApolloServer({
   typeDefs,
-  mocks: true,
+  mocks,
 });
 
 server.listen().then(({ url }) => console.log(`🚀 Server ready at ${url}`));

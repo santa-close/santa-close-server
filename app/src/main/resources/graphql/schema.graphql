@@ -1,57 +1,57 @@
 schema {
-    query: Query
+  query: Query
 }
 
 "Directs the executor to include this field or fragment only when the `if` argument is true"
 directive @include(
     "Included when true."
     if: Boolean!
-) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 "Directs the executor to skip this field or fragment when the `if`'argument is true."
 directive @skip(
     "Skipped when true."
     if: Boolean!
-) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 "Marks the field, argument, input field or enum value as deprecated"
 directive @deprecated(
     "The reason for the deprecation"
     reason: String = "No longer supported"
-) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
 
 "Exposes a URL that specifies the behaviour of this scalar."
 directive @specifiedBy(
     "The URL that specifies the behaviour of this scalar."
     url: String!
-) on SCALAR
+  ) on SCALAR
 
 type CategoryDto {
-    sampleStatus: [ECode!]!
+  sampleStatus: [ECode!]!
 }
 
 type ECode {
-    code: SampleStatus!
-    name: String!
+  code: SampleStatus!
+  name: String!
 }
 
 type Query {
-    categories: CategoryDto!
-    sample(input: SampleInput!): SampleDto!
+  categories: CategoryDto!
+  sample(input: SampleInput!): SampleDto!
 }
 
 type SampleDto {
-    name: String!
-    price: Int!
-    status: SampleStatus!
+  name: String!
+  price: Int!
+  status: SampleStatus!
 }
 
 enum SampleStatus {
-    CLOSE
-    OPEN
+  CLOSE
+  OPEN
 }
 
 input SampleInput {
-    name: String
-    price: Int!
+  name: String
+  price: Int!
 }

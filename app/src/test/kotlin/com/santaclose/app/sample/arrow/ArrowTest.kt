@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 
 internal class ArrowTest {
     @Nested
-    class OptionTest {
+    inner class OptionTest {
         @Test
         fun chaining() = runTest {
             // given
@@ -53,7 +53,7 @@ internal class ArrowTest {
             }
 
             // then
-            result shouldBeSome 2
+            result shouldBeSome 102
         }
 
         @Test
