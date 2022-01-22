@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne
 class MountainReview(
     var name: String,
     @Embedded
-    var ratings: Ratings,
+    var ratings: MountainRating,
     var content: String,
     @ManyToOne(fetch = FetchType.LAZY)
     var mountain: Mountain,
