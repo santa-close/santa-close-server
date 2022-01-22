@@ -6,10 +6,12 @@ import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.ManyToOne
+import javax.validation.Valid
 
 @Entity
 class MountainReview(
     var name: String,
+    @field:Valid
     @Embedded
     var ratings: MountainRating,
     var content: String,
