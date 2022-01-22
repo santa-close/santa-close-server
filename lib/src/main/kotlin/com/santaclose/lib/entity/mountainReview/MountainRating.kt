@@ -10,5 +10,5 @@ class MountainRating(
     @field:Min(0)
     var facility: Byte,
     @field:Min(0)
-    var traffic: Byte
+    var traffic: Byte,
 )
