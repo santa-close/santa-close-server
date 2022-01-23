@@ -1,14 +1,14 @@
 package com.santaclose.lib.entity.mountainReview
 
 import javax.persistence.Embeddable
-import javax.validation.constraints.Min
+import javax.validation.constraints.Size
 
 @Embeddable
 class MountainRating(
-    @field:Min(0)
+    @field:Size(min = 0, max = 5)
     var scenery: Byte,
-    @field:Min(0)
+    @field:Size(min = 0, max = 5)
     var facility: Byte,
-    @field:Min(0)
+    @field:Size(min = 0, max = 5)
     var traffic: Byte,
 )
