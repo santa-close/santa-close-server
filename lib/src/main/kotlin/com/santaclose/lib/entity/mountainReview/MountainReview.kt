@@ -13,7 +13,7 @@ class MountainReview(
     var name: String,
     @field:Valid
     @Embedded
-    var ratings: MountainRating,
+    var rating: MountainRating,
     var content: String,
     @ManyToOne(fetch = FetchType.LAZY)
     var mountain: Mountain,
