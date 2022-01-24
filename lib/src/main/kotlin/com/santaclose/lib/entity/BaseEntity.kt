@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.MappedSuperclass
+import javax.validation.constraints.NotNull
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
@@ -18,8 +19,10 @@ abstract class BaseEntity {
     var id: Long = 0
 
     @CreatedDate
+    @field:NotNull
     lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
+    @field:NotNull
     lateinit var updatedAt: LocalDateTime
 }
