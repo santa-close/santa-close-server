@@ -1,5 +1,6 @@
 schema {
   query: Query
+  mutation: Mutation
 }
 
 "Directs the executor to include this field or fragment only when the `if` argument is true"
@@ -26,6 +27,10 @@ directive @specifiedBy(
     url: String!
   ) on SCALAR
 
+type Mutation {
+  createSample(dto: CreateSampleAppInput!): Boolean!
+}
+
 type Query {
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail!
@@ -40,6 +45,12 @@ type SampleAppDetail {
 enum SampleStatus {
   CLOSE
   OPEN
+}
+
+input CreateSampleAppInput {
+  name: String!
+  price: Int!
+  status: SampleStatus!
 }
 
 input SampleAppItemInput {
