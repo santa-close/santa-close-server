@@ -28,7 +28,7 @@ directive @specifiedBy(
   ) on SCALAR
 
 type Mutation {
-  createSample(dto: CreateSampleAppInput!): Boolean!
+  createSample(input: CreateSampleAppInput!): Boolean!
 }
 
 type Query {
