@@ -12,7 +12,8 @@ const val DATA_JSON_PATH = "$.data"
 const val ERRORS_JSON_PATH = "$.errors"
 const val EXTENSIONS_JSON_PATH = "$.extensions"
 
-inline class QueryInput(@Language("GraphQL") val query: String)
+@JvmInline
+value class QueryInput(@Language("GraphQL") val query: String)
 
 fun WebTestClient.query(queryInput: QueryInput): WebTestClient.ResponseSpec =
     this.post()

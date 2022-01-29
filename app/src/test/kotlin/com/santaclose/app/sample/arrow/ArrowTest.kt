@@ -8,7 +8,6 @@ import arrow.core.filterOption
 import arrow.core.some
 import io.kotest.assertions.arrow.core.shouldBeSome
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -16,7 +15,7 @@ internal class ArrowTest {
     @Nested
     inner class OptionTest {
         @Test
-        fun chaining() = runTest {
+        fun chaining() {
             // given
             class Bar(val number: Int)
             class Foo(val bar: Option<Bar>)
@@ -42,7 +41,7 @@ internal class ArrowTest {
             //     .map { it + 10 }
 
             // when
-            val result = option {
+            val result = option.eager<Int> {
                 val foo = getFoo().bind()
                 val bar = foo.bar.bind()
                 val result = divideBy100(bar.number).bind()
