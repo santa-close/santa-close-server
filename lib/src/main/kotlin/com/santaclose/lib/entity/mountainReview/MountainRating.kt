@@ -7,8 +7,10 @@ import javax.validation.constraints.Size
 class MountainRating(
     @field:Size(min = 0, max = 5)
     var scenery: Byte,
+
     @field:Size(min = 0, max = 5)
     var facility: Byte,
+
     @field:Size(min = 0, max = 5)
     var traffic: Byte,
 )
