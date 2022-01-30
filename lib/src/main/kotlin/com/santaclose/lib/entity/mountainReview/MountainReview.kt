@@ -8,19 +8,24 @@ import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
 import javax.persistence.ManyToOne
 import javax.validation.Valid
+import javax.validation.constraints.NotNull
 
 @Entity
 class MountainReview(
+    @NotNull
     var name: String,
 
     @field:Valid
-    @Embedded
+    @field:Embedded
+    @NotNull
     var rating: MountainRating,
 
-    @Column(columnDefinition = "TEXT")
+    @field:Column(columnDefinition = "TEXT")
+    @NotNull
     var content: String,
 
-    @ManyToOne(fetch = LAZY)
+    @field:ManyToOne(fetch = LAZY)
+    @NotNull
     var mountain: Mountain,
 
     // 추가한 사용자 id,
