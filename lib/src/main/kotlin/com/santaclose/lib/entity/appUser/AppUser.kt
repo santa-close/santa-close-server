@@ -21,4 +21,6 @@ class AppUser(
     @Column(length = 10)
     @field:NotNull
     var role: AppUserRole,
-) : BaseEntity()
+) : BaseEntity() {
+    fun hasRole(role: AppUserRole) = this.role == role
+}
