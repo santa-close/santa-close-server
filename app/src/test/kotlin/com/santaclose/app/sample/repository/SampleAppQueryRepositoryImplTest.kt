@@ -42,7 +42,7 @@ internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
                 em.persist(sample)
             }
 
-            exception.message shouldContain "0보다 커야 합니다"
+            exception.message shouldContain "javax.validation.constraints.Positive"
         }
     }
 }
