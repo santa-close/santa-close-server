@@ -12,20 +12,20 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class MountainReview(
-    @NotNull
+    @field:NotNull
     var name: String,
 
-    @field:Valid
-    @field:Embedded
-    @NotNull
+    @Valid
+    @Embedded
+    @field:NotNull
     var rating: MountainRating,
 
-    @field:Column(columnDefinition = "TEXT")
-    @NotNull
+    @Column(columnDefinition = "TEXT")
+    @field:NotNull
     var content: String,
 
-    @field:ManyToOne(fetch = LAZY)
-    @NotNull
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
     var mountain: Mountain,
 
     // 추가한 사용자 id,
