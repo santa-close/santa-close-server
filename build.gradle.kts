@@ -67,5 +67,9 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+        reports {
+            html.required.set(false)
+            junitXml.required.set(true)
+        }
     }
 }
