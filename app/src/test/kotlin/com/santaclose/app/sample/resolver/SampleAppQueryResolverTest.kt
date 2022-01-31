@@ -33,7 +33,15 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
         @Test
         fun `데이터가 없는 경우 에러가 발생한다`() {
             // given
-            val query = QueryInput("query { sample(input: {price: 123}) { name price status }}")
+            val query = QueryInput(
+                """query {
+                |  sample(input: {price: 123}) {
+                |    name
+                |    price
+                |    status
+                |  }
+                |}""".trimMargin()
+            )
             every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
 
             // when
@@ -46,7 +54,15 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
         @Test
         fun `데이터가 있는 경우 sample 을 가져온다`() {
             // given
-            val query = QueryInput("query { sample(input: {price: 123}) { name price status }}")
+            val query = QueryInput(
+                """query {
+                |  sample(input: {price: 123}) {
+                |    name
+                |    price
+                |    status
+                |  }
+                |}""".trimMargin()
+            )
             val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
             every { sampleAppQueryService.findByPrice(123) } returns dto
 

@@ -5,9 +5,12 @@ import com.santaclose.app.util.TestQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import javax.validation.ConstraintViolationException
 
 @DataJpaTest
 internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
@@ -30,6 +33,16 @@ internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
             result shouldBeRight sample.run {
                 SampleAppDetail(name, price, status)
             }
+        }
+
+        @Test
+        fun `bean validation 이 정상적으로 동작한다`() {
+            val exception = shouldThrow<ConstraintViolationException> {
+                val sample = Sample("test", -123, SampleStatus.OPEN)
+                em.persist(sample)
+            }
+
+            exception.message shouldContain "0보다 커야 합니다"
         }
     }
 }
