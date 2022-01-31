@@ -15,6 +15,9 @@ directive @skip(
     if: Boolean!
   ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
+"authorization"
+directive @auth(role: AppUserRole!) on FIELD_DEFINITION
+
 "Marks the field, argument, input field or enum value as deprecated"
 directive @deprecated(
     "The reason for the deprecation"
@@ -33,13 +36,18 @@ type Mutation {
 
 type Query {
   "샘플 데이터"
-  sample(input: SampleAppItemInput!): SampleAppDetail!
+  sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
 }
 
 type SampleAppDetail {
   name: String!
   price: Int!
   status: SampleStatus!
+}
+
+enum AppUserRole {
+  USER
+  VIEWER
 }
 
 enum SampleStatus {
