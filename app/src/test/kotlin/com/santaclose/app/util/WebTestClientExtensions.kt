@@ -33,9 +33,12 @@ fun WebTestClient.ResponseSpec.success(query: String): WebTestClient.BodyContent
 fun WebTestClient.BodyContentSpec.verify(path: String, data: Any): WebTestClient.BodyContentSpec =
     this.jsonPath("$DATA_JSON_PATH.$path").isEqualTo(data)
 
-fun WebTestClient.ResponseSpec.verifyError(code: GraphqlErrorCode, message: String): WebTestClient.BodyContentSpec =
+fun WebTestClient.ResponseSpec.verifyError(
+    code: GraphqlErrorCode,
+    message: String? = null
+): WebTestClient.BodyContentSpec =
     this.expectBody()
         .jsonPath(DATA_JSON_PATH).doesNotExist()
         .jsonPath("$ERRORS_JSON_PATH.[0].extensions.code").isEqualTo(code.name)
-        .jsonPath("$ERRORS_JSON_PATH.[0].message").isEqualTo(message)
+        .apply { message?.let { jsonPath("$ERRORS_JSON_PATH.[0].message").isEqualTo(message) } }
         .jsonPath(EXTENSIONS_JSON_PATH).doesNotExist()
