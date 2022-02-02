@@ -45,7 +45,7 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 |}""".trimMargin()
             )
             every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
-            withMockUser(AppUserRole.VIEWER)
+            withAnonymousUser()
 
             // when
             val response = webTestClient.query(query)

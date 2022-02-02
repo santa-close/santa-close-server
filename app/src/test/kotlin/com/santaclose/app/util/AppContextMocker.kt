@@ -1,5 +1,6 @@
 package com.santaclose.app.util
 
+import arrow.core.None
 import arrow.core.toOption
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.ninjasquad.springmockk.MockkBean
@@ -35,5 +36,15 @@ internal abstract class AppContextMocker {
         }
 
         return appUser
+    }
+
+    fun withAnonymousUser() {
+        val slot = slot<ServerRequest>()
+        coEvery { appGraphQLContextFactory.generateContextMap(capture(slot)) } answers {
+            mapOf(
+                "user" to None,
+                "request" to slot.captured
+            )
+        }
     }
 }
