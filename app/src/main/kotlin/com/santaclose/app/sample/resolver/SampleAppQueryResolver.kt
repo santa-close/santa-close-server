@@ -8,7 +8,6 @@ import com.santaclose.app.sample.resolver.dto.SampleAppItemInput
 import com.santaclose.app.sample.service.SampleAppQueryService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.web.error.getOrThrow
-import graphql.schema.DataFetchingEnvironment
 import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
 import javax.validation.Valid
@@ -20,7 +19,7 @@ class SampleAppQueryResolver(
 ) : Query {
     @Auth(AppUserRole.USER)
     @GraphQLDescription("샘플 데이터")
-    fun sample(@Valid input: SampleAppItemInput, dfe: DataFetchingEnvironment): SampleAppDetail =
+    fun sample(@Valid input: SampleAppItemInput): SampleAppDetail =
         sampleAppQueryService
             .findByPrice(input.price)
             .getOrThrow()
