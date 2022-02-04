@@ -8,18 +8,20 @@ import javax.persistence.NoResultException
 enum class GraphqlErrorCode {
     NOT_FOUND,
     SERVER_ERROR,
+    UNAUTHORIZED,
 }
 
 fun <A> Either<Throwable, A>.getOrThrow(): A =
-    this.getOrHandle { throw it.toGraphQLError() }
+    this.getOrHandle { throw it.toGraphQLException() }
 
-fun Throwable.toGraphQLError(): Throwable = GraphqlErrorException.newErrorException()
+fun Throwable.toGraphQLException(): Throwable = GraphqlErrorException.newErrorException()
     .cause(this)
     .message(this.message)
     .extensions(
         mutableMapOf(
             "code" to when (this) {
                 is NoResultException -> GraphqlErrorCode.NOT_FOUND
+                is UnauthorizedException -> GraphqlErrorCode.UNAUTHORIZED
                 else -> GraphqlErrorCode.SERVER_ERROR
             }
         ) as Map<String, Any>?

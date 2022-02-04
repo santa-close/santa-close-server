@@ -15,7 +15,7 @@ class Sample(
     @field:NotNull
     var name: String,
 
-    @Positive
+    @field:Positive
     var price: Int,
 
     @Enumerated(EnumType.STRING)
