@@ -42,7 +42,6 @@ internal class ServerRequestParserImplTest {
     fun `유효한 토큰을 읽어 세션을 반환한다`() {
         // given
         val user = AppSession(12345, AppUserRole.USER)
-        println(JwtTestUtil.genToken(user))
         val request = MockServerRequest
             .builder()
             .header("Authorization", "Bearer ${JwtTestUtil.genToken(user)}")

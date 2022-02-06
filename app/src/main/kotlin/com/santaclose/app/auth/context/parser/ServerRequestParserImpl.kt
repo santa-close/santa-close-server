@@ -1,12 +1,13 @@
 package com.santaclose.app.auth.context.parser
 
+import arrow.core.Either.Companion.catch
 import arrow.core.Option
-import arrow.core.Option.Companion.catch
 import arrow.core.firstOrNone
 import arrow.core.lastOrNone
 import com.santaclose.app.auth.context.AppSession
 import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.entity.appUser.type.AppUserRole
+import com.santaclose.lib.logger.logger
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Service
@@ -16,6 +17,7 @@ import org.springframework.web.reactive.function.server.ServerRequest
 class ServerRequestParserImpl(jwtConfig: JWTConfig) : ServerRequestParser {
     private val parserBuilder = Jwts.parserBuilder()
     private val key = Keys.hmacShaKeyFor(jwtConfig.secret.toByteArray())
+    private val logger = logger()
 
     override fun parse(request: ServerRequest): Option<AppSession> =
         request
@@ -38,4 +40,6 @@ class ServerRequestParserImpl(jwtConfig: JWTConfig) : ServerRequestParser {
                 )
             }
     }
+        .mapLeft { logger.info("failed to parse token: token=$token message=${it.message}") }
+        .orNone()
 }
