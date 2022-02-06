@@ -25,7 +25,8 @@ class AuthSchemaDirectiveWiring : KotlinSchemaDirectiveWiring {
             it.graphQlContext.get<Option<AppUser>>("user")
                 .filter { user -> user.hasRole(role) }
                 .tapNone { throw UnauthorizedException("접근 권한이 없습니다").toGraphQLException() }
-                .run { originalDataFetcher.get(it) }
+
+            originalDataFetcher.get(it)
         }.let(environment::setDataFetcher)
 
         return environment.element
