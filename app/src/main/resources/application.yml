@@ -18,4 +18,4 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 jwt:
-  secret: "secret"
+  secret: "Xn2r5u8x/A?D*G-KaPdSgVkYp3s6v9y$"

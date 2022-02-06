@@ -2,16 +2,14 @@ package com.santaclose.app.auth.context.parser
 
 import com.santaclose.app.auth.context.AppSession
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import java.util.Date
-import javax.crypto.SecretKey
 
 internal class JwtTestUtil {
     companion object {
-        private val key = Keys.hmacShaKeyFor("PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4".toByteArray())
+        const val secret = "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
 
-        fun genKey(): SecretKey = Keys.secretKeyFor(SignatureAlgorithm.ES256)
+        private val key = Keys.hmacShaKeyFor(secret.toByteArray())
 
         fun genToken(session: AppSession? = null): String =
             Jwts
