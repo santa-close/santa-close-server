@@ -2,9 +2,9 @@ package com.santaclose.app.auth.directive
 
 import arrow.core.None
 import arrow.core.Option
-import arrow.core.toOption
+import arrow.core.Some
 import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnvironment
-import com.santaclose.lib.entity.appUser.AppUser
+import com.santaclose.app.auth.context.AppSession
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import graphql.GraphQLException
 import graphql.GraphqlErrorException
@@ -54,7 +54,7 @@ internal class AuthSchemaDirectiveWiringTest {
 
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
-            every { fetchEnvMock.graphQlContext.get<Option<AppUser>>("user") } returns None
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns None
             shouldThrow<GraphqlErrorException> {
                 slot.captured.get(fetchEnvMock)
             }.apply {
@@ -77,8 +77,8 @@ internal class AuthSchemaDirectiveWiringTest {
 
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
-            val appUser = AppUser("11", "id", AppUserRole.VIEWER)
-            every { fetchEnvMock.graphQlContext.get<Option<AppUser>>("user") } returns appUser.toOption()
+            val session = AppSession(11, AppUserRole.VIEWER)
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns Some(session)
 
             shouldThrow<GraphqlErrorException> {
                 slot.captured.get(fetchEnvMock)
@@ -102,8 +102,8 @@ internal class AuthSchemaDirectiveWiringTest {
 
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
-            val appUser = AppUser("11", "id", AppUserRole.USER)
-            every { fetchEnvMock.graphQlContext.get<Option<AppUser>>("user") } returns appUser.toOption()
+            val session = AppSession(11, AppUserRole.USER)
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns Some(session)
 
             shouldNotThrowAny { slot.captured.get(fetchEnvMock) }
         }

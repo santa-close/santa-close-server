@@ -18,4 +18,4 @@ logging:
         type: off
 
 jwt:
-  secret: "secret"
+  secret: "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
