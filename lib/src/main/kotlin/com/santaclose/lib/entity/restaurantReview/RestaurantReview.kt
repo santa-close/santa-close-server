@@ -15,12 +15,12 @@ class RestaurantReview(
 
     var content: String,
 
-    @Valid  
-    @Embedded  
-    @field:NotNull  
+    @Valid
+    @Embedded
+    @field:NotNull
     var rating: RestaurantRating,
 
-    @ManyToOne(fetch = LAZY)  
-    @field:NotNull  
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
     var restaurant: Restaurant,
 ) : BaseEntity()
