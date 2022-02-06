@@ -5,7 +5,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import javax.persistence.AttributeConverter
 
 class StringListConverter : AttributeConverter<List<String>?, String?> {
-    private val mapper = ObjectMapper()
+    companion object {
+        private val mapper = ObjectMapper()
+    }
 
     override fun convertToDatabaseColumn(attribute: List<String>?): String? {
         return attribute?.let { mapper.writeValueAsString(it) }

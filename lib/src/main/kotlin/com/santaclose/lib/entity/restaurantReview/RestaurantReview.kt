@@ -4,8 +4,10 @@ import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.restaurant.Restaurant
 import javax.persistence.Embedded
 import javax.persistence.Entity
-import javax.persistence.FetchType
+import javax.persistence.FetchType.LAZY
 import javax.persistence.ManyToOne
+import javax.validation.Valid
+import javax.validation.constraints.NotNull
 
 @Entity
 class RestaurantReview(
@@ -13,9 +15,12 @@ class RestaurantReview(
 
     var content: String,
 
+    @Valid  
     @Embedded  
+    @field:NotNull  
     var rating: RestaurantRating,
 
-    @ManyToOne(fetch = FetchType.LAZY)  
+    @ManyToOne(fetch = LAZY)  
+    @field:NotNull  
     var restaurant: Restaurant,
 ) : BaseEntity()
