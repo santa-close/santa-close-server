@@ -3,7 +3,7 @@ package com.santaclose.app.auth.context.parser
 import com.santaclose.app.auth.context.AppSession
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import java.util.*
+import java.util.Date
 
 internal class JwtTestUtil {
     companion object {
