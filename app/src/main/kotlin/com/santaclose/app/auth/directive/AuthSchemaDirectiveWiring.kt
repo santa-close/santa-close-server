@@ -3,7 +3,7 @@ package com.santaclose.app.auth.directive
 import arrow.core.Option
 import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnvironment
 import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveWiring
-import com.santaclose.lib.entity.appUser.AppUser
+import com.santaclose.app.auth.context.AppSession
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.web.error.UnauthorizedException
 import com.santaclose.lib.web.error.toGraphQLException
@@ -21,11 +21,12 @@ class AuthSchemaDirectiveWiring : KotlinSchemaDirectiveWiring {
         }
         val originalDataFetcher = environment.getDataFetcher()
 
-        DataFetcher {
-            it.graphQlContext.get<Option<AppUser>>("user")
-                .filter { user -> user.hasRole(role) }
+        DataFetcher { dfe ->
+            dfe.graphQlContext.get<Option<AppSession>>("user")
+                .filter { it.hasRole(role) }
                 .tapNone { throw UnauthorizedException("접근 권한이 없습니다").toGraphQLException() }
-                .run { originalDataFetcher.get(it) }
+
+            originalDataFetcher.get(dfe)
         }.let(environment::setDataFetcher)
 
         return environment.element

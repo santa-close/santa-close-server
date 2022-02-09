@@ -46,8 +46,6 @@ internal class ArrowTest {
                 val bar = foo.bar.bind()
                 val result = divideBy100(bar.number).bind()
 
-                println("here")
-
                 result + 100
             }
 

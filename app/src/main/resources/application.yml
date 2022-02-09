@@ -16,3 +16,6 @@ spring:
       use-new-id-generator-mappings: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+jwt:
+  secret: "Xn2r5u8x/A?D*G-KaPdSgVkYp3s6v9y$"

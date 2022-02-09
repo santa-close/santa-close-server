@@ -16,3 +16,6 @@ logging:
     org:
       hibernate:
         type: off
+
+jwt:
+  secret: "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
