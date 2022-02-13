@@ -12,5 +12,5 @@ data class KakaoConfig(
     @field:NotBlank
     val clientId: String,
     @field:NotBlank
-    val redirectUrl: String,
+    val redirectUri: String,
 )
