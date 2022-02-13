@@ -2,11 +2,13 @@ package com.santaclose.lib.auth.kakao
 
 import arrow.core.Either
 import arrow.core.Either.Companion.catch
+import arrow.core.computations.either
+import com.santaclose.lib.auth.Profile
 import io.netty.channel.ChannelOption
-import kotlinx.coroutines.reactive.awaitSingle
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.web.reactive.function.BodyInserters.fromFormData
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.awaitBody
 import reactor.netty.http.client.HttpClient
 import java.time.Duration
 
@@ -24,6 +26,14 @@ class KakaoAuth(
             .let(::ReactorClientHttpConnector)
             .let { builder.clientConnector(it).build() }
 
+    suspend fun getProfile(code: String): Either<Throwable, Profile> =
+        either {
+            val tokenResponse = getAccessToken(code).bind()
+            val userResponse = getUser(tokenResponse.access_token).bind()
+
+            userResponse.toProfile()
+        }
+
     suspend fun getAccessToken(code: String): Either<Throwable, KakaoTokenResponse> = catch {
         client
             .post()
@@ -35,10 +45,8 @@ class KakaoAuth(
                     .with("code", code)
             )
             .retrieve()
-            .bodyToMono(KakaoTokenResponse::class.java)
-            .map { it.apply { validate() } }
-            .awaitSingle()
-    }.mapLeft { Exception("kakao 토큰 발급 실패: ${it.message}", it) }
+            .awaitBody<KakaoTokenResponse>()
+    }.mapLeft { Exception("kakao 토큰 발급 실패", it) }
 
     suspend fun getUser(token: String): Either<Throwable, KakaoUserResponse> = catch {
         client
@@ -46,8 +54,6 @@ class KakaoAuth(
             .uri(userUri)
             .header("Authorization", "Bearer $token")
             .retrieve()
-            .bodyToMono(KakaoUserResponse::class.java)
-            .map { it.apply { validate() } }
-            .awaitSingle()
-    }.mapLeft { Exception("kakao 사용자 조회 실패: ${it.message}", it) }
+            .awaitBody<KakaoUserResponse>()
+    }.mapLeft { Exception("kakao 사용자 조회 실패", it) }
 }

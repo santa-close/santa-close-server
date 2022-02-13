@@ -1,6 +1,7 @@
 package com.santaclose.lib.auth.kakao
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.santaclose.lib.auth.Profile
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.string.shouldContain
@@ -53,8 +54,8 @@ internal class KakaoAuthTest {
             val result = kakaoAuth.getAccessToken("code")
 
             // then
-            result.shouldBeLeft().let {
-                it.message shouldContain "토큰 발급 실패"
+            result.shouldBeLeft().apply {
+                message shouldContain "토큰 발급 실패"
             }
         }
 
@@ -71,8 +72,8 @@ internal class KakaoAuthTest {
             val result = kakaoAuth.getAccessToken("code")
 
             // then
-            result.shouldBeLeft().let {
-                it.message shouldContain "토큰 정보가 없습니다"
+            result.shouldBeLeft().apply {
+                cause?.message shouldContain "value failed for JSON property"
             }
         }
 
@@ -109,8 +110,8 @@ internal class KakaoAuthTest {
             val result = kakaoAuth.getUser("token")
 
             // then
-            result.shouldBeLeft().let {
-                it.message shouldContain "사용자 조회 실패"
+            result.shouldBeLeft().apply {
+                message shouldContain "사용자 조회 실패"
             }
         }
 
@@ -127,8 +128,8 @@ internal class KakaoAuthTest {
             val result = kakaoAuth.getUser("token")
 
             // then
-            result.shouldBeLeft().let {
-                it.message shouldContain "사용자 정보가 없습니다"
+            result.shouldBeLeft().apply {
+                cause?.message shouldContain "value failed for JSON property"
             }
         }
 
@@ -147,6 +148,34 @@ internal class KakaoAuthTest {
 
             // then
             result shouldBeRight user
+        }
+    }
+
+    @Nested
+    inner class GetProfile {
+        @Test
+        fun `성공적으로 프로필을 가져온다`() = runTest {
+            // given
+            server.enqueue(
+                MockResponse()
+                    .addHeader("Content-Type", "application/json")
+                    .setBody("{\"access_token\":\"token\"}")
+            )
+            server.enqueue(
+                MockResponse()
+                    .addHeader("Content-Type", "application/json")
+                    .setBody(
+                        ObjectMapper().writeValueAsString(
+                            KakaoUserResponse(123, KakaoAccountResponse(KakaoProfileResponse("name"), "email"))
+                        )
+                    )
+            )
+
+            // when
+            val result = kakaoAuth.getProfile("code")
+
+            // then
+            result shouldBeRight Profile("123", "name", "email")
         }
     }
 }
