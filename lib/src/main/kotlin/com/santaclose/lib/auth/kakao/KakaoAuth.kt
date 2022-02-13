@@ -29,7 +29,7 @@ class KakaoAuth(
     suspend fun getProfile(code: String): Either<Throwable, Profile> =
         either {
             val tokenResponse = getAccessToken(code).bind()
-            val userResponse = getUser(tokenResponse.access_token).bind()
+            val userResponse = getUser(tokenResponse.accessToken).bind()
 
             userResponse.toProfile()
         }
