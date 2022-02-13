@@ -1,7 +1,5 @@
 package com.santaclose.app.appUser.repository
 
-import arrow.core.None
-import arrow.core.Some
 import com.santaclose.app.util.TestQueryFactory
 import com.santaclose.lib.entity.appUser.AppUser
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -23,7 +21,7 @@ internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
             val result = appUserAppRepository.findBySocialId("not exist")
 
             // then
-            result shouldBeRight None
+            result shouldBeRight null
         }
 
         @Test
@@ -36,7 +34,7 @@ internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
             val result = appUserAppRepository.findBySocialId("12345")
 
             // then
-            result shouldBeRight Some(appUser)
+            result shouldBeRight appUser
         }
     }
 }
