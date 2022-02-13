@@ -11,6 +11,7 @@ dependencies {
     implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.2")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
+    testImplementation("com.squareup.okhttp3:okhttp:4.9.3")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
 }
 
