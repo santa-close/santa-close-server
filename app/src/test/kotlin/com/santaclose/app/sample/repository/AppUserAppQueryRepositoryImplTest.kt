@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.validation.ConstraintViolationException
 
 @DataJpaTest
-internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
+internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
     private val sampleAppQueryRepository by lazy {
         SampleAppQueryRepositoryImpl(queryFactory)
     }
