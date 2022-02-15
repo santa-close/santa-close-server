@@ -47,7 +47,7 @@ class KakaoAuth(
                     .with("code", code)
             )
             .retrieve()
-            .awaitBody<KakaoTokenResponse>()
+            .awaitBody()
     }
 
     suspend fun getUser(token: String): Either<Throwable, KakaoUserResponse> = catch {
@@ -56,6 +56,6 @@ class KakaoAuth(
             .uri(userUri)
             .header("Authorization", "Bearer $token")
             .retrieve()
-            .awaitBody<KakaoUserResponse>()
+            .awaitBody()
     }
 }
