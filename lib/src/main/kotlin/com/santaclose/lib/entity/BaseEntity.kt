@@ -19,7 +19,7 @@ abstract class BaseEntity {
     var id: Long = 0
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
