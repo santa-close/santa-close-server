@@ -5,11 +5,12 @@ import arrow.core.Either.Companion.catch
 import com.santaclose.app.auth.context.AppSession
 import io.jsonwebtoken.Jwts
 import java.security.Key
+import java.time.LocalDateTime
 import java.util.Date
 
 data class AppAuthInfo(
     val accessToken: String,
-    val expiredAt: Int,
+    val expiredAt: LocalDateTime,
 ) {
     companion object {
         fun by(appSession: AppSession, key: Key, expiredDays: Int): Either<Throwable, AppAuthInfo> = catch {
@@ -20,7 +21,7 @@ data class AppAuthInfo(
                 .setIssuedAt(Date())
                 .signWith(key)
                 .compact()
-                .let { AppAuthInfo(it, expiredDays) }
+                .let { AppAuthInfo(it, LocalDateTime.now()) }
         }
     }
 }

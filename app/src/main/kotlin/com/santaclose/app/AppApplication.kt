@@ -1,8 +1,8 @@
 package com.santaclose.app
 
 import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
-import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.santaclose.app.auth.directive.AuthSchemaDirectiveWiring
+import com.santaclose.app.hook.CustomSchemaGeneratorHooks
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -21,10 +21,8 @@ class AppApplication {
     )
 
     @Bean
-    fun hooks(wiringFactory: KotlinDirectiveWiringFactory) = object : SchemaGeneratorHooks {
-        override val wiringFactory: KotlinDirectiveWiringFactory
-            get() = wiringFactory
-    }
+    fun hooks(wiringFactory: KotlinDirectiveWiringFactory) =
+        CustomSchemaGeneratorHooks(wiringFactory)
 }
 
 fun main(args: Array<String>) {

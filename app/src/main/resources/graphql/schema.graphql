@@ -32,7 +32,7 @@ directive @specifiedBy(
 
 type AppAuthInfo {
   accessToken: String!
-  expiredAt: Int!
+  expiredAt: DateTime!
 }
 
 type Mutation {
@@ -65,6 +65,9 @@ enum SignInType {
   APPLE
   KAKAO
 }
+
+"A type representing a formatted java.time.LocalDateTime"
+scalar DateTime
 
 input CreateSampleAppInput {
   name: String!
