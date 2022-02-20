@@ -30,8 +30,14 @@ directive @specifiedBy(
     url: String!
   ) on SCALAR
 
+type AppAuthInfo {
+  accessToken: String!
+  expiredAt: String!
+}
+
 type Mutation {
   createSample(input: CreateSampleAppInput!): Boolean!
+  signIn(input: SignInAppInput!): AppAuthInfo!
 }
 
 type Query {
@@ -55,6 +61,11 @@ enum SampleStatus {
   OPEN
 }
 
+enum SignInType {
+  APPLE
+  KAKAO
+}
+
 input CreateSampleAppInput {
   name: String!
   price: Int!
@@ -64,4 +75,9 @@ input CreateSampleAppInput {
 input SampleAppItemInput {
   name: String
   price: Int!
+}
+
+input SignInAppInput {
+  code: String!
+  type: SignInType!
 }

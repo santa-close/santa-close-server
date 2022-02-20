@@ -22,12 +22,12 @@ class AuthAppService(
     suspend fun signIn(code: String) = either<Throwable, AppSession> {
         val profile = authManager.getProfile(code).bind()
         val appUser = appUserAppQueryRepository.findBySocialId(profile.id).bind()
-            ?: signUp(profile).bind()
+            ?: createAppUser(profile).bind()
 
         AppSession(appUser.id, appUser.role)
     }.tapLeft { logger.error(it.message, it) }
 
-    private fun signUp(profile: Profile): Either<Throwable, AppUser> = catch {
+    private fun createAppUser(profile: Profile): Either<Throwable, AppUser> = catch {
         val appUser = AppUser.signUp(profile.name, profile.email, profile.id)
 
         appUserAppRepository.save(appUser)
