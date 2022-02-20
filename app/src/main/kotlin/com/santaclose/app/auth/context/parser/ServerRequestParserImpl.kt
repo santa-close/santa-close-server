@@ -9,14 +9,12 @@ import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.logger.logger
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.server.ServerRequest
 
 @Service
-class ServerRequestParserImpl(jwtConfig: JWTConfig) : ServerRequestParser {
+class ServerRequestParserImpl(private val jwtConfig: JWTConfig) : ServerRequestParser {
     private val parserBuilder = Jwts.parserBuilder()
-    private val key = Keys.hmacShaKeyFor(jwtConfig.secret.toByteArray())
     private val logger = logger()
 
     override fun parse(request: ServerRequest): Option<AppSession> =
@@ -29,7 +27,7 @@ class ServerRequestParserImpl(jwtConfig: JWTConfig) : ServerRequestParser {
 
     private fun parseJwt(token: String): Option<AppSession> = catch {
         parserBuilder
-            .setSigningKey(key)
+            .setSigningKey(jwtConfig.key)
             .build()
             .parseClaimsJws(token)
             .body

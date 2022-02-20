@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.mock.web.reactive.function.server.MockServerRequest
 
 internal class ServerRequestParserImplTest {
-    private val parser = ServerRequestParserImpl(JWTConfig(JwtTestUtil.secret))
+    private val parser = ServerRequestParserImpl(JWTConfig(JwtTestUtil.secret, 30))
 
     @Test
     fun `토큰 정보가 없으면 none 을 반환한다`() {

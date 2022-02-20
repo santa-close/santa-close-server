@@ -32,7 +32,7 @@ directive @specifiedBy(
 
 type AppAuthInfo {
   accessToken: String!
-  expiredAt: String!
+  expiredAt: Int!
 }
 
 type Mutation {
