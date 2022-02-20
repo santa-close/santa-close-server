@@ -16,7 +16,7 @@ data class JWTConfig(
     val secret: String,
 
     @field:Positive
-    val expiredDays: Int,
+    val expiredDays: Long,
 ) {
     val key: SecretKey = Keys.hmacShaKeyFor(secret.toByteArray())
 }

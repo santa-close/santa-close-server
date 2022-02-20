@@ -45,7 +45,7 @@ private object DateTimeCoercing : Coercing<LocalDateTime, String> {
     }
 
     override fun serialize(dataFetcherResult: Any): String = runCatching {
-        dataFetcherResult.toString()
+        (dataFetcherResult as? LocalDateTime)?.format(formatter) ?: dataFetcherResult.toString()
     }.getOrElse {
         throw CoercingSerializeException("Data fetcher result $dataFetcherResult cannot be serialized to a String")
     }
