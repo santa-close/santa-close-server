@@ -1,9 +1,11 @@
 package com.santaclose.app.util
 
 import com.santaclose.lib.web.error.GraphqlErrorCode
+import io.kotest.matchers.string.shouldContain
 import org.intellij.lang.annotations.Language
 import org.springframework.http.MediaType
 import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.test.web.reactive.server.JsonPathAssertions
 import org.springframework.test.web.reactive.server.WebTestClient
 
 const val GRAPHQL_ENDPOINT = "/graphql"
@@ -24,21 +26,44 @@ fun WebTestClient.query(queryInput: QueryInput): WebTestClient.ResponseSpec =
         .exchange()
         .expectStatus().isOk
 
-fun WebTestClient.ResponseSpec.success(query: String): WebTestClient.BodyContentSpec =
+fun WebTestClient.ResponseSpec.withSuccess(@Language("JSONPath") query: String, scope: BodySpec.() -> Unit = {}) {
     this.expectBody()
         .jsonPath("$DATA_JSON_PATH.$query").exists()
         .jsonPath(ERRORS_JSON_PATH).doesNotExist()
         .jsonPath(EXTENSIONS_JSON_PATH).doesNotExist()
+        .let { BodySpec(query, it) }
+        .apply(scope)
+}
 
-fun WebTestClient.BodyContentSpec.verify(path: String, data: Any): WebTestClient.BodyContentSpec =
-    this.jsonPath("$DATA_JSON_PATH.$path").isEqualTo(data)
-
-fun WebTestClient.ResponseSpec.verifyError(
+fun WebTestClient.ResponseSpec.withError(
     code: GraphqlErrorCode,
     message: String? = null
 ): WebTestClient.BodyContentSpec =
     this.expectBody()
         .jsonPath(DATA_JSON_PATH).doesNotExist()
         .jsonPath("$ERRORS_JSON_PATH.[0].extensions.code").isEqualTo(code.name)
-        .apply { message?.let { jsonPath("$ERRORS_JSON_PATH.[0].message").isEqualTo(message) } }
+        .apply {
+            message?.let {
+                jsonPath("$ERRORS_JSON_PATH.[0].message").value(
+                    { it shouldContain message },
+                    String::class.java
+                )
+            }
+        }
         .jsonPath(EXTENSIONS_JSON_PATH).doesNotExist()
+
+class BodySpec(
+    val query: String,
+    val spec: WebTestClient.BodyContentSpec,
+) {
+    fun expect(@Language("JSONPath") path: String): JsonPathAssertions =
+        spec.jsonPath("$DATA_JSON_PATH.$query.$path")
+
+    inline fun <reified T> parse(@Language("JSONPath") path: String): T {
+        var result: T? = null
+        spec.jsonPath("$DATA_JSON_PATH.$query.$path")
+            .value({ result = it }, T::class.java)
+
+        return result ?: throw Exception("failed to parse path: $path")
+    }
+}

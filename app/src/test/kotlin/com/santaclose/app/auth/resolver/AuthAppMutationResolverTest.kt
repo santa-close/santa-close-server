@@ -8,10 +8,11 @@ import com.santaclose.app.auth.service.AuthAppService
 import com.santaclose.app.util.AppContextMocker
 import com.santaclose.app.util.QueryInput
 import com.santaclose.app.util.query
-import com.santaclose.app.util.success
-import com.santaclose.app.util.verifyError
+import com.santaclose.app.util.withError
+import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.web.error.GraphqlErrorCode
+import io.kotest.matchers.string.shouldHaveMinLength
 import io.mockk.coEvery
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -47,7 +48,7 @@ internal class AuthAppMutationResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.verifyError(GraphqlErrorCode.SERVER_ERROR, "Exception while fetching data (/signIn) : error")
+            response.withError(GraphqlErrorCode.SERVER_ERROR, "error")
         }
 
         @Test
@@ -68,9 +69,9 @@ internal class AuthAppMutationResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.success("signIn").apply {
-                jsonPath("$.data.signIn.accessToken").isNotEmpty
-                jsonPath("$.data.signIn.expiredAt").isNotEmpty
+            response.withSuccess("signIn") {
+                parse<String>("accessToken") shouldHaveMinLength 50
+                expect("expiredAt").isNotEmpty
             }
         }
     }
