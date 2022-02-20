@@ -1,14 +1,14 @@
 import { sample } from './query';
 import { signIn } from './mutation';
-import { chance } from './chance';
 import { toDateTime } from './util';
+import faker from '@faker-js/faker';
 
 export const mocks = {
-  Int: () => chance.integer({ min: 1, max: 10000 }),
-  Float: () => chance.floating(),
-  String: () => chance.string(),
-  Boolean: () => chance.bool(),
-  DateTime: () => toDateTime(chance.date()),
+  Int: () => faker.datatype.number({ min: 1, max: 10000 }),
+  Float: () => faker.datatype.float(),
+  String: () => faker.datatype.string(),
+  Boolean: () => faker.datatype.boolean(),
+  DateTime: () => toDateTime(faker.date.recent()),
   Query: {
     sample,
   },

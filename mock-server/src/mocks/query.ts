@@ -1,7 +1,7 @@
-import { chance } from './chance';
+import faker from '@faker-js/faker';
 
 export const sample = () => ({
-  name: chance.name(),
-  price: chance.integer({ min: 0, max: 1000 }),
-  status: chance.pickone(['OPEN', 'CLOSE']),
+  name: faker.name.findName(),
+  price: faker.datatype.number({ min: 0, max: 1000 }),
+  status: faker.random.arrayElement(['OPEN', 'CLOSE']),
 });
