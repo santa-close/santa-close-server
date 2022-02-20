@@ -44,18 +44,14 @@ internal class KakaoAuthTest {
         @Test
         fun `토큰 발급에 실패한 경우 에러가 발생한다`() = runTest {
             // given
-            server.enqueue(
-                MockResponse()
-                    .setResponseCode(500)
-                    .setBody("error")
-            )
+            server.enqueue(MockResponse().setResponseCode(500))
 
             // when
             val result = kakaoAuth.getAccessToken("code")
 
             // then
             result.shouldBeLeft().apply {
-                message shouldContain "토큰 발급 실패"
+                message shouldContain "Server Error"
             }
         }
 
@@ -100,18 +96,14 @@ internal class KakaoAuthTest {
         @Test
         fun `사용자 조회에 실패한 경우 에러가 발생한다`() = runTest {
             // given
-            server.enqueue(
-                MockResponse()
-                    .setResponseCode(500)
-                    .setBody("error")
-            )
+            server.enqueue(MockResponse().setResponseCode(500))
 
             // when
             val result = kakaoAuth.getUser("token")
 
             // then
             result.shouldBeLeft().apply {
-                message shouldContain "사용자 조회 실패"
+                message shouldContain "Server Error"
             }
         }
 
