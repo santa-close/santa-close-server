@@ -16,7 +16,7 @@ class MountainReviewAppMutationService(
 ) {
     fun register(input: CreateMountainReviewAppInput) {
         val mountain =
-            mountainAppRepository.findByIdOrNull(input.mountainId.toLongOrNull())
+            mountainAppRepository.findByIdOrNull(input.mountainId.toLong())
                 ?: throw NoResultException("유효하지 않은 mountainId 입니다.").toGraphQLException()
 
         mountainReviewAppRepository.save(
