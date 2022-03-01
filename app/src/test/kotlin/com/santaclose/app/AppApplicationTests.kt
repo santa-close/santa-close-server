@@ -1,7 +1,7 @@
 package com.santaclose.app
 
+import io.kotest.matchers.nulls.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,19 +17,16 @@ internal class AppApplicationTests(
     @Test
     fun generateSchema() {
         // when
-        val response = webTestClient
+        val schema = webTestClient
             .get()
             .uri("/sdl")
             .exchange()
-
-        // then
-        response
             .returnResult(String::class.java)
             .responseBody.reduce { a, b -> a + "\n" + b }
             .block()
-            ?.let {
-                File("src/main/resources/graphql/schema.graphql").writeText(it)
-            }
-            ?: fail("failed to get SDL")
+
+        // then
+        schema.shouldNotBeNull()
+        File("src/main/resources/graphql/schema.graphql").writeText(schema)
     }
 }

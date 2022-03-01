@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.2" apply false
+    id("org.springframework.boot") version "2.6.3" apply false
     id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
-    id("com.expediagroup.graphql") version "5.3.1" apply false
+    id("com.expediagroup.graphql") version "5.3.2" apply false
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.diffplug.spotless") version "6.1.2"
 
@@ -35,6 +35,7 @@ subprojects {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("io.arrow-kt:arrow-core:1.0.1")
         implementation("org.springframework.boot:spring-boot-starter-validation")

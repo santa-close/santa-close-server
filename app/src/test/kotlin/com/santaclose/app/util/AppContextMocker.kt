@@ -3,6 +3,7 @@ package com.santaclose.app.util
 import arrow.core.None
 import arrow.core.toOption
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
+import com.navercorp.fixturemonkey.kotlin.giveMeBuilder
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.context.AppGraphQLContextFactory
 import com.santaclose.app.auth.context.AppSession
@@ -20,7 +21,7 @@ internal abstract class AppContextMocker {
     }
 
     fun withMockUser(role: AppUserRole): AppSession {
-        val session = sut.giveMeBuilder(AppSession::class.java)
+        val session = sut.giveMeBuilder<AppSession>()
             .set("role", role)
             .sample()
         val slot = slot<ServerRequest>()

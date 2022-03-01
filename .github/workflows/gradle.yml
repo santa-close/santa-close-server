@@ -27,12 +27,13 @@ jobs:
         with:
           arguments: test
 
-      - name: Publish test report
-        uses: mikepenz/action-junit-report@v2
+      - name: Test Report
+        uses: dorny/test-reporter@v1
         if: always()
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          name: test-results
+          path: '**/build/test-results/test/TEST-*.xml'
+          reporter: java-junit
 
       - name: Check files are changed
         run: git diff --exit-code

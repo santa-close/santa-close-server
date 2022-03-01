@@ -6,21 +6,24 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
-import javax.validation.constraints.NotNull
 
 @Entity
 class AppUser(
-    @Column(length = 15)
-    @field:NotNull
-    var phoneNumber: String,
+    @Column(nullable = false)
+    var name: String,
 
-    @field:NotNull
+    @Column(nullable = false)
+    var email: String,
+
+    @Column(unique = true, nullable = false)
     var socialId: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10)
-    @field:NotNull
+    @Column(length = 10, nullable = false)
     var role: AppUserRole,
 ) : BaseEntity() {
-    fun hasRole(role: AppUserRole) = this.role == role
+    companion object {
+        fun signUp(name: String, email: String, socialId: String) =
+            AppUser(name, email, socialId, AppUserRole.USER)
+    }
 }

@@ -19,3 +19,8 @@ logging:
 
 jwt:
   secret: "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
+  expiredDays: 30
+
+kakao:
+  clientId: "ab0e3d8af995fbf72d461fcaf38ef7b2"
+  redirectUri: "http://localhost:8080/oauth"

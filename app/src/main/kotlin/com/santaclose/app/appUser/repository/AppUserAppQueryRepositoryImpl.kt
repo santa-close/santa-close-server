@@ -1,0 +1,23 @@
+package com.santaclose.app.appUser.repository
+
+import arrow.core.Either
+import arrow.core.Either.Companion.catch
+import com.linecorp.kotlinjdsl.querydsl.expression.col
+import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
+import com.linecorp.kotlinjdsl.spring.data.listQuery
+import com.santaclose.lib.entity.appUser.AppUser
+import org.springframework.stereotype.Repository
+
+@Repository
+class AppUserAppQueryRepositoryImpl(
+    private val springDataQueryFactory: SpringDataQueryFactory,
+) : AppUserAppQueryRepository {
+    override fun findBySocialId(socialId: String): Either<Throwable, AppUser?> = catch {
+        springDataQueryFactory.listQuery<AppUser> {
+            select(entity(AppUser::class))
+            from(AppUser::class)
+            where(col(AppUser::socialId).equal(socialId))
+            limit(1)
+        }.firstOrNull()
+    }
+}

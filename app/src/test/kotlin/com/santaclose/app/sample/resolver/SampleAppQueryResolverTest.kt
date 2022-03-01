@@ -8,9 +8,8 @@ import com.santaclose.app.sample.service.SampleAppQueryService
 import com.santaclose.app.util.AppContextMocker
 import com.santaclose.app.util.QueryInput
 import com.santaclose.app.util.query
-import com.santaclose.app.util.success
-import com.santaclose.app.util.verify
-import com.santaclose.app.util.verifyError
+import com.santaclose.app.util.withError
+import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import com.santaclose.lib.web.error.GraphqlErrorCode
@@ -51,7 +50,7 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.verifyError(GraphqlErrorCode.UNAUTHORIZED, "Exception while fetching data (/sample) : 접근 권한이 없습니다")
+            response.withError(GraphqlErrorCode.UNAUTHORIZED, "접근 권한이 없습니다")
         }
 
         @Test
@@ -73,7 +72,7 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.verifyError(GraphqlErrorCode.NOT_FOUND, "Exception while fetching data (/sample) : no result")
+            response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
         }
 
         @Test
@@ -96,10 +95,10 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.success("sample").apply {
-                verify("sample.name", "name")
-                verify("sample.price", 1000)
-                verify("sample.status", SampleStatus.OPEN.name)
+            response.withSuccess("sample") {
+                expect("name").isEqualTo("name")
+                expect("price").isEqualTo(1000)
+                expect("status").isEqualTo(SampleStatus.OPEN.name)
             }
         }
     }

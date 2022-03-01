@@ -30,8 +30,14 @@ directive @specifiedBy(
     url: String!
   ) on SCALAR
 
+type AppAuthInfo {
+  accessToken: String!
+  expiredAt: DateTime!
+}
+
 type Mutation {
   createSample(input: CreateSampleAppInput!): Boolean!
+  signIn(input: SignInAppInput!): AppAuthInfo!
 }
 
 type Query {
@@ -55,6 +61,14 @@ enum SampleStatus {
   OPEN
 }
 
+enum SignInType {
+  APPLE
+  KAKAO
+}
+
+"A type representing a formatted java.time.LocalDateTime"
+scalar DateTime
+
 input CreateSampleAppInput {
   name: String!
   price: Int!
@@ -64,4 +78,9 @@ input CreateSampleAppInput {
 input SampleAppItemInput {
   name: String
   price: Int!
+}
+
+input SignInAppInput {
+  code: String!
+  type: SignInType!
 }

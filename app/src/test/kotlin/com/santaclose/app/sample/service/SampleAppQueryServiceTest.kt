@@ -2,6 +2,7 @@ package com.santaclose.app.sample.service
 
 import arrow.core.right
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
+import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
 import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -25,7 +26,7 @@ internal class SampleAppQueryServiceTest {
     @Test
     fun `정상적으로 데이터를 가져온다`() {
         // given
-        val sampleAppDetail = sut.giveMeOne(SampleAppDetail::class.java)
+        val sampleAppDetail = sut.giveMeOne<SampleAppDetail>()
         every { sampleAppQueryRepository.findByPrice(sampleAppDetail.price) } returns sampleAppDetail.right()
 
         // when
