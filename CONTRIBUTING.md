@@ -70,3 +70,8 @@ logging:
 ```shell
 ./gradlew :app:bootRun
 ```
+
+### 개발 환경 이슈
+
+- 테스트 실행 또는 서버 실행시, `unresolved reference: lib`
+    - `./gradlew clean` 으로 다시 설치한다. 
