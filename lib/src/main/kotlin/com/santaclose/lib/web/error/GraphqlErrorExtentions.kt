@@ -9,6 +9,7 @@ enum class GraphqlErrorCode {
     NOT_FOUND,
     SERVER_ERROR,
     UNAUTHORIZED,
+    BAD_REQUEST
 }
 
 fun <A> Either<Throwable, A>.getOrThrow(): A =
@@ -22,6 +23,7 @@ fun Throwable.toGraphQLException(): Throwable = GraphqlErrorException.newErrorEx
             "code" to when (this) {
                 is NoResultException -> GraphqlErrorCode.NOT_FOUND
                 is UnauthorizedException -> GraphqlErrorCode.UNAUTHORIZED
+                is NumberFormatException -> GraphqlErrorCode.BAD_REQUEST
                 else -> GraphqlErrorCode.SERVER_ERROR
             }
         ) as Map<String, Any>?

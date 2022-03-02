@@ -36,6 +36,7 @@ type AppAuthInfo {
 }
 
 type Mutation {
+  createMountainReview(input: CreateMountainReviewAppInput!): Boolean!
   createSample(input: CreateSampleAppInput!): Boolean!
   signIn(input: SignInAppInput!): AppAuthInfo!
 }
@@ -68,6 +69,15 @@ enum SignInType {
 
 "A type representing a formatted java.time.LocalDateTime"
 scalar DateTime
+
+input CreateMountainReviewAppInput {
+  content: String!
+  facility: Int!
+  mountainId: String!
+  scenery: Int!
+  title: String!
+  traffic: Int!
+}
 
 input CreateSampleAppInput {
   name: String!

@@ -10,8 +10,8 @@ import javax.validation.Valid
 @Component
 @Validated
 class SampleAppMutationResolver(
-    private val sample: SampleAppMutationService,
+    private val sampleAppMutationService: SampleAppMutationService,
 ) : Mutation {
     fun createSample(@Valid input: CreateSampleAppInput): Boolean =
-        sample.create(input.toEntity()).run { true }
+        sampleAppMutationService.create(input.toEntity()).run { true }
 }

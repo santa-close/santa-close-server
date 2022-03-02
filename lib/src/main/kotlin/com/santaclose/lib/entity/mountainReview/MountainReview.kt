@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull
 @Entity
 class MountainReview(
     @field:NotNull
-    var name: String,
+    var title: String,
 
     @Valid
     @Embedded
@@ -27,8 +27,22 @@ class MountainReview(
     @ManyToOne(fetch = LAZY)
     @field:NotNull
     var mountain: Mountain,
-
     // 추가한 사용자 id,
-
     // 위치 id,
-) : BaseEntity()
+) : BaseEntity() {
+    companion object {
+        fun create(
+            title: String,
+            scenery: Byte,
+            facility: Byte,
+            traffic: Byte,
+            content: String,
+            mountain: Mountain,
+        ): MountainReview = MountainReview(
+            title,
+            MountainRating(scenery, facility, traffic),
+            content,
+            mountain
+        )
+    }
+}
