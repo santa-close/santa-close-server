@@ -4,8 +4,8 @@ import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.app.util.QueryInput
 import com.santaclose.app.util.query
-import com.santaclose.app.util.success
-import com.santaclose.app.util.verifyError
+import com.santaclose.app.util.withError
+import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.web.error.GraphqlErrorCode
 import io.mockk.every
 import io.mockk.justRun
@@ -40,7 +40,8 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    traffic: 5
                 |    content: "Good~"
                 |  })
-                |}""".trimMargin()
+                |}
+                """.trimMargin()
             )
             every { mountainReviewAppMutationService.register(any()) } throws NoResultException("no result")
 
@@ -48,7 +49,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.verifyError(GraphqlErrorCode.NOT_FOUND, "no result")
+            response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
         }
 
         @Test
@@ -64,7 +65,8 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    traffic: 5
                 |    content: "Good~"
                 |  })
-                |}""".trimMargin()
+                |}
+                """.trimMargin()
             )
             justRun { mountainReviewAppMutationService.register(any()) }
 
@@ -72,7 +74,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
             val response = webTestClient.query(query)
 
             // then
-            response.success("createMountainReview").returnResult()
+            response.withSuccess("createMountainReview")
         }
     }
 }
