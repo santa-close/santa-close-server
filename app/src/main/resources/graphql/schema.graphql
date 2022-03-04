@@ -57,6 +57,12 @@ enum AppUserRole {
   VIEWER
 }
 
+enum MountainDifficulty {
+  EASY
+  HARD
+  NORMAL
+}
+
 enum SampleStatus {
   CLOSE
   OPEN
@@ -72,11 +78,16 @@ scalar DateTime
 
 input CreateMountainReviewAppInput {
   content: String!
-  facility: Int!
+  difficulty: MountainDifficulty!
+  images: [String!]!
   mountainId: String!
+  parking: Int!
   scenery: Int!
   title: String!
+  toilet: Int!
   traffic: Int!
+  trail: Int!
+  tree: Int!
 }
 
 input CreateSampleAppInput {

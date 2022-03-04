@@ -22,10 +22,15 @@ class MountainReviewAppMutationService(
             MountainReview.create(
                 title = input.title,
                 scenery = input.scenery.toByte(),
-                facility = input.facility.toByte(),
                 traffic = input.traffic.toByte(),
                 content = input.content,
                 mountain = mountain,
+                parking = input.parking.toByte(),
+                toilet = input.toilet.toByte(),
+                trail = input.trail.toByte(),
+                tree = input.tree.toByte(),
+                images = input.images,
+                difficulty = input.difficulty,
             )
         )
     }

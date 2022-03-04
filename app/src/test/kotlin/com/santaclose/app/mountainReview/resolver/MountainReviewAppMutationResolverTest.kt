@@ -33,12 +33,17 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
             val query = QueryInput(
                 """mutation {
                 |  createMountainReview(input: { 
-                |    mountainId: "1", 
+                |    mountainId: "1" 
                 |    title: "title"
+                |    parking: 5
                 |    scenery: 5
-                |    facility: 5
+                |    toilet: 5
                 |    traffic: 5
+                |    trail: 5
+                |    tree: 5
                 |    content: "Good~"
+                |    images: []
+                |    difficulty: HARD
                 |  })
                 |}
                 """.trimMargin()
@@ -58,12 +63,17 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
             val query = QueryInput(
                 """mutation {
                 |  createMountainReview(input: { 
-                |    mountainId: "1", 
+                |    mountainId: "1" 
                 |    title: "title"
+                |    parking: 5
                 |    scenery: 5
-                |    facility: 5
+                |    toilet: 5
                 |    traffic: 5
+                |    trail: 5
+                |    tree: 5
                 |    content: "Good~"
+                |    images: ["a"]
+                |    difficulty: NORMAL
                 |  })
                 |}
                 """.trimMargin()

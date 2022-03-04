@@ -4,6 +4,7 @@ import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -27,7 +28,9 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
         fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
             // given
             mountainAppRepository.save(Mountain("name", "detail"))
-            val input = CreateMountainReviewAppInput("-1", "title", 0, 0, 0, "content")
+            val input = CreateMountainReviewAppInput(
+                "-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY
+            )
 
             // when
             val exception = shouldThrow<NoResultException> { mountainReviewAppMutationService.register(input) }
@@ -40,7 +43,20 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
         fun `mountain id가 유효하면 MountainReview를 생성한다`() {
             // given
             val mountain = mountainAppRepository.save(Mountain("name", "detail"))
-            val input = CreateMountainReviewAppInput(mountain.id.toString(), "title", 1, 2, 3, "content")
+            val input =
+                CreateMountainReviewAppInput(
+                    mountain.id.toString(),
+                    "title",
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    3,
+                    "content",
+                    listOf("a", "b", "c"),
+                    EASY
+                )
 
             // when
             mountainReviewAppMutationService.register(input)
@@ -51,9 +67,14 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
             mountainReviews[0].apply {
                 title shouldBe input.title
                 rating.scenery shouldBe input.scenery.toByte()
-                rating.facility shouldBe input.facility.toByte()
+                rating.tree shouldBe input.tree.toByte()
+                rating.trail shouldBe input.trail.toByte()
+                rating.parking shouldBe input.parking.toByte()
+                rating.toilet shouldBe input.toilet.toByte()
                 rating.traffic shouldBe input.traffic.toByte()
                 content shouldBe input.content
+                images shouldBe input.images
+                difficulty shouldBe input.difficulty
             }
         }
     }

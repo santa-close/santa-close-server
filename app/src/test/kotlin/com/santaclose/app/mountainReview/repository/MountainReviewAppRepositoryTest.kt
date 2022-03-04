@@ -3,6 +3,8 @@ package com.santaclose.app.mountainReview.repository
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainReview
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.HARD
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 import org.junit.jupiter.api.Nested
@@ -22,7 +24,19 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             // given
             val mountain = Mountain("name", "detail")
             mountainAppRepository.save(mountain)
-            val mountainReview = MountainReview.create("title", 1, 1, 1, "content", mountain)
+            val mountainReview = MountainReview.create(
+                "title",
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                "content",
+                mountain,
+                emptyList(),
+                EASY
+            )
 
             // when
             mountainReviewAppRepository.save(mountainReview)
@@ -36,7 +50,11 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             // given
             val mountain = Mountain("name", "detail")
             mountainAppRepository.save(mountain)
-            val mountainReview = MountainReview.create("title", 1, 1, 1, "content", mountain)
+            val mountainReview =
+                MountainReview.create(
+                    "title", 1, 1, 1, 1, 1, 1, "content", mountain, emptyList(),
+                    HARD
+                )
             mountainReviewAppRepository.save(mountainReview)
             val notExistId = 1000L
 
