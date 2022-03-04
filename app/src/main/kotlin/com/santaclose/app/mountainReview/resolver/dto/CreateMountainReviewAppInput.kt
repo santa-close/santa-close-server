@@ -12,22 +12,22 @@ data class CreateMountainReviewAppInput(
     val title: String,
 
     @field:Range(min = 1, max = 5)
-    var scenery: Int,
+    val scenery: Int,
 
     @field:Range(min = 1, max = 5)
-    var tree: Int,
+    val tree: Int,
 
     @field:Range(min = 1, max = 5)
-    var trail: Int,
+    val trail: Int,
 
     @field:Range(min = 1, max = 5)
-    var parking: Int,
+    val parking: Int,
 
     @field:Range(min = 1, max = 5)
-    var toilet: Int,
+    val toilet: Int,
 
     @field:Range(min = 1, max = 5)
-    var traffic: Int,
+    val traffic: Int,
 
     val content: String,
 
