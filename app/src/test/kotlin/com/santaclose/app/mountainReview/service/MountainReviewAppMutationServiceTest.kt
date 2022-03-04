@@ -27,7 +27,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
         fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
             // given
             mountainAppRepository.save(Mountain("name", "detail"))
-            val input = CreateMountainReviewAppInput("-1", "title", 0, 0, 0, "content")
+            val input = CreateMountainReviewAppInput("-1", "title", 1, 1, 1, 1, 1, 1, "content")
 
             // when
             val exception = shouldThrow<NoResultException> { mountainReviewAppMutationService.register(input) }
@@ -40,7 +40,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
         fun `mountain id가 유효하면 MountainReview를 생성한다`() {
             // given
             val mountain = mountainAppRepository.save(Mountain("name", "detail"))
-            val input = CreateMountainReviewAppInput(mountain.id.toString(), "title", 1, 2, 3, "content")
+            val input = CreateMountainReviewAppInput(mountain.id.toString(), "title", 1, 2, 3, 4, 5, 3, "content")
 
             // when
             mountainReviewAppMutationService.register(input)
@@ -51,7 +51,10 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
             mountainReviews[0].apply {
                 title shouldBe input.title
                 rating.scenery shouldBe input.scenery.toByte()
-                rating.facility shouldBe input.facility.toByte()
+                rating.tree shouldBe input.tree.toByte()
+                rating.trail shouldBe input.trail.toByte()
+                rating.parking shouldBe input.parking.toByte()
+                rating.toilet shouldBe input.toilet.toByte()
                 rating.traffic shouldBe input.traffic.toByte()
                 content shouldBe input.content
             }

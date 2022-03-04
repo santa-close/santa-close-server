@@ -22,7 +22,7 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             // given
             val mountain = Mountain("name", "detail")
             mountainAppRepository.save(mountain)
-            val mountainReview = MountainReview.create("title", 1, 1, 1, "content", mountain)
+            val mountainReview = MountainReview.create("title", 1, 1, 1, 1, 1, 1, "content", mountain)
 
             // when
             mountainReviewAppRepository.save(mountainReview)
@@ -36,7 +36,7 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             // given
             val mountain = Mountain("name", "detail")
             mountainAppRepository.save(mountain)
-            val mountainReview = MountainReview.create("title", 1, 1, 1, "content", mountain)
+            val mountainReview = MountainReview.create("title", 1, 1, 1, 1, 1, 1, "content", mountain)
             mountainReviewAppRepository.save(mountainReview)
             val notExistId = 1000L
 

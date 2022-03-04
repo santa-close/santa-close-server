@@ -72,11 +72,14 @@ scalar DateTime
 
 input CreateMountainReviewAppInput {
   content: String!
-  facility: Int!
   mountainId: String!
+  parking: Int!
   scenery: Int!
   title: String!
+  toilet: Int!
   traffic: Int!
+  trail: Int!
+  tree: Int!
 }
 
 input CreateSampleAppInput {

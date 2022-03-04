@@ -34,13 +34,16 @@ class MountainReview(
         fun create(
             title: String,
             scenery: Byte,
-            facility: Byte,
+            tree: Byte,
+            trail: Byte,
+            parking: Byte,
+            toilet: Byte,
             traffic: Byte,
             content: String,
             mountain: Mountain,
         ): MountainReview = MountainReview(
             title,
-            MountainRating(scenery, facility, traffic),
+            MountainRating(scenery, tree, trail, parking, toilet, traffic),
             content,
             mountain
         )
