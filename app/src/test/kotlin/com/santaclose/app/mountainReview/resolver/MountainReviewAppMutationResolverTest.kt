@@ -43,6 +43,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    tree: 5
                 |    content: "Good~"
                 |    images: []
+                |    difficulty: HARD
                 |  })
                 |}
                 """.trimMargin()
@@ -72,6 +73,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    tree: 5
                 |    content: "Good~"
                 |    images: ["a"]
+                |    difficulty: NORMAL
                 |  })
                 |}
                 """.trimMargin()

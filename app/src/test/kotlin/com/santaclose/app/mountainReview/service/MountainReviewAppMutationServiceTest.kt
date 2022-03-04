@@ -4,6 +4,7 @@ import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -28,7 +29,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
             // given
             mountainAppRepository.save(Mountain("name", "detail"))
             val input = CreateMountainReviewAppInput(
-                "-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList()
+                "-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY
             )
 
             // when
@@ -54,6 +55,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                     3,
                     "content",
                     listOf("a", "b", "c"),
+                    EASY
                 )
 
             // when
@@ -72,6 +74,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                 rating.traffic shouldBe input.traffic.toByte()
                 content shouldBe input.content
                 images shouldBe input.images
+                difficulty shouldBe input.difficulty
             }
         }
     }

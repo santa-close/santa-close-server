@@ -3,10 +3,13 @@ package com.santaclose.lib.entity.mountainReview
 import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import javax.persistence.Column
 import javax.persistence.Convert
 import javax.persistence.Embedded
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType.LAZY
 import javax.persistence.ManyToOne
 import javax.validation.Valid
@@ -33,6 +36,11 @@ class MountainReview(
     @Convert(converter = StringListConverter::class)
     var images: List<String>,
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    @field:NotNull
+    var difficulty: MountainDifficulty,
+
     // 추가한 사용자 id,
     // 위치 id,
 ) : BaseEntity() {
@@ -48,12 +56,14 @@ class MountainReview(
             content: String,
             mountain: Mountain,
             images: List<String>,
+            difficulty: MountainDifficulty,
         ): MountainReview = MountainReview(
             title,
             MountainRating(scenery, tree, trail, parking, toilet, traffic),
             content,
             mountain,
             images,
+            difficulty
         )
     }
 }

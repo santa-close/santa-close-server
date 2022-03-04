@@ -1,5 +1,6 @@
 package com.santaclose.app.mountainReview.resolver.dto
 
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import org.hibernate.validator.constraints.Range
 import org.springframework.format.annotation.NumberFormat
 import org.springframework.format.annotation.NumberFormat.Style.NUMBER
@@ -31,4 +32,6 @@ data class CreateMountainReviewAppInput(
     val content: String,
 
     val images: List<String>,
+
+    val difficulty: MountainDifficulty,
 )
