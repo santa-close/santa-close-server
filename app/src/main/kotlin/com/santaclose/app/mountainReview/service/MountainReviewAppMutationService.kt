@@ -29,6 +29,7 @@ class MountainReviewAppMutationService(
                 toilet = input.toilet.toByte(),
                 trail = input.trail.toByte(),
                 tree = input.tree.toByte(),
+                images = input.images
             )
         )
     }

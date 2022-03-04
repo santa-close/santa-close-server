@@ -72,6 +72,7 @@ scalar DateTime
 
 input CreateMountainReviewAppInput {
   content: String!
+  images: [String!]!
   mountainId: String!
   parking: Int!
   scenery: Int!

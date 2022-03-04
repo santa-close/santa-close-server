@@ -1,8 +1,10 @@
 package com.santaclose.lib.entity.mountainReview
 
+import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.mountain.Mountain
 import javax.persistence.Column
+import javax.persistence.Convert
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
@@ -27,6 +29,10 @@ class MountainReview(
     @ManyToOne(fetch = LAZY)
     @field:NotNull
     var mountain: Mountain,
+
+    @Convert(converter = StringListConverter::class)
+    var images: List<String>,
+
     // 추가한 사용자 id,
     // 위치 id,
 ) : BaseEntity() {
@@ -41,11 +47,13 @@ class MountainReview(
             traffic: Byte,
             content: String,
             mountain: Mountain,
+            images: List<String>,
         ): MountainReview = MountainReview(
             title,
             MountainRating(scenery, tree, trail, parking, toilet, traffic),
             content,
-            mountain
+            mountain,
+            images,
         )
     }
 }

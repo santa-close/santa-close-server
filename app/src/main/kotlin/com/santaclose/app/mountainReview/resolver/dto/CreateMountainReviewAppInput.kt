@@ -29,4 +29,6 @@ data class CreateMountainReviewAppInput(
     var traffic: Int,
 
     val content: String,
+
+    val images: List<String>,
 )

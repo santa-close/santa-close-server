@@ -42,6 +42,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    trail: 5
                 |    tree: 5
                 |    content: "Good~"
+                |    images: []
                 |  })
                 |}
                 """.trimMargin()
@@ -70,6 +71,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |    trail: 5
                 |    tree: 5
                 |    content: "Good~"
+                |    images: ["a"]
                 |  })
                 |}
                 """.trimMargin()
