@@ -41,7 +41,8 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 |    price
                 |    status
                 |  }
-                |}""".trimMargin()
+                |}
+                """.trimMargin()
             )
             every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
             withAnonymousUser()
@@ -63,7 +64,8 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 |    price
                 |    status
                 |  }
-                |}""".trimMargin()
+                |}
+                """.trimMargin()
             )
             every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
             withMockUser(AppUserRole.USER)
@@ -85,7 +87,8 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 |    price
                 |    status
                 |  }
-                |}""".trimMargin()
+                |}
+                """.trimMargin()
             )
             val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
             every { sampleAppQueryService.findByPrice(123) } returns dto

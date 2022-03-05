@@ -1,21 +1,23 @@
 package com.santaclose.app.mountainReview.repository
 
-import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
-import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.HARD
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceException
 
 @DataJpaTest
 internal class MountainReviewAppRepositoryTest @Autowired constructor(
     private val mountainReviewAppRepository: MountainReviewAppRepository,
-    private val mountainAppRepository: MountainAppRepository,
+    private val em: EntityManager,
 ) {
     @Nested
     inner class Create {
@@ -23,19 +25,17 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
         fun `정상적으로 산 리뷰를 생성한다`() {
             // given
             val mountain = Mountain("name", "detail")
-            mountainAppRepository.save(mountain)
+            em.persist(mountain)
+
+            val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
             val mountainReview = MountainReview.create(
                 "title",
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
                 "content",
-                mountain,
                 emptyList(),
-                EASY
+                mountainRating,
+                EASY,
+                mountain,
+                em.createAppUser(),
             )
 
             // when
@@ -49,12 +49,18 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
         fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
             // given
             val mountain = Mountain("name", "detail")
-            mountainAppRepository.save(mountain)
-            val mountainReview =
-                MountainReview.create(
-                    "title", 1, 1, 1, 1, 1, 1, "content", mountain, emptyList(),
-                    HARD
-                )
+            em.persist(mountain)
+
+            val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+            val mountainReview = MountainReview.create(
+                "title",
+                "content",
+                emptyList(),
+                mountainRating,
+                EASY,
+                mountain,
+                em.createAppUser(),
+            )
             mountainReviewAppRepository.save(mountainReview)
             val notExistId = 1000L
 
@@ -62,7 +68,10 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             mountainReview.mountain.id = notExistId
 
             // then
-            shouldThrow<Throwable> { mountainAppRepository.existsById(notExistId) }
+            shouldThrow<PersistenceException> {
+                em.persist(mountainReview)
+                em.flush()
+            }
         }
     }
 }

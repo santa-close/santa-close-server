@@ -3,6 +3,7 @@ package com.santaclose.app.mountainReview.service
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
+import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
@@ -12,28 +13,33 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 
 @DataJpaTest
 internal class MountainReviewAppMutationServiceTest @Autowired constructor(
     private val mountainAppRepository: MountainAppRepository,
     private val mountainReviewAppRepository: MountainReviewAppRepository,
+    private val em: EntityManager,
 ) {
     private val mountainReviewAppMutationService =
-        MountainReviewAppMutationService(mountainAppRepository, mountainReviewAppRepository)
+        MountainReviewAppMutationService(mountainAppRepository, em)
 
     @Nested
     inner class Register {
         @Test
         fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
             // given
+            val appUser = em.createAppUser()
             mountainAppRepository.save(Mountain("name", "detail"))
             val input = CreateMountainReviewAppInput(
                 "-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY
             )
 
             // when
-            val exception = shouldThrow<NoResultException> { mountainReviewAppMutationService.register(input) }
+            val exception = shouldThrow<NoResultException> {
+                mountainReviewAppMutationService.register(input, appUser.id)
+            }
 
             // then
             exception.message shouldBe "유효하지 않은 mountainId 입니다."
@@ -42,6 +48,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
         @Test
         fun `mountain id가 유효하면 MountainReview를 생성한다`() {
             // given
+            val appUser = em.createAppUser()
             val mountain = mountainAppRepository.save(Mountain("name", "detail"))
             val input =
                 CreateMountainReviewAppInput(
@@ -52,14 +59,14 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                     3,
                     4,
                     5,
-                    3,
+                    6,
                     "content",
                     listOf("a", "b", "c"),
                     EASY
                 )
 
             // when
-            mountainReviewAppMutationService.register(input)
+            mountainReviewAppMutationService.register(input, appUser.id)
 
             // then
             val mountainReviews = mountainReviewAppRepository.findAll()
