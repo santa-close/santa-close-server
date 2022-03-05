@@ -31,7 +31,7 @@ internal class AppGraphQLContextFactoryTest {
         // then
         result.shouldNotBeNull()
         result["request"] shouldBe request
-        result["user"]
+        result["session"]
             .shouldBeInstanceOf<Option<AppUser>>()
             .shouldBeSome(session)
     }

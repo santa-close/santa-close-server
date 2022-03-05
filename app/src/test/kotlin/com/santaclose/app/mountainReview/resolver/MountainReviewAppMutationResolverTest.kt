@@ -81,8 +81,8 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |}
                 """.trimMargin()
             )
-            justRun { mountainReviewAppMutationService.register(any(), 1) }
-            withMockUser(AppUserRole.USER)
+            val session = withMockUser(AppUserRole.USER)
+            justRun { mountainReviewAppMutationService.register(any(), session.id) }
 
             // when
             val response = webTestClient.query(query)
