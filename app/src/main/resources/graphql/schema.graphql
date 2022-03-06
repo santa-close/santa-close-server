@@ -37,7 +37,9 @@ type AppAuthInfo {
 
 type Mutation {
   createMountainReview(input: CreateMountainReviewAppInput!): Boolean!
-  createSample(input: CreateSampleAppInput!): Boolean!
+  "샘플 데이터"
+  createSample(input: CreateSampleAppInput!): Boolean! @auth(role : USER)
+  "로그인 및 회원가입"
   signIn(input: SignInAppInput!): AppAuthInfo!
 }
 
