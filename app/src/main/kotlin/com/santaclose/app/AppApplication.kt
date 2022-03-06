@@ -9,6 +9,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.http.HttpMethod
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.reactive.CorsWebFilter
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 @EnableJpaAuditing
 @ConfigurationPropertiesScan
@@ -23,6 +27,20 @@ class AppApplication {
     @Bean
     fun hooks(wiringFactory: KotlinDirectiveWiringFactory) =
         CustomSchemaGeneratorHooks(wiringFactory)
+
+    @Bean
+    fun corsFilter(): CorsWebFilter {
+        val config = CorsConfiguration().apply {
+            allowCredentials = true
+            addAllowedOrigin("https://studio.apollographql.com")
+            addAllowedHeader("*")
+            addAllowedMethod(HttpMethod.POST.name)
+        }
+
+        return UrlBasedCorsConfigurationSource()
+            .apply { registerCorsConfiguration("/graphql/**", config) }
+            .let(::CorsWebFilter)
+    }
 }
 
 fun main(args: Array<String>) {
