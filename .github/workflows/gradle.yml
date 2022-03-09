@@ -30,6 +30,7 @@ jobs:
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v2
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           files: ./app/build/reports/jacoco/test/jacocoTestReport.xml,./lib/build/reports/jacoco/test/jacocoTestReport.xml
           verbose: true
