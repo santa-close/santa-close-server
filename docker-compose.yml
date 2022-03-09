@@ -12,3 +12,11 @@ services:
       - "MYSQL_PASSWORD=test"
     ports:
       - "3306:3306"
+
+  localstack:
+    image: localstack/localstack:0.14.0
+    container_name: santa-close-localstack
+    ports:
+      - "4568:4566"
+    environment:
+      - SERVICES=s3
