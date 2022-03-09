@@ -27,6 +27,13 @@ jobs:
         with:
           arguments: test
 
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          files: ./app/build/reports/jacoco/test/jacocoTestReport.xml,./lib/build/reports/jacoco/test/jacocoTestReport.xml
+          verbose: true
+
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
