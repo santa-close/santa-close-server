@@ -9,13 +9,11 @@ plugins {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.2")
-    implementation("aws.sdk.kotlin:s3:0.+")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
     testImplementation("com.squareup.okhttp3:okhttp:4.9.3")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
     testImplementation("org.testcontainers:localstack:1.16.3")
-    testImplementation("com.amazonaws:aws-java-sdk-s3:1.11.914")
 }
 
 allOpen {
