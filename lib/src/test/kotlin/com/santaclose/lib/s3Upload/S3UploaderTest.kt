@@ -19,7 +19,7 @@ import org.testcontainers.utility.DockerImageName
 internal class S3UploaderTest {
 
     companion object {
-        private val localstackImage: DockerImageName = DockerImageName.parse("localstack/localstack:latest")
+        private val localstackImage: DockerImageName = DockerImageName.parse("localstack/localstack:0.14.0")
         lateinit var localstack: LocalStackContainer
         lateinit var s3Uploader: S3Uploader
         lateinit var s3Client: S3Client
@@ -58,7 +58,7 @@ internal class S3UploaderTest {
                 // given
                 val multipartFile = MockMultipartFile("fileName", "file content".toByteArray())
                 // when
-                s3Uploader.upload("test", "path", multipartFile, "content-Type")
+                s3Uploader.upload("test", "path", multipartFile)
 
                 // then
                 shouldNotThrow<Throwable> {

@@ -24,12 +24,12 @@ class S3Uploader private constructor(
         fun createByClient(s3Client: S3Client) = S3Uploader(s3Client)
     }
 
-    suspend fun upload(bucket: String, path: String, data: MultipartFile, contentType: String) = catch {
+    suspend fun upload(bucket: String, path: String, data: MultipartFile) = catch {
         s3Client.putObject {
             this.bucket = bucket
             key = path
             body = ByteStream.fromBytes(data.bytes)
-            this.contentType = contentType
+            this.contentType = data.contentType
         }
     }
 }
