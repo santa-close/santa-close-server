@@ -71,7 +71,22 @@ logging:
 ./gradlew :app:bootRun
 ```
 
+### 주의 사항
+
+#### schema.graphql 업데이트
+
+graphql api 변경 시 [schema.graphql](app/src/main/resources/graphql/schema.graphql) 파일도 업데이트 해야한다.
+[AppApplicationTests](app/src/test/kotlin/com/santaclose/app/AppApplicationTests.kt) 테스트를 실행하면 된다.
+
+#### category 정보 업데이트
+
+[CategoryAppList.kt](app/src/main/kotlin/com/santaclose/app/category/resolver/dto/CategoryAppList.kt) 파일이 수정된 경우
+category 응답 데이터를 업데이트 해야한다.
+[CategoryAppQueryResolverTest](app/src/test/kotlin/com/santaclose/app/category/resolver/CategoryAppQueryResolverTest.kt)
+테스트를 실행하면 된다.
+
 ### 개발 환경 이슈
 
-- 테스트 실행 또는 서버 실행시, `unresolved reference: lib`
-    - `./gradlew clean` 으로 다시 설치한다. 
+#### 테스트 실행 또는 서버 실행시, `unresolved reference: lib` 에러 발생
+
+`./gradlew clean` 으로 다시 설치한다. 
