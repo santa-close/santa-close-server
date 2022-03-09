@@ -9,6 +9,6 @@ data class MountainDifficultyCategory(
     companion object {
         fun category() = MountainDifficulty
             .values()
-            .map { MountainDifficultyCategory(it, it.name) }
+            .map { MountainDifficultyCategory(it, it.text) }
     }
 }
