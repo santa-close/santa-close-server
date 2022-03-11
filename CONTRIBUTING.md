@@ -4,6 +4,14 @@
 
 ### setting
 
+> pre-commit 과 pre-push hook 이 동작하기 위해 사전에 `yarn` 으로 husky 를 설치해야 한다.
+
+```shell
+yarn
+```
+
+이후 아래 명령어를 수행한다.
+
 ```shell
 ./gradlew addKtlintCheckGitPreCommitHook
 ```
@@ -75,10 +83,14 @@ logging:
 
 #### schema.graphql 업데이트
 
+> git hook 이 제대로 설정된 상태라면 푸시하기 전에 테스트가 자동으로 실행된다.
+
 graphql api 변경 시 [schema.graphql](app/src/main/resources/graphql/schema.graphql) 파일도 업데이트 해야한다.
 [AppApplicationTests](app/src/test/kotlin/com/santaclose/app/AppApplicationTests.kt) 테스트를 실행하면 된다.
 
 #### category 정보 업데이트
+
+> git hook 이 제대로 설정된 상태라면 푸시하기 전에 테스트가 자동으로 실행된다.
 
 [CategoryAppList.kt](app/src/main/kotlin/com/santaclose/app/category/resolver/dto/CategoryAppList.kt) 파일이 수정된 경우
 category 응답 데이터를 업데이트 해야한다.
