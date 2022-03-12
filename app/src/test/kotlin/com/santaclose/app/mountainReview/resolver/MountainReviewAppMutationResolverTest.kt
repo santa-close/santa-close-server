@@ -2,10 +2,12 @@ package com.santaclose.app.mountainReview.resolver
 
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
+import com.santaclose.app.util.AppContextMocker
 import com.santaclose.app.util.QueryInput
 import com.santaclose.app.util.query
 import com.santaclose.app.util.withError
 import com.santaclose.app.util.withSuccess
+import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.web.error.GraphqlErrorCode
 import io.mockk.every
 import io.mockk.justRun
@@ -23,7 +25,7 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean
     private val mountainReviewAppMutationService: MountainReviewAppMutationService,
-) {
+) : AppContextMocker() {
 
     @Nested
     inner class CreateMountainReview {
@@ -48,7 +50,8 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |}
                 """.trimMargin()
             )
-            every { mountainReviewAppMutationService.register(any()) } throws NoResultException("no result")
+            every { mountainReviewAppMutationService.register(any(), any()) } throws NoResultException("no result")
+            withMockUser(AppUserRole.USER)
 
             // when
             val response = webTestClient.query(query)
@@ -78,7 +81,8 @@ internal class MountainReviewAppMutationResolverTest @Autowired constructor(
                 |}
                 """.trimMargin()
             )
-            justRun { mountainReviewAppMutationService.register(any()) }
+            val session = withMockUser(AppUserRole.USER)
+            justRun { mountainReviewAppMutationService.register(any(), session.id) }
 
             // when
             val response = webTestClient.query(query)

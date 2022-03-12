@@ -2,6 +2,7 @@ package com.santaclose.lib.entity.mountainReview
 
 import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
+import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import javax.persistence.Column
@@ -29,41 +30,39 @@ class MountainReview(
     @field:NotNull
     var content: String,
 
-    @ManyToOne(fetch = LAZY)
-    @field:NotNull
-    var mountain: Mountain,
-
     @Convert(converter = StringListConverter::class)
-    var images: List<String>,
+    var images: List<String> = emptyList(),
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     @field:NotNull
     var difficulty: MountainDifficulty,
 
-    // 추가한 사용자 id,
-    // 위치 id,
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var mountain: Mountain,
+
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var appUser: AppUser,
 ) : BaseEntity() {
     companion object {
         fun create(
             title: String,
-            scenery: Byte,
-            tree: Byte,
-            trail: Byte,
-            parking: Byte,
-            toilet: Byte,
-            traffic: Byte,
             content: String,
-            mountain: Mountain,
             images: List<String>,
+            rating: MountainRating,
             difficulty: MountainDifficulty,
+            mountain: Mountain,
+            appUser: AppUser,
         ): MountainReview = MountainReview(
             title,
-            MountainRating(scenery, tree, trail, parking, toilet, traffic),
+            rating,
             content,
-            mountain,
             images,
-            difficulty
+            difficulty,
+            mountain,
+            appUser,
         )
     }
 }

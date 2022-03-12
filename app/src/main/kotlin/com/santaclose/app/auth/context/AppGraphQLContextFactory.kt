@@ -12,7 +12,7 @@ class AppGraphQLContextFactory(
 ) : SpringGraphQLContextFactory<SpringGraphQLContext>() {
     override suspend fun generateContextMap(request: ServerRequest): Map<*, Any>? =
         mapOf(
-            "user" to serverRequestParser.parse(request),
+            "session" to serverRequestParser.parse(request),
             "request" to request,
         )
 

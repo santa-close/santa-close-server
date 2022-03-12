@@ -28,7 +28,7 @@ internal abstract class AppContextMocker {
 
         coEvery { appGraphQLContextFactory.generateContextMap(capture(slot)) } answers {
             mapOf(
-                "user" to session.toOption(),
+                "session" to session.toOption(),
                 "request" to slot.captured
             )
         }
@@ -40,7 +40,7 @@ internal abstract class AppContextMocker {
         val slot = slot<ServerRequest>()
         coEvery { appGraphQLContextFactory.generateContextMap(capture(slot)) } answers {
             mapOf(
-                "user" to None,
+                "session" to None,
                 "request" to slot.captured
             )
         }

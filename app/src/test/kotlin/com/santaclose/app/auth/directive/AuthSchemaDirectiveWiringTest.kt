@@ -54,7 +54,7 @@ internal class AuthSchemaDirectiveWiringTest {
 
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
-            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns None
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("session") } returns None
             shouldThrow<GraphqlErrorException> {
                 slot.captured.get(fetchEnvMock)
             }.apply {
@@ -78,7 +78,7 @@ internal class AuthSchemaDirectiveWiringTest {
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
             val session = AppSession(11, AppUserRole.VIEWER)
-            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns Some(session)
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("session") } returns Some(session)
 
             shouldThrow<GraphqlErrorException> {
                 slot.captured.get(fetchEnvMock)
@@ -103,7 +103,7 @@ internal class AuthSchemaDirectiveWiringTest {
             // then
             val fetchEnvMock = mockk<DataFetchingEnvironment>()
             val session = AppSession(11, AppUserRole.USER)
-            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("user") } returns Some(session)
+            every { fetchEnvMock.graphQlContext.get<Option<AppSession>>("session") } returns Some(session)
 
             shouldNotThrowAny { slot.captured.get(fetchEnvMock) }
         }
