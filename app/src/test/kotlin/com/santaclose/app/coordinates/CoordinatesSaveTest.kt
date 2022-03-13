@@ -1,7 +1,6 @@
 package com.santaclose.app.coordinates
 
 import com.santaclose.lib.entity.coordinate.Coordinates
-import com.santaclose.lib.entity.coordinate.type.CoordinateType
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -16,7 +15,7 @@ class CoordinatesSaveTest @Autowired constructor(
     @Test
     fun `정상적으로 데이터를 저장한다`() {
         // given
-        val coordinates = Coordinates.create(CoordinateType.MOUNTAIN, 1, 10.123, 20.345)
+        val coordinates = Coordinates.byMountain(1, 10.123, 20.345)
 
         // when
         em.persist(coordinates)

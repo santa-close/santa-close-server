@@ -27,15 +27,16 @@ constructor(
   private val mountainReviewAppMutationService =
     MountainReviewAppMutationService(mountainAppRepository, em)
 
-  @Nested
-  inner class Register {
-    @Test
-    fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
-      // given
-      val appUser = em.createAppUser()
-      mountainAppRepository.save(Mountain("name", "detail"))
-      val input =
-        CreateMountainReviewAppInput("-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY)
+    @Nested
+    inner class Register {
+        @Test
+        fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
+            // given
+            val appUser = em.createAppUser()
+            mountainAppRepository.save(Mountain("name", "detail", appUser))
+            val input = CreateMountainReviewAppInput(
+                "-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY
+            )
 
       // when
       val exception =
@@ -43,9 +44,25 @@ constructor(
           mountainReviewAppMutationService.register(input, appUser.id)
         }
 
-      // then
-      exception.message shouldBe "유효하지 않은 mountainId 입니다."
-    }
+        @Test
+        fun `mountain id가 유효하면 MountainReview를 생성한다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = mountainAppRepository.save(Mountain("name", "detail", appUser))
+            val input =
+                CreateMountainReviewAppInput(
+                    mountain.id.toString(),
+                    "title",
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    "content",
+                    listOf("a", "b", "c"),
+                    EASY
+                )
 
     @Test
     fun `mountain id가 유효하면 MountainReview를 생성한다`() {

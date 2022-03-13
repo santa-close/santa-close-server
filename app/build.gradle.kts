@@ -9,7 +9,8 @@ plugins {
 dependencies {
     implementation(project(":lib"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:1.1.0.RELEASE")
+    implementation("org.hibernate:hibernate-spatial")
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:1.3.0.RELEASE")
     implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.2")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")

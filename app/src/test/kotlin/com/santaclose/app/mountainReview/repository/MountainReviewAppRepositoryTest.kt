@@ -21,25 +21,25 @@ constructor(
   private val mountainReviewAppRepository: MountainReviewAppRepository,
   private val em: EntityManager,
 ) {
-  @Nested
-  inner class Create {
-    @Test
-    fun `정상적으로 산 리뷰를 생성한다`() {
-      // given
-      val mountain = Mountain("name", "detail")
-      em.persist(mountain)
+    @Nested
+    inner class Create {
+        @Test
+        fun `정상적으로 산 리뷰를 생성한다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = Mountain("name", "detail", appUser)
+            em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
-      val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          em.createAppUser(),
-        )
+            val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+            val mountainReview = MountainReview.create(
+                "title",
+                "content",
+                emptyList(),
+                mountainRating,
+                EASY,
+                mountain,
+                appUser
+            )
 
       // when
       mountainReviewAppRepository.save(mountainReview)
@@ -48,25 +48,25 @@ constructor(
       mountainReview.id.shouldNotBeNull()
     }
 
-    @Test
-    fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
-      // given
-      val mountain = Mountain("name", "detail")
-      em.persist(mountain)
+        @Test
+        fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = Mountain("name", "detail", appUser)
+            em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
-      val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          em.createAppUser(),
-        )
-      mountainReviewAppRepository.save(mountainReview)
-      val notExistId = 1000L
+            val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+            val mountainReview = MountainReview.create(
+                "title",
+                "content",
+                emptyList(),
+                mountainRating,
+                EASY,
+                mountain,
+                appUser,
+            )
+            mountainReviewAppRepository.save(mountainReview)
+            val notExistId = 1000L
 
       // when
       mountainReview.mountain.id = notExistId
