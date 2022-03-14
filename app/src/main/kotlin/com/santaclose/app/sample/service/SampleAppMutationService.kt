@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class SampleAppMutationService(
-    private val sampleAppRepository: SampleAppRepository,
+  private val sampleAppRepository: SampleAppRepository,
 ) {
-    fun create(sample: Sample) {
-        sampleAppRepository.save(sample)
-    }
+  fun create(sample: Sample) {
+    sampleAppRepository.save(sample)
+  }
 }

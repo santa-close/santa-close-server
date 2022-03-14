@@ -9,13 +9,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class Restaurant(
-    @field:NotNull
-    var name: String,
-
-    @Column(length = 100)
-    var description: String,
-
-    @Convert(converter = StringListConverter::class)
-    var images: ArrayList<String>,
-
+  @field:NotNull var name: String,
+  @Column(length = 100) var description: String,
+  @Convert(converter = StringListConverter::class) var images: ArrayList<String>,
 ) : BaseEntity()

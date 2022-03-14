@@ -18,58 +18,61 @@ import org.testcontainers.utility.DockerImageName
 
 internal class S3UploaderTest {
 
-    companion object {
-        private val localstackImage: DockerImageName = DockerImageName.parse("localstack/localstack:0.14.0")
-        lateinit var localstack: LocalStackContainer
-        lateinit var s3Uploader: S3Uploader
-        lateinit var s3Client: S3Client
+  companion object {
+    private val localstackImage: DockerImageName =
+      DockerImageName.parse("localstack/localstack:0.14.0")
+    lateinit var localstack: LocalStackContainer
+    lateinit var s3Uploader: S3Uploader
+    lateinit var s3Client: S3Client
 
-        @BeforeAll
-        @JvmStatic
-        fun beforeAll() {
-            localstack = LocalStackContainer(localstackImage)
-                .withServices(LocalStackContainer.Service.S3)
-            with(localstack) {
-                start()
-                s3Client = S3Client {
-                    region = this@with.region
-                    endpointResolver =
-                        StaticEndpointResolver(AwsEndpoint(url = getEndpointOverride(LocalStackContainer.Service.S3).toString()))
-                    credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
-                }
-                s3Uploader = S3Uploader.createByClient(s3Client)
-                runBlocking { s3Client.createBucket { bucket = "test" } }
-            }
-        }
-
-        @AfterAll
-        @JvmStatic
-        fun afterAll() {
-            localstack.stop()
-        }
+    @BeforeAll
+    @JvmStatic
+    fun beforeAll() {
+      localstack = LocalStackContainer(localstackImage).withServices(LocalStackContainer.Service.S3)
+      with(localstack) {
+        start()
+        s3Client =
+          S3Client {
+            region = this@with.region
+            endpointResolver =
+              StaticEndpointResolver(
+                AwsEndpoint(url = getEndpointOverride(LocalStackContainer.Service.S3).toString())
+              )
+            credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
+          }
+        s3Uploader = S3Uploader.createByClient(s3Client)
+        runBlocking { s3Client.createBucket { bucket = "test" } }
+      }
     }
 
-    @Nested
-    inner class Upload {
-
-        @Test
-        fun `파일 업로드를 수행한다`() {
-            runBlocking {
-                // given
-                val multipartFile = MockMultipartFile("fileName", "file content".toByteArray())
-                // when
-                s3Uploader.upload("test", "path", multipartFile)
-
-                // then
-                shouldNotThrow<Throwable> {
-                    s3Client.getObject(
-                        GetObjectRequest {
-                            bucket = "test"
-                            key = "path"
-                        }
-                    ) {}
-                }
-            }
-        }
+    @AfterAll
+    @JvmStatic
+    fun afterAll() {
+      localstack.stop()
     }
+  }
+
+  @Nested
+  inner class Upload {
+
+    @Test
+    fun `파일 업로드를 수행한다`() {
+      runBlocking {
+        // given
+        val multipartFile = MockMultipartFile("fileName", "file content".toByteArray())
+        // when
+        s3Uploader.upload("test", "path", multipartFile)
+
+        // then
+        shouldNotThrow<Throwable> {
+          s3Client.getObject(
+            GetObjectRequest {
+              bucket = "test"
+              key = "path"
+            }
+          ) {}
+        }
+      }
+    }
+  }
 }

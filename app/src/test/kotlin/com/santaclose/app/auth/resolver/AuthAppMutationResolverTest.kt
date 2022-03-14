@@ -23,56 +23,59 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class AuthAppMutationResolverTest @Autowired constructor(
-    private val webTestClient: WebTestClient,
-    @MockkBean
-    private val authAppService: AuthAppService,
+internal class AuthAppMutationResolverTest
+@Autowired
+constructor(
+  private val webTestClient: WebTestClient,
+  @MockkBean private val authAppService: AuthAppService,
 ) : AppContextMocker() {
-    @Nested
-    inner class SignIn {
-        @Test
-        fun `로그인 실패 시 에러 응답을 반환한다`() {
-            // given
-            val code = "code"
-            val query = QueryInput(
-                """mutation {
-                |  signIn(input: {code: "$code", type: KAKAO}) {
-                |    accessToken
-                |    expiredAt
-                |  }
-                |}""".trimMargin()
-            )
-            coEvery { authAppService.signIn(code) } returns Exception("error").left()
+  @Nested
+  inner class SignIn {
+    @Test
+    fun `로그인 실패 시 에러 응답을 반환한다`() {
+      // given
+      val code = "code"
+      val query =
+        QueryInput(
+          """mutation {
+            |  signIn(input: {code: "$code", type: KAKAO}) {
+            |    accessToken
+            |    expiredAt
+            |  }
+            |}""".trimMargin()
+        )
+      coEvery { authAppService.signIn(code) } returns Exception("error").left()
 
-            // when
-            val response = webTestClient.query(query)
+      // when
+      val response = webTestClient.query(query)
 
-            // then
-            response.withError(GraphqlErrorCode.SERVER_ERROR, "error")
-        }
-
-        @Test
-        fun `로그인 성공 시 토큰 정보를 반환한다`() {
-            // given
-            val code = "code"
-            val query = QueryInput(
-                """mutation {
-                |  signIn(input: {code: "$code", type: KAKAO}) {
-                |    accessToken
-                |    expiredAt
-                |  }
-                |}""".trimMargin()
-            )
-            coEvery { authAppService.signIn(code) } returns AppSession(123, AppUserRole.USER).right()
-
-            // when
-            val response = webTestClient.query(query)
-
-            // then
-            response.withSuccess("signIn") {
-                parse<String>("accessToken") shouldHaveMinLength 50
-                expect("expiredAt").isNotEmpty
-            }
-        }
+      // then
+      response.withError(GraphqlErrorCode.SERVER_ERROR, "error")
     }
+
+    @Test
+    fun `로그인 성공 시 토큰 정보를 반환한다`() {
+      // given
+      val code = "code"
+      val query =
+        QueryInput(
+          """mutation {
+            |  signIn(input: {code: "$code", type: KAKAO}) {
+            |    accessToken
+            |    expiredAt
+            |  }
+            |}""".trimMargin()
+        )
+      coEvery { authAppService.signIn(code) } returns AppSession(123, AppUserRole.USER).right()
+
+      // when
+      val response = webTestClient.query(query)
+
+      // then
+      response.withSuccess("signIn") {
+        parse<String>("accessToken") shouldHaveMinLength 50
+        expect("expiredAt").isNotEmpty
+      }
+    }
+  }
 }

@@ -10,31 +10,25 @@
 yarn
 ```
 
-이후 아래 명령어를 수행한다.
-
-```shell
-./gradlew addKtlintCheckGitPreCommitHook
-```
-
 ### check
 
 ```shell
-./gradlew ktlintCheck
+./gradlew ktfmtCheck
 ```
 
 ### format
 
 ```shell
-./gradlew ktlintFormat
+./gradlew ktfmtFormat
 ```
 
 ### IntelliJ IDEA 설정
 
-파일 저장 시 자동 포맷팅 하려면 `ktlint` 플러그인 설치 후 아래처럼 설정
+파일 저장 시 자동 포맷팅 하려면 `ktfmt` 플러그인 설치 후 아래처럼 설정
 
-- Preferences -> Tools -> ktlint
+- Preferences -> Editor -> ktfmt Settings
 
-![ktlint](./image/ktlint.png)
+![ktlint](./image/ktfmt.png)
 
 - Preferences -> Tools -> Actions on Save
 

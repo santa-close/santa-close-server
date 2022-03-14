@@ -11,16 +11,8 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class RestaurantReview(
-    var title: String,
-
-    var content: String,
-
-    @Valid
-    @Embedded
-    @field:NotNull
-    var rating: RestaurantRating,
-
-    @ManyToOne(fetch = LAZY)
-    @field:NotNull
-    var restaurant: Restaurant,
+  var title: String,
+  var content: String,
+  @Valid @Embedded @field:NotNull var rating: RestaurantRating,
+  @ManyToOne(fetch = LAZY) @field:NotNull var restaurant: Restaurant,
 ) : BaseEntity()

@@ -19,30 +19,29 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 @EntityScan(basePackages = ["com.santaclose.lib.entity"])
 @SpringBootApplication
 class AppApplication {
-    @Bean
-    fun wiringFactory() = KotlinDirectiveWiringFactory(
-        manualWiring = mapOf("auth" to AuthSchemaDirectiveWiring())
-    )
+  @Bean
+  fun wiringFactory() =
+    KotlinDirectiveWiringFactory(manualWiring = mapOf("auth" to AuthSchemaDirectiveWiring()))
 
-    @Bean
-    fun hooks(wiringFactory: KotlinDirectiveWiringFactory) =
-        CustomSchemaGeneratorHooks(wiringFactory)
+  @Bean
+  fun hooks(wiringFactory: KotlinDirectiveWiringFactory) = CustomSchemaGeneratorHooks(wiringFactory)
 
-    @Bean
-    fun corsFilter(): CorsWebFilter {
-        val config = CorsConfiguration().apply {
-            allowCredentials = true
-            addAllowedOrigin("https://studio.apollographql.com")
-            addAllowedHeader("*")
-            addAllowedMethod(HttpMethod.POST.name)
-        }
+  @Bean
+  fun corsFilter(): CorsWebFilter {
+    val config =
+      CorsConfiguration().apply {
+        allowCredentials = true
+        addAllowedOrigin("https://studio.apollographql.com")
+        addAllowedHeader("*")
+        addAllowedMethod(HttpMethod.POST.name)
+      }
 
-        return UrlBasedCorsConfigurationSource()
-            .apply { registerCorsConfiguration("/graphql/**", config) }
-            .let(::CorsWebFilter)
-    }
+    return UrlBasedCorsConfigurationSource()
+      .apply { registerCorsConfiguration("/graphql/**", config) }
+      .let(::CorsWebFilter)
+  }
 }
 
 fun main(args: Array<String>) {
-    runApplication<AppApplication>(*args)
+  runApplication<AppApplication>(*args)
 }

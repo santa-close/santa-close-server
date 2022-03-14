@@ -8,13 +8,13 @@ import org.springframework.web.reactive.function.server.ServerRequest
 
 @Component
 class AppGraphQLContextFactory(
-    private val serverRequestParser: ServerRequestParser,
+  private val serverRequestParser: ServerRequestParser,
 ) : SpringGraphQLContextFactory<SpringGraphQLContext>() {
-    override suspend fun generateContextMap(request: ServerRequest): Map<*, Any>? =
-        mapOf(
-            "session" to serverRequestParser.parse(request),
-            "request" to request,
-        )
+  override suspend fun generateContextMap(request: ServerRequest): Map<*, Any>? =
+    mapOf(
+      "session" to serverRequestParser.parse(request),
+      "request" to request,
+    )
 
-    override suspend fun generateContext(request: ServerRequest): SpringGraphQLContext? = null
+  override suspend fun generateContext(request: ServerRequest): SpringGraphQLContext? = null
 }

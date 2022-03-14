@@ -12,23 +12,25 @@ import graphql.schema.DataFetcher
 import graphql.schema.GraphQLFieldDefinition
 
 class AuthSchemaDirectiveWiring : KotlinSchemaDirectiveWiring {
-    override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {
-        val role = environment.directive.getArgument("role").argumentValue.value.let {
-            when (it) {
-                is AppUserRole -> it
-                else -> throw GraphQLException("invalid app user role: $it")
-            }
+  override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {
+    val role =
+      environment.directive.getArgument("role").argumentValue.value.let {
+        when (it) {
+          is AppUserRole -> it
+          else -> throw GraphQLException("invalid app user role: $it")
         }
-        val originalDataFetcher = environment.getDataFetcher()
+      }
+    val originalDataFetcher = environment.getDataFetcher()
 
-        DataFetcher { dfe ->
-            dfe.graphQlContext.get<Option<AppSession>>("session")
-                .filter { it.hasRole(role) }
-                .tapNone { throw UnauthorizedException("접근 권한이 없습니다").toGraphQLException() }
+    DataFetcher { dfe ->
+        dfe.graphQlContext.get<Option<AppSession>>("session").filter { it.hasRole(role) }.tapNone {
+          throw UnauthorizedException("접근 권한이 없습니다").toGraphQLException()
+        }
 
-            originalDataFetcher.get(dfe)
-        }.let(environment::setDataFetcher)
+        originalDataFetcher.get(dfe)
+      }
+      .let(environment::setDataFetcher)
 
-        return environment.element
-    }
+    return environment.element
+  }
 }

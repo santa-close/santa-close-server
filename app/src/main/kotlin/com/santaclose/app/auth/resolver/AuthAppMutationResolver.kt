@@ -12,12 +12,13 @@ import org.springframework.stereotype.Component
 
 @Component
 class AuthAppMutationResolver(
-    private val authAppService: AuthAppService,
-    private val jwtConfig: JWTConfig,
+  private val authAppService: AuthAppService,
+  private val jwtConfig: JWTConfig,
 ) : Mutation {
-    @GraphQLDescription("로그인 및 회원가입")
-    suspend fun signIn(input: SignInAppInput): AppAuthInfo =
-        authAppService.signIn(input.code)
-            .flatMap { AppAuthInfo.by(it, jwtConfig.key, jwtConfig.expiredDays) }
-            .getOrThrow()
+  @GraphQLDescription("로그인 및 회원가입")
+  suspend fun signIn(input: SignInAppInput): AppAuthInfo =
+    authAppService
+      .signIn(input.code)
+      .flatMap { AppAuthInfo.by(it, jwtConfig.key, jwtConfig.expiredDays) }
+      .getOrThrow()
 }

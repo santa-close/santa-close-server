@@ -14,30 +14,23 @@ import org.springframework.web.reactive.function.server.ServerRequest
 
 @Service
 class ServerRequestParserImpl(private val jwtConfig: JWTConfig) : ServerRequestParser {
-    private val parserBuilder = Jwts.parserBuilder()
-    private val logger = logger()
+  private val parserBuilder = Jwts.parserBuilder()
+  private val logger = logger()
 
-    override fun parse(request: ServerRequest): Option<AppSession> =
-        request
-            .headers()
-            .header("Authorization")
-            .firstOrNone()
-            .flatMap { it.split(" ").lastOrNone() }
-            .flatMap(::parseJwt)
+  override fun parse(request: ServerRequest): Option<AppSession> =
+    request
+      .headers()
+      .header("Authorization")
+      .firstOrNone()
+      .flatMap { it.split(" ").lastOrNone() }
+      .flatMap(::parseJwt)
 
-    private fun parseJwt(token: String): Option<AppSession> = catch {
-        parserBuilder
-            .setSigningKey(jwtConfig.key)
-            .build()
-            .parseClaimsJws(token)
-            .body
-            .let {
-                AppSession(
-                    (it["id"] as String).toLong(),
-                    AppUserRole.valueOf(it["role"] as String)
-                )
-            }
-    }
-        .mapLeft { logger.info("failed to parse token: token=$token message=${it.message}") }
-        .orNone()
+  private fun parseJwt(token: String): Option<AppSession> =
+    catch {
+        parserBuilder.setSigningKey(jwtConfig.key).build().parseClaimsJws(token).body.let {
+          AppSession((it["id"] as String).toLong(), AppUserRole.valueOf(it["role"] as String))
+        }
+      }
+      .mapLeft { logger.info("failed to parse token: token=$token message=${it.message}") }
+      .orNone()
 }
