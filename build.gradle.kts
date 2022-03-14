@@ -10,6 +10,8 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.spring") version "1.6.10" apply false
     kotlin("plugin.jpa") version "1.6.10" apply false
+
+    jacoco
 }
 
 repositories {
@@ -28,6 +30,7 @@ subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "com.diffplug.spotless")
+    apply(plugin = "jacoco")
 
     java.sourceCompatibility = JavaVersion.VERSION_11
 
@@ -68,11 +71,25 @@ subprojects {
         }
     }
 
+    jacoco {
+        toolVersion = "0.8.7"
+    }
+
+    tasks.withType<JacocoReport> {
+        reports {
+            xml.required.set(true)
+            csv.required.set(false)
+            html.required.set(false)
+        }
+        dependsOn(tasks.test)
+    }
+
     tasks.withType<Test> {
         useJUnitPlatform()
         reports {
             html.required.set(false)
             junitXml.required.set(true)
         }
+        finalizedBy(tasks.jacocoTestReport)
     }
 }

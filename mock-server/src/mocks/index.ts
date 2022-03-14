@@ -1,4 +1,4 @@
-import { sample } from './query';
+import { categories, sample } from './query';
 import { signIn } from './mutation';
 import { toDateTime } from './util';
 import faker from '@faker-js/faker';
@@ -11,6 +11,7 @@ export const mocks = {
   DateTime: () => toDateTime(faker.date.recent()),
   Query: {
     sample,
+    categories,
   },
   Mutation: {
     signIn,

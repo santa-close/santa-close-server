@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node mock-server/src/index.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "apollo-server": "^3.6.1",
@@ -18,6 +19,7 @@
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
