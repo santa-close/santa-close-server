@@ -29,14 +29,14 @@ constructor(
       val query =
         QueryInput(
           """query {
-                |  categories {
-                |    mountainDifficulty {
-                |      code
-                |      name
-                |    }
-                |  }
-                |}
-                """.trimMargin()
+            |  categories {
+            |    mountainDifficulty {
+            |      code
+            |      name
+            |    }
+            |  }
+            |}
+            """.trimMargin()
         )
       withMockUser(AppUserRole.USER)
 

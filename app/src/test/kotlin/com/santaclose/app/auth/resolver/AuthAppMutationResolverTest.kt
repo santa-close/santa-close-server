@@ -38,11 +38,11 @@ constructor(
       val query =
         QueryInput(
           """mutation {
-                |  signIn(input: {code: "$code", type: KAKAO}) {
-                |    accessToken
-                |    expiredAt
-                |  }
-                |}""".trimMargin()
+            |  signIn(input: {code: "$code", type: KAKAO}) {
+            |    accessToken
+            |    expiredAt
+            |  }
+            |}""".trimMargin()
         )
       coEvery { authAppService.signIn(code) } returns Exception("error").left()
 
@@ -60,11 +60,11 @@ constructor(
       val query =
         QueryInput(
           """mutation {
-                |  signIn(input: {code: "$code", type: KAKAO}) {
-                |    accessToken
-                |    expiredAt
-                |  }
-                |}""".trimMargin()
+            |  signIn(input: {code: "$code", type: KAKAO}) {
+            |    accessToken
+            |    expiredAt
+            |  }
+            |}""".trimMargin()
         )
       coEvery { authAppService.signIn(code) } returns AppSession(123, AppUserRole.USER).right()
 

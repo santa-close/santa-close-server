@@ -38,13 +38,13 @@ constructor(
       val query =
         QueryInput(
           """query {
-                |  sample(input: {price: 123}) {
-                |    name
-                |    price
-                |    status
-                |  }
-                |}
-                """.trimMargin()
+            |  sample(input: {price: 123}) {
+            |    name
+            |    price
+            |    status
+            |  }
+            |}
+            """.trimMargin()
         )
       every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
       withAnonymousUser()
@@ -62,13 +62,13 @@ constructor(
       val query =
         QueryInput(
           """query {
-                |  sample(input: {price: 123}) {
-                |    name
-                |    price
-                |    status
-                |  }
-                |}
-                """.trimMargin()
+            |  sample(input: {price: 123}) {
+            |    name
+            |    price
+            |    status
+            |  }
+            |}
+            """.trimMargin()
         )
       every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
       withMockUser(AppUserRole.USER)
@@ -86,13 +86,13 @@ constructor(
       val query =
         QueryInput(
           """query {
-                |  sample(input: {price: 123}) {
-                |    name
-                |    price
-                |    status
-                |  }
-                |}
-                """.trimMargin()
+            |  sample(input: {price: 123}) {
+            |    name
+            |    price
+            |    status
+            |  }
+            |}
+            """.trimMargin()
         )
       val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
       every { sampleAppQueryService.findByPrice(123) } returns dto
