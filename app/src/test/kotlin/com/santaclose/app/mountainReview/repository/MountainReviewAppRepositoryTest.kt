@@ -30,7 +30,7 @@ constructor(
       val mountain = Mountain("name", "detail", appUser)
       em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+      val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
         MountainReview.create(
           "title",
@@ -56,7 +56,7 @@ constructor(
       val mountain = Mountain("name", "detail", appUser)
       em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+      val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
         MountainReview.create(
           "title",

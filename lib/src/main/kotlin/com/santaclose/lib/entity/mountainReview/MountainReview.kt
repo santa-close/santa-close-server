@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull
 @Entity
 class MountainReview(
   @field:NotNull var title: String,
-  @Valid @Embedded @field:NotNull var rating: MountainRating,
+  @field:Valid @Embedded @field:NotNull var rating: MountainRating,
   @Column(columnDefinition = "TEXT") @field:NotNull var content: String,
   @Convert(converter = StringListConverter::class)
   var images: MutableList<String> = mutableListOf(),
