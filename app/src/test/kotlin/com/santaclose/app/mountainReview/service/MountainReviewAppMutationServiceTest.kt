@@ -42,6 +42,9 @@ constructor(
         shouldThrow<NoResultException> {
           mountainReviewAppMutationService.register(input, appUser.id)
         }
+
+      // then
+      exception.message shouldBe "유효하지 않은 mountainId 입니다."
     }
 
     @Test
