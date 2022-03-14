@@ -12,10 +12,5 @@ import javax.validation.constraints.NotNull
 class Mountain(
   @field:NotNull var name: String,
   @Column(columnDefinition = "TEXT") @field:NotNull var detail: String,
-
-// 위치 id,
-
-    @ManyToOne(fetch = LAZY)
-    @field:NotNull
-    var appUser: AppUser,
+  @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
 ) : BaseEntity()
