@@ -12,57 +12,55 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class ArrowTest {
-    @Nested
-    inner class OptionTest {
-        @Test
-        fun chaining() {
-            // given
-            class Bar(val number: Int)
-            class Foo(val bar: Option<Bar>)
+  @Nested
+  inner class OptionTest {
+    @Test
+    fun chaining() {
+      // given
+      class Bar(val number: Int)
+      class Foo(val bar: Option<Bar>)
 
-            fun getFoo() = Foo(
-                Option.fromNullable(
-                    Bar(50)
-                )
-            ).some()
+      fun getFoo() = Foo(Option.fromNullable(Bar(50))).some()
 
-            fun divideBy100(num: Int) = when (num) {
-                0 -> None
-                else -> Some(100 / num)
-            }
-
-            // val result = getFoo()
-            //     .flatMap { it.bar }
-            //     .flatMap { divideBy100(it.number) }
-            //     .map { it + 100 }
-
-            // val result = listOf(1, 2, 3, 4)
-            //     .flatMap { listOf(it, 100) }
-            //     .map { it + 10 }
-
-            // when
-            val result = option.eager<Int> {
-                val foo = getFoo().bind()
-                val bar = foo.bar.bind()
-                val result = divideBy100(bar.number).bind()
-
-                result + 100
-            }
-
-            // then
-            result shouldBeSome 102
+      fun divideBy100(num: Int) =
+        when (num) {
+          0 -> None
+          else -> Some(100 / num)
         }
 
-        @Test
-        fun filterOption() {
-            // given
-            val optionList = listOf(Some("foo"), None, Some("bar"))
+      // val result = getFoo()
+      //     .flatMap { it.bar }
+      //     .flatMap { divideBy100(it.number) }
+      //     .map { it + 100 }
 
-            // when
-            val result = optionList.filterOption()
+      // val result = listOf(1, 2, 3, 4)
+      //     .flatMap { listOf(it, 100) }
+      //     .map { it + 10 }
 
-            // then
-            result shouldBe listOf("foo", "bar")
+      // when
+      val result =
+        option.eager<Int> {
+          val foo = getFoo().bind()
+          val bar = foo.bar.bind()
+          val result = divideBy100(bar.number).bind()
+
+          result + 100
         }
+
+      // then
+      result shouldBeSome 102
     }
+
+    @Test
+    fun filterOption() {
+      // given
+      val optionList = listOf(Some("foo"), None, Some("bar"))
+
+      // when
+      val result = optionList.filterOption()
+
+      // then
+      result shouldBe listOf("foo", "bar")
+    }
+  }
 }

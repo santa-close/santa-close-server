@@ -11,14 +11,14 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class SampleAppQueryRepositoryImpl(
-    private val springDataQueryFactory: SpringDataQueryFactory,
+  private val springDataQueryFactory: SpringDataQueryFactory,
 ) : SampleAppQueryRepository {
 
-    override fun findByPrice(price: Int): Either<Throwable, SampleAppDetail> = catch {
-        springDataQueryFactory.singleQuery {
-            selectMulti(col(Sample::name), col(Sample::price), col(Sample::status))
-            from(Sample::class)
-            where(col(Sample::price).equal(price))
-        }
+  override fun findByPrice(price: Int): Either<Throwable, SampleAppDetail> = catch {
+    springDataQueryFactory.singleQuery {
+      selectMulti(col(Sample::name), col(Sample::price), col(Sample::status))
+      from(Sample::class)
+      where(col(Sample::price).equal(price))
     }
+  }
 }

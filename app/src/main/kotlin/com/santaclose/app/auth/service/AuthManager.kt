@@ -7,10 +7,10 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Service
 class AuthManager(
-    kakaoConfig: KakaoConfig,
-    builder: WebClient.Builder,
+  kakaoConfig: KakaoConfig,
+  builder: WebClient.Builder,
 ) {
-    private val kakaoAuth = KakaoAuth(builder, kakaoConfig.clientId, kakaoConfig.redirectUri)
+  private val kakaoAuth = KakaoAuth(builder, kakaoConfig.clientId, kakaoConfig.redirectUri)
 
-    suspend fun getProfile(code: String) = kakaoAuth.getProfile(code)
+  suspend fun getProfile(code: String) = kakaoAuth.getProfile(code)
 }

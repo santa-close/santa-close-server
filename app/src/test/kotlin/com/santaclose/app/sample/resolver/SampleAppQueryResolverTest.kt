@@ -14,28 +14,30 @@ import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import com.santaclose.lib.web.error.GraphqlErrorCode
 import io.mockk.every
+import javax.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
-import javax.persistence.NoResultException
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class SampleAppQueryResolverTest @Autowired constructor(
-    private val webTestClient: WebTestClient,
-    @MockkBean
-    private val sampleAppQueryService: SampleAppQueryService,
+internal class SampleAppQueryResolverTest
+@Autowired
+constructor(
+  private val webTestClient: WebTestClient,
+  @MockkBean private val sampleAppQueryService: SampleAppQueryService,
 ) : AppContextMocker() {
-    @Nested
-    inner class Sample {
-        @Test
-        fun `권한없는 유저가 요청 시 에러가 발생한다`() {
-            // given
-            val query = QueryInput(
-                """query {
+  @Nested
+  inner class Sample {
+    @Test
+    fun `권한없는 유저가 요청 시 에러가 발생한다`() {
+      // given
+      val query =
+        QueryInput(
+          """query {
                 |  sample(input: {price: 123}) {
                 |    name
                 |    price
@@ -43,66 +45,68 @@ internal class SampleAppQueryResolverTest @Autowired constructor(
                 |  }
                 |}
                 """.trimMargin()
-            )
-            every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
-            withAnonymousUser()
+        )
+      every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
+      withAnonymousUser()
 
-            // when
-            val response = webTestClient.query(query)
+      // when
+      val response = webTestClient.query(query)
 
-            // then
-            response.withError(GraphqlErrorCode.UNAUTHORIZED, "접근 권한이 없습니다")
-        }
-
-        @Test
-        fun `데이터가 없는 경우 에러가 발생한다`() {
-            // given
-            val query = QueryInput(
-                """query {
-                |  sample(input: {price: 123}) {
-                |    name
-                |    price
-                |    status
-                |  }
-                |}
-                """.trimMargin()
-            )
-            every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
-            withMockUser(AppUserRole.USER)
-
-            // when
-            val response = webTestClient.query(query)
-
-            // then
-            response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
-        }
-
-        @Test
-        fun `데이터가 있는 경우 sample 을 가져온다`() {
-            // given
-            val query = QueryInput(
-                """query {
-                |  sample(input: {price: 123}) {
-                |    name
-                |    price
-                |    status
-                |  }
-                |}
-                """.trimMargin()
-            )
-            val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
-            every { sampleAppQueryService.findByPrice(123) } returns dto
-            withMockUser(AppUserRole.USER)
-
-            // when
-            val response = webTestClient.query(query)
-
-            // then
-            response.withSuccess("sample") {
-                expect("name").isEqualTo("name")
-                expect("price").isEqualTo(1000)
-                expect("status").isEqualTo(SampleStatus.OPEN.name)
-            }
-        }
+      // then
+      response.withError(GraphqlErrorCode.UNAUTHORIZED, "접근 권한이 없습니다")
     }
+
+    @Test
+    fun `데이터가 없는 경우 에러가 발생한다`() {
+      // given
+      val query =
+        QueryInput(
+          """query {
+                |  sample(input: {price: 123}) {
+                |    name
+                |    price
+                |    status
+                |  }
+                |}
+                """.trimMargin()
+        )
+      every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
+      withMockUser(AppUserRole.USER)
+
+      // when
+      val response = webTestClient.query(query)
+
+      // then
+      response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
+    }
+
+    @Test
+    fun `데이터가 있는 경우 sample 을 가져온다`() {
+      // given
+      val query =
+        QueryInput(
+          """query {
+                |  sample(input: {price: 123}) {
+                |    name
+                |    price
+                |    status
+                |  }
+                |}
+                """.trimMargin()
+        )
+      val dto = SampleAppDetail("name", 1000, SampleStatus.OPEN).right()
+      every { sampleAppQueryService.findByPrice(123) } returns dto
+      withMockUser(AppUserRole.USER)
+
+      // when
+      val response = webTestClient.query(query)
+
+      // then
+      response.withSuccess("sample") {
+        expect("name").isEqualTo("name")
+        expect("price").isEqualTo(1000)
+        expect("status").isEqualTo(SampleStatus.OPEN.name)
+      }
+    }
+  }
 }

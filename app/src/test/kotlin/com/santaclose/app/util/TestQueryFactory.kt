@@ -8,13 +8,12 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 internal abstract class TestQueryFactory {
-    @PersistenceContext
-    protected lateinit var em: EntityManager
+  @PersistenceContext protected lateinit var em: EntityManager
 
-    protected val queryFactory: SpringDataQueryFactory by lazy {
-        SpringDataQueryFactoryImpl(
-            criteriaQueryCreator = CriteriaQueryCreatorImpl(em),
-            subqueryCreator = SubqueryCreatorImpl()
-        )
-    }
+  protected val queryFactory: SpringDataQueryFactory by lazy {
+    SpringDataQueryFactoryImpl(
+      criteriaQueryCreator = CriteriaQueryCreatorImpl(em),
+      subqueryCreator = SubqueryCreatorImpl()
+    )
+  }
 }
