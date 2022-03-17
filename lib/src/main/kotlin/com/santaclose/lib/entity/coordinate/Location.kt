@@ -15,7 +15,7 @@ import org.locationtech.jts.geom.Point
 
 @Entity
 @Table(indexes = [Index(columnList = "targetId")])
-class Coordinates(
+class Location(
   @field:NotNull var point: Point,
   @Enumerated(EnumType.STRING) @Column(length = 20) @field:NotNull var type: CoordinateType,
   @field:NotNull var targetId: Long
@@ -30,7 +30,7 @@ class Coordinates(
       create(CoordinateType.RESTAURANT, targetId, longitude, latitude)
 
     fun create(type: CoordinateType, targetId: Long, longitude: Double, latitude: Double) =
-      Coordinates(
+      Location(
         point = factory.createPoint(Coordinate(longitude, latitude)),
         type,
         targetId,

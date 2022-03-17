@@ -1,6 +1,6 @@
 package com.santaclose.app.coordinates
 
-import com.santaclose.lib.entity.coordinate.Coordinates
+import com.santaclose.lib.entity.coordinate.Location
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -9,20 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-class CoordinatesSaveTest @Autowired constructor(private val em: EntityManager) {
+class LocationSaveTest @Autowired constructor(private val em: EntityManager) {
   @Test
   fun `정상적으로 데이터를 저장한다`() {
     // given
-    val coordinates = Coordinates.byMountain(1, 10.123, 20.345)
+    val location = Location.byMountain(1, 10.123, 20.345)
 
     // when
-    em.persist(coordinates)
+    em.persist(location)
 
     // then
     em.flush()
     em.clear()
-    val result = em.find(Coordinates::class.java, coordinates.id)
+    val result = em.find(Location::class.java, location.id)
     result.shouldNotBeNull()
-    result.point shouldBe coordinates.point
+    result.point shouldBe location.point
   }
 }
