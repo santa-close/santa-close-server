@@ -33,10 +33,10 @@ class MountainReviewAppMutationService(
         traffic = input.traffic.toByte(),
       )
     val review =
-      MountainReview.create(
+      MountainReview(
         title = input.title,
         content = input.content,
-        images = input.images,
+        images = input.images.toMutableList(),
         rating = rating,
         difficulty = input.difficulty,
         mountain = em.getReference(Mountain::class.java, id),

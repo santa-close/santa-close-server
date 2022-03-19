@@ -1,6 +1,7 @@
 package com.santaclose.app.mountainReview.repository
 
 import com.santaclose.app.util.createAppUser
+import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
@@ -27,19 +28,20 @@ constructor(
     fun `정상적으로 산 리뷰를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val mountain = Mountain("name", "detail", appUser)
+      val point = Location.createPoint(10.0, 20.0)
+      val mountain = Mountain("name", "detail", appUser, point)
       em.persist(mountain)
 
       val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          appUser
+        MountainReview(
+          title = "title",
+          content = "content",
+          images = mutableListOf(),
+          rating = mountainRating,
+          difficulty = EASY,
+          mountain = mountain,
+          appUser = appUser,
         )
 
       // when
@@ -53,19 +55,20 @@ constructor(
     fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
       // given
       val appUser = em.createAppUser()
-      val mountain = Mountain("name", "detail", appUser)
+      val point = Location.createPoint(10.0, 20.0)
+      val mountain = Mountain("name", "detail", appUser, point)
       em.persist(mountain)
 
       val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          appUser,
+        MountainReview(
+          title = "title",
+          content = "content",
+          images = mutableListOf(),
+          rating = mountainRating,
+          difficulty = EASY,
+          mountain = mountain,
+          appUser = appUser,
         )
       mountainReviewAppRepository.save(mountainReview)
       val notExistId = 1000L

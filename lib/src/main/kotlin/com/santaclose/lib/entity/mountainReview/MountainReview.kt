@@ -29,25 +29,4 @@ class MountainReview(
   var difficulty: MountainDifficulty,
   @ManyToOne(fetch = LAZY) @field:NotNull var mountain: Mountain,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
-) : BaseEntity() {
-  companion object {
-    fun create(
-      title: String,
-      content: String,
-      images: List<String>,
-      rating: MountainRating,
-      difficulty: MountainDifficulty,
-      mountain: Mountain,
-      appUser: AppUser,
-    ): MountainReview =
-      MountainReview(
-        title,
-        rating,
-        content,
-        images.toMutableList(),
-        difficulty,
-        mountain,
-        appUser,
-      )
-  }
-}
+) : BaseEntity()
