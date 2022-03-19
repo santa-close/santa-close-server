@@ -1,7 +1,7 @@
 package com.santaclose.lib.entity.coordinate
 
 import com.santaclose.lib.entity.BaseEntity
-import com.santaclose.lib.entity.coordinate.type.CoordinateType
+import com.santaclose.lib.entity.coordinate.type.LocationType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -17,19 +17,19 @@ import org.locationtech.jts.geom.Point
 @Table(indexes = [Index(columnList = "targetId")])
 class Location(
   @field:NotNull var point: Point,
-  @Enumerated(EnumType.STRING) @Column(length = 20) @field:NotNull var type: CoordinateType,
+  @Enumerated(EnumType.STRING) @Column(length = 20) @field:NotNull var type: LocationType,
   @field:NotNull var targetId: Long
 ) : BaseEntity() {
   companion object {
     private val factory = GeometryFactory()
 
     fun byMountain(targetId: Long, longitude: Double, latitude: Double) =
-      create(CoordinateType.MOUNTAIN, targetId, longitude, latitude)
+      create(LocationType.MOUNTAIN, targetId, longitude, latitude)
 
     fun byRestaurant(targetId: Long, longitude: Double, latitude: Double) =
-      create(CoordinateType.RESTAURANT, targetId, longitude, latitude)
+      create(LocationType.RESTAURANT, targetId, longitude, latitude)
 
-    fun create(type: CoordinateType, targetId: Long, longitude: Double, latitude: Double) =
+    fun create(type: LocationType, targetId: Long, longitude: Double, latitude: Double) =
       Location(
         point = factory.createPoint(Coordinate(longitude, latitude)),
         type,

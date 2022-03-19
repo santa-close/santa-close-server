@@ -1,6 +1,6 @@
 package com.santaclose.lib.entity.coordinate.type
 
-enum class CoordinateType {
+enum class LocationType {
   MOUNTAIN,
   RESTAURANT
 }
