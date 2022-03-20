@@ -31,3 +31,4 @@ s3:
   credentialsAccessKey: "accesskey"
   credentialsSecretKey: "secretKey"
   bucket: 'bucket'
+  domain: 'domain'
