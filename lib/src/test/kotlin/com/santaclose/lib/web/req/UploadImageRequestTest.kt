@@ -2,10 +2,10 @@ package com.santaclose.lib.web.req
 
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.matchers.string.shouldContain
+import java.time.LocalDate
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.mock.web.MockMultipartFile
-import java.time.LocalDate
 
 internal class UploadImageRequestTest {
 
@@ -35,9 +35,7 @@ internal class UploadImageRequestTest {
       val result = request.validateFile()
 
       // then
-      result.shouldBeLeft().apply {
-        message shouldContain "파일만 업로드 가능합니다."
-      }
+      result.shouldBeLeft().apply { message shouldContain "파일만 업로드 가능합니다." }
     }
 
     @Test
@@ -50,9 +48,7 @@ internal class UploadImageRequestTest {
       val result = request.validateFile()
 
       // then
-      result.shouldBeLeft().apply {
-        message shouldContain "파일만 업로드 가능합니다."
-      }
+      result.shouldBeLeft().apply { message shouldContain "파일만 업로드 가능합니다." }
     }
   }
 }

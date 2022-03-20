@@ -6,14 +6,13 @@ import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.req.UploadImageRequest
 
 class FileAppService(
-    private val fileManager: FileManager,
+  private val fileManager: FileManager,
 ) {
-    private val logger = logger()
+  private val logger = logger()
 
-    suspend fun uploadImage(request: UploadImageRequest): Either<Throwable, Unit> =
-        request
-            .validateFile()
-            .flatMap { fileManager.upload(request.path, request.fileData, request.contentType) }
-            .map { }
-            .tapLeft { logger.error(it.message, it) }
+  suspend fun uploadImage(request: UploadImageRequest): Either<Throwable, String> =
+    request
+      .validateFile()
+      .flatMap { fileManager.upload(request.path, request.fileData, request.contentType) }
+      .tapLeft { logger.error(it.message, it) }
 }

@@ -56,13 +56,13 @@ internal class S3UploaderTest {
   @Nested
   inner class Upload {
 
-        @Test
-        fun `파일 업로드를 수행한다`() {
-            runBlocking {
-                // given
-                val file = MockMultipartFile("fileName", "file content".toByteArray())
-                // when
-                s3Uploader.upload("test", "path", ByteStream.fromBytes(file.bytes), file.contentType ?: "")
+    @Test
+    fun `파일 업로드를 수행한다`() {
+      runBlocking {
+        // given
+        val file = MockMultipartFile("fileName", "file content".toByteArray())
+        // when
+        s3Uploader.upload("test", "path", ByteStream.fromBytes(file.bytes), file.contentType ?: "")
 
         // then
         shouldNotThrow<Throwable> {
