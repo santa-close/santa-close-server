@@ -10,12 +10,12 @@ import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import javax.persistence.EntityManager
+import javax.persistence.NoResultException
 
 @DataJpaTest
 internal class MountainReviewAppMutationServiceTest
@@ -34,8 +34,8 @@ constructor(
     fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
       val appUser = em.createAppUser()
-      val point = Location.createPoint(10.123, 20.345)
-      mountainAppRepository.save(Mountain("name", "detail", appUser, point))
+      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      Mountain("name", "detail", appUser, location).also { em.persist(it) }
       val input =
         CreateMountainReviewAppInput("-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY)
 
@@ -53,8 +53,11 @@ constructor(
     fun `mountain id가 유효하면 MountainReview를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val point = Location.createPoint(10.123, 20.345)
-      val mountain = mountainAppRepository.save(Mountain("name", "detail", appUser, point))
+      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      val mountain =
+        mountainAppRepository.save(Mountain("name", "detail", appUser, location)).also {
+          em.persist(it)
+        }
       val input =
         CreateMountainReviewAppInput(
           mountain.id.toString(),
