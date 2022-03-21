@@ -4,6 +4,7 @@ graphql:
 
 spring:
   jpa:
+    database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect
     properties:
       hibernate:
         check_nullability: true

@@ -1,6 +1,7 @@
 package com.santaclose.app.mountainReview.repository
 
 import com.santaclose.app.util.createAppUser
+import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
@@ -8,7 +9,6 @@ import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 import javax.persistence.EntityManager
-import javax.persistence.PersistenceException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,19 +26,21 @@ constructor(
     @Test
     fun `정상적으로 산 리뷰를 생성한다`() {
       // given
-      val mountain = Mountain("name", "detail")
+      val appUser = em.createAppUser()
+      val point = Location.createPoint(10.0, 20.0)
+      val mountain = Mountain("name", "detail", appUser, point)
       em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+      val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          em.createAppUser(),
+        MountainReview(
+          title = "title",
+          content = "content",
+          images = mutableListOf(),
+          rating = mountainRating,
+          difficulty = EASY,
+          mountain = mountain,
+          appUser = appUser,
         )
 
       // when
@@ -51,19 +53,21 @@ constructor(
     @Test
     fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
       // given
-      val mountain = Mountain("name", "detail")
+      val appUser = em.createAppUser()
+      val point = Location.createPoint(10.0, 20.0)
+      val mountain = Mountain("name", "detail", appUser, point)
       em.persist(mountain)
 
-      val mountainRating = MountainRating(1, 2, 3, 4, 5, 6)
+      val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
-        MountainReview.create(
-          "title",
-          "content",
-          emptyList(),
-          mountainRating,
-          EASY,
-          mountain,
-          em.createAppUser(),
+        MountainReview(
+          title = "title",
+          content = "content",
+          images = mutableListOf(),
+          rating = mountainRating,
+          difficulty = EASY,
+          mountain = mountain,
+          appUser = appUser,
         )
       mountainReviewAppRepository.save(mountainReview)
       val notExistId = 1000L
@@ -72,7 +76,7 @@ constructor(
       mountainReview.mountain.id = notExistId
 
       // then
-      shouldThrow<PersistenceException> {
+      shouldThrow<IllegalStateException> {
         em.persist(mountainReview)
         em.flush()
       }

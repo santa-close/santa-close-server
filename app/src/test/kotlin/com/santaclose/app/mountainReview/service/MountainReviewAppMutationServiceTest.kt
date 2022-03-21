@@ -4,6 +4,7 @@ import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.app.util.createAppUser
+import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
@@ -33,7 +34,8 @@ constructor(
     fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
       val appUser = em.createAppUser()
-      mountainAppRepository.save(Mountain("name", "detail"))
+      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      Mountain("name", "detail", appUser, location).also { em.persist(it) }
       val input =
         CreateMountainReviewAppInput("-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY)
 
@@ -51,7 +53,11 @@ constructor(
     fun `mountain id가 유효하면 MountainReview를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val mountain = mountainAppRepository.save(Mountain("name", "detail"))
+      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      val mountain =
+        mountainAppRepository.save(Mountain("name", "detail", appUser, location)).also {
+          em.persist(it)
+        }
       val input =
         CreateMountainReviewAppInput(
           mountain.id.toString(),
@@ -61,7 +67,7 @@ constructor(
           3,
           4,
           5,
-          6,
+          3,
           "content",
           listOf("a", "b", "c"),
           EASY

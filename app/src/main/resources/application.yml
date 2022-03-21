@@ -10,12 +10,12 @@ spring:
     password: test
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
     hibernate:
       ddl-auto: update
       use-new-id-generator-mappings: true
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
 
 jwt:
   secret: "Xn2r5u8x/A?D*G-KaPdSgVkYp3s6v9y$"
