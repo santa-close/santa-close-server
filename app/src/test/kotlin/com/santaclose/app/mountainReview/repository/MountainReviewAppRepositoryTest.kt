@@ -8,11 +8,11 @@ import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
+import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import javax.persistence.EntityManager
 
 @DataJpaTest
 internal class MountainReviewAppRepositoryTest
