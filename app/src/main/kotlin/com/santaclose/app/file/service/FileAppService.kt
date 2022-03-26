@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.flatMap
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.req.UploadImageRequest
+import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,6 +16,8 @@ class FileAppService(
   suspend fun uploadImage(request: UploadImageRequest): Either<Throwable, String> =
     request
       .validateFile()
-      .flatMap { fileManager.upload(request.path, request.fileData, request.contentType) }
+      .flatMap {
+        fileManager.upload(request.path, request.fileData.awaitSingle(), request.contentType)
+      }
       .tapLeft { logger.error(it.message, it) }
 }
