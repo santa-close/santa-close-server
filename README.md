@@ -2,6 +2,7 @@
 
 ![build](https://github.com/santa-close/santa-close-server/actions/workflows/gradle.yml/badge.svg)
 [![codecov](https://codecov.io/gh/santa-close/santa-close-server/branch/main/graph/badge.svg?token=8PMN5193TA)](https://codecov.io/gh/santa-close/santa-close-server)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d41c2d812c94d087fbaa/maintainability)](https://codeclimate.com/github/santa-close/santa-close-server/maintainability)
 
 지도 서비스를 기반으로 등산한 산과 식사한 식당을 등록하여 히스토리를 기록할 수 있는 앱 프로덕트입니다. 주요 기능은 아래와 같습니다.
 
