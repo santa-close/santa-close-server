@@ -4,23 +4,20 @@ import com.santaclose.app.file.controller.dto.UploadImageResponse
 import com.santaclose.app.file.service.FileAppService
 import com.santaclose.lib.web.error.getOrThrow
 import com.santaclose.lib.web.req.UploadImageRequest
-import org.springframework.http.MediaType
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.multipart.MultipartFile
-import reactor.core.publisher.Mono
 
 @RestController
-@RequestMapping("/api/image")
+@RequestMapping("/api")
 class FileAppController constructor(private val fileAppService: FileAppService) {
 
-  @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-  suspend fun uploadImage(@RequestBody file: Mono<FilePart>): UploadImageResponse =
+  @PostMapping("/image")
+  suspend fun uploadImage(@RequestPart file: FilePart): UploadImageResponse =
     fileAppService
-      .uploadImage(UploadImageRequest(file.block() as MultipartFile))
+      .uploadImage(UploadImageRequest(file))
       .map { UploadImageResponse(it) }
       .getOrThrow()
 }

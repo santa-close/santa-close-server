@@ -6,10 +6,12 @@ import arrow.core.right
 import aws.smithy.kotlin.runtime.content.ByteStream
 import java.time.LocalDate
 import java.util.*
-import org.springframework.web.multipart.MultipartFile
+import org.springframework.http.codec.multipart.FilePart
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 
 data class UploadImageRequest(
-  val file: MultipartFile,
+  val file: FilePart,
   var date: LocalDate = LocalDate.now(),
   var code: UUID = UUID.randomUUID(),
 ) {
@@ -19,13 +21,16 @@ data class UploadImageRequest(
   }
 
   private val fileName: String
-    get() = file.originalFilename ?: ""
+    get() = file.filename()
 
-  val fileData: ByteStream
-    get() = ByteStream.fromBytes(file.bytes)
+  val fileData: Mono<ByteStream>
+    get() =
+      file.content().toMono().map { it?.asByteBuffer()?.array() ?: byteArrayOf() }.map {
+        ByteStream.fromBytes(it)
+      }
 
   val contentType: String
-    get() = file.contentType ?: ""
+    get() = file.headers().contentType.toString()
 
   val path: String
     get() = "image/$date/$code-$fileName"
