@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
-import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import io.kotest.matchers.shouldBe
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -10,7 +9,7 @@ internal class CreateRestaurantReviewAppInputTest {
   val validator = Validation.buildDefaultValidatorFactory().validator
 
   @Test
-  fun `rating의 값이 6이 포함되어 있으면 에러가 발생한다`() {
+  fun `rating에 6이 포함되어 있으면 에러가 발생한다`() {
     // given
     val dto =
       CreateRestaurantReviewAppInput(
@@ -18,7 +17,7 @@ internal class CreateRestaurantReviewAppInputTest {
         mountainId = "1",
         title = "",
         content = "content",
-        rating = RestaurantRating(1, 2, 3, 4, 6),
+        rating = RestaurantRatingDto(1, 2, 3, 4, 6),
         images = mutableListOf()
       )
 
@@ -39,7 +38,7 @@ internal class CreateRestaurantReviewAppInputTest {
         mountainId = "1",
         title = "",
         content = "content",
-        rating = RestaurantRating(1, 2, 3, 4, 5),
+        rating = RestaurantRatingDto(1, 2, 3, 4, 5),
         images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
       )
 

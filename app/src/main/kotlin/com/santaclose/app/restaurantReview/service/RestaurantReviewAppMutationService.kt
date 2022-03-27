@@ -33,7 +33,7 @@ class RestaurantReviewAppMutationService(
     RestaurantReview(
         title = input.title,
         content = input.content,
-        rating = input.rating,
+        rating = input.rating.toEntity(),
         images = input.images.toMutableList(),
         restaurant = em.getReference(Restaurant::class.java, input.restaurantId.toLong()),
         mountain = em.getReference(Mountain::class.java, input.mountainId.toLong()),

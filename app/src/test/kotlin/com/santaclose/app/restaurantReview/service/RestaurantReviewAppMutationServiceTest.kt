@@ -4,10 +4,10 @@ import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
 import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
+import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingDto
 import com.santaclose.app.util.createAppMountain
 import com.santaclose.app.util.createAppRestaurant
 import com.santaclose.app.util.createAppUser
-import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -48,7 +48,7 @@ constructor(
           mountainId = "-1",
           "title",
           "content",
-          RestaurantRating(1, 2, 3, 4, 5),
+          RestaurantRatingDto(1, 2, 3, 4, 5),
           mutableListOf()
         )
 
@@ -73,7 +73,7 @@ constructor(
           mountain.id.toString(),
           "title",
           "content",
-          RestaurantRating(1, 2, 3, 4, 5),
+          RestaurantRatingDto(1, 2, 3, 4, 5),
           mutableListOf()
         )
 
@@ -99,7 +99,7 @@ constructor(
           mountain.id.toString(),
           "title",
           "content",
-          RestaurantRating(1, 2, 3, 4, 5),
+          RestaurantRatingDto(1, 2, 3, 4, 5),
           mutableListOf("url")
         )
 
@@ -116,7 +116,11 @@ constructor(
           appUser.id shouldBe appUser.id
           title shouldBe input.title
           content shouldBe input.content
-          rating shouldBe input.rating
+          rating.mood shouldBe input.rating.mood.toByte()
+          rating.kind shouldBe input.rating.kind.toByte()
+          rating.parkingSpace shouldBe input.rating.parkingSpace.toByte()
+          rating.clean shouldBe input.rating.clean.toByte()
+          rating.taste shouldBe input.rating.taste.toByte()
           images shouldBe input.images
         }
       }
