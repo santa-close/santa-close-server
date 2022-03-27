@@ -1,6 +1,7 @@
 package com.santaclose.app.restaurantReview.resolver
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import com.expediagroup.graphql.server.operations.Mutation
 import com.santaclose.app.auth.context.userId
 import com.santaclose.app.auth.directive.Auth
 import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
@@ -17,7 +18,7 @@ import org.springframework.validation.annotation.Validated
 @Validated
 class RestaurantReviewAppMutationResolver(
   private val restaurantReviewAppMutationService: RestaurantReviewAppMutationService
-) {
+) : Mutation {
   val logger = logger()
 
   @Auth(AppUserRole.USER)
