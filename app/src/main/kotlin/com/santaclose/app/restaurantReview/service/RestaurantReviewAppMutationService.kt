@@ -13,7 +13,7 @@ import javax.persistence.NoResultException
 import org.springframework.stereotype.Service
 
 @Service
-class RestaurantReviewAppService(
+class RestaurantReviewAppMutationService(
   private val mountainAppRepository: MountainAppRepository,
   private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
   private val restaurantRepository: RestaurantAppRepository,

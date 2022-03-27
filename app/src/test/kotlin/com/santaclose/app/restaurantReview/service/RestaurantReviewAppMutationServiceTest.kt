@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-internal class RestaurantReviewAppServiceTest
+internal class RestaurantReviewAppMutationServiceTest
 @Autowired
 constructor(
   private val mountainAppRepository: MountainAppRepository,
@@ -27,8 +27,8 @@ constructor(
   private val restaurantRepository: RestaurantAppRepository,
   private val em: EntityManager
 ) {
-  private val RestaurantReviewAppService =
-    RestaurantReviewAppService(
+  private val RestaurantReviewAppMutationService =
+    RestaurantReviewAppMutationService(
       mountainAppRepository,
       restaurantReviewAppRepository,
       restaurantRepository,
@@ -54,7 +54,9 @@ constructor(
 
       // when
       val exception =
-        shouldThrow<NoResultException> { RestaurantReviewAppService.register(input, appUser.id) }
+        shouldThrow<NoResultException> {
+          RestaurantReviewAppMutationService.register(input, appUser.id)
+        }
 
       // then
       exception.message shouldBe "유효하지 않은 mountainId 입니다."
@@ -77,7 +79,9 @@ constructor(
 
       // when
       val exception =
-        shouldThrow<NoResultException> { RestaurantReviewAppService.register(input, appUser.id) }
+        shouldThrow<NoResultException> {
+          RestaurantReviewAppMutationService.register(input, appUser.id)
+        }
 
       // then
       exception.message shouldBe "유효하지 않은 restaurantId 입니다."
@@ -100,7 +104,7 @@ constructor(
         )
 
       // when
-      RestaurantReviewAppService.register(input, appUser.id)
+      RestaurantReviewAppMutationService.register(input, appUser.id)
 
       // then
       val restaurantReview = restaurantReviewAppRepository.findAll()
