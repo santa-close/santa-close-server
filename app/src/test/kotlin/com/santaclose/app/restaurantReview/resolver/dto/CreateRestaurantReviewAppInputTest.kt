@@ -6,14 +6,14 @@ import javax.validation.ConstraintViolation
 import javax.validation.Validation
 import org.junit.jupiter.api.Test
 
-internal class CreateRestaurantReviewInputTest {
+internal class CreateRestaurantReviewAppInputTest {
   val validator = Validation.buildDefaultValidatorFactory().validator
 
   @Test
   fun `rating의 값이 6이 포함되어 있으면 에러가 발생한다`() {
     // given
     val dto =
-      CreateRestaurantReviewInput(
+      CreateRestaurantReviewAppInput(
         restaurantId = "1",
         mountainId = "1",
         title = "",
@@ -23,7 +23,8 @@ internal class CreateRestaurantReviewInputTest {
       )
 
     // when
-    val violations: Set<ConstraintViolation<CreateRestaurantReviewInput>> = validator.validate(dto)
+    val violations: Set<ConstraintViolation<CreateRestaurantReviewAppInput>> =
+      validator.validate(dto)
 
     // then
     violations.forEach { it.message shouldBe "1에서 5 사이여야 합니다" }
@@ -33,7 +34,7 @@ internal class CreateRestaurantReviewInputTest {
   fun `images의 길이가 11일 경우 에러가 발생한다`() {
     // given
     val dto =
-      CreateRestaurantReviewInput(
+      CreateRestaurantReviewAppInput(
         restaurantId = "1",
         mountainId = "1",
         title = "",
@@ -43,7 +44,8 @@ internal class CreateRestaurantReviewInputTest {
       )
 
     // when
-    val violations: Set<ConstraintViolation<CreateRestaurantReviewInput>> = validator.validate(dto)
+    val violations: Set<ConstraintViolation<CreateRestaurantReviewAppInput>> =
+      validator.validate(dto)
 
     // then
     violations.forEach { it.message shouldBe "크기가 0에서 10 사이여야 합니다" }

@@ -3,7 +3,7 @@ package com.santaclose.app.restaurantReview.service
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
-import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewInput
+import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.restaurant.Restaurant
@@ -19,7 +19,7 @@ class RestaurantReviewAppMutationService(
   private val restaurantRepository: RestaurantAppRepository,
   private val em: EntityManager
 ) {
-  fun register(input: CreateRestaurantReviewInput, userId: Long) {
+  fun register(input: CreateRestaurantReviewAppInput, userId: Long) {
     val isMountainExist = mountainAppRepository.existsById(input.mountainId.toLong())
     if (!isMountainExist) {
       throw NoResultException("유효하지 않은 mountainId 입니다.")

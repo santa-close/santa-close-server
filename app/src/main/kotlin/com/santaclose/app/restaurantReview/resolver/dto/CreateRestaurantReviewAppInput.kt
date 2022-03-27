@@ -4,7 +4,7 @@ import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import javax.validation.constraints.Size
 import org.springframework.format.annotation.NumberFormat
 
-class CreateRestaurantReviewInput(
+class CreateRestaurantReviewAppInput(
   @field:NumberFormat(style = NumberFormat.Style.NUMBER) val restaurantId: String,
   @field:NumberFormat(style = NumberFormat.Style.NUMBER) val mountainId: String,
   val title: String,

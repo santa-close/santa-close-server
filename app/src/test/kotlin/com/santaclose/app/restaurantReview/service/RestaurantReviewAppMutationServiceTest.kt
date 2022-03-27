@@ -3,7 +3,7 @@ package com.santaclose.app.restaurantReview.service
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
-import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewInput
+import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
 import com.santaclose.app.util.createAppMountain
 import com.santaclose.app.util.createAppRestaurant
 import com.santaclose.app.util.createAppUser
@@ -43,7 +43,7 @@ constructor(
       val appUser = em.createAppUser()
       val restaurant = em.createAppRestaurant(appUser)
       val input =
-        CreateRestaurantReviewInput(
+        CreateRestaurantReviewAppInput(
           restaurant.id.toString(),
           mountainId = "-1",
           "title",
@@ -68,7 +68,7 @@ constructor(
       val appUser = em.createAppUser()
       val mountain = em.createAppMountain(appUser)
       val input =
-        CreateRestaurantReviewInput(
+        CreateRestaurantReviewAppInput(
           restaurantId = "-1",
           mountain.id.toString(),
           "title",
@@ -94,7 +94,7 @@ constructor(
       val restaurant = em.createAppRestaurant(appUser)
       val mountain = em.createAppMountain(appUser)
       val input =
-        CreateRestaurantReviewInput(
+        CreateRestaurantReviewAppInput(
           restaurant.id.toString(),
           mountain.id.toString(),
           "title",
