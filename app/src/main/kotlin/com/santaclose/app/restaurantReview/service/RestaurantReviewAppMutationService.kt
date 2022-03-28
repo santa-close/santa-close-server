@@ -8,6 +8,7 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 import org.springframework.stereotype.Service
@@ -37,7 +38,9 @@ class RestaurantReviewAppMutationService(
         images = input.images.toMutableList(),
         restaurant = em.getReference(Restaurant::class.java, input.restaurantId.toLong()),
         mountain = em.getReference(Mountain::class.java, input.mountainId.toLong()),
-        appUser = em.getReference(AppUser::class.java, userId)
+        appUser = em.getReference(AppUser::class.java, userId),
+        priceAverage = 10000,
+        priceComment = PriceComment.IS_CHEAP
       )
       .apply { restaurantReviewAppRepository.save(this) }
   }

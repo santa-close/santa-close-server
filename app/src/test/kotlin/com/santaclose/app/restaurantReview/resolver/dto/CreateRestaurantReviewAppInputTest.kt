@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
+import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.matchers.shouldBe
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -18,7 +19,9 @@ internal class CreateRestaurantReviewAppInputTest {
         title = "",
         content = "content",
         rating = RestaurantRatingDto(1, 2, 3, 4, 6),
-        images = mutableListOf()
+        images = mutableListOf(),
+        priceAverage = 10000,
+        priceComment = PriceComment.IS_CHEAP
       )
 
     // when
@@ -39,7 +42,9 @@ internal class CreateRestaurantReviewAppInputTest {
         title = "",
         content = "content",
         rating = RestaurantRatingDto(1, 2, 3, 4, 5),
-        images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+        images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"),
+        priceAverage = 10000,
+        priceComment = PriceComment.IS_CHEAP
       )
 
     // when

@@ -8,6 +8,7 @@ import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingDto
 import com.santaclose.app.util.createAppMountain
 import com.santaclose.app.util.createAppRestaurant
 import com.santaclose.app.util.createAppUser
+import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -49,6 +50,8 @@ constructor(
           "title",
           "content",
           RestaurantRatingDto(1, 2, 3, 4, 5),
+          PriceComment.IS_CHEAP,
+          10000,
           mutableListOf()
         )
 
@@ -74,6 +77,8 @@ constructor(
           "title",
           "content",
           RestaurantRatingDto(1, 2, 3, 4, 5),
+          PriceComment.IS_CHEAP,
+          10000,
           mutableListOf()
         )
 
@@ -100,6 +105,8 @@ constructor(
           "title",
           "content",
           RestaurantRatingDto(1, 2, 3, 4, 5),
+          PriceComment.IS_CHEAP,
+          10000,
           mutableListOf("url")
         )
 
@@ -121,6 +128,8 @@ constructor(
           rating.parkingSpace shouldBe input.rating.parkingSpace.toByte()
           rating.clean shouldBe input.rating.clean.toByte()
           rating.taste shouldBe input.rating.taste.toByte()
+          priceAverage shouldBe input.priceAverage
+          priceComment shouldBe input.priceComment
           images shouldBe input.images
         }
       }
