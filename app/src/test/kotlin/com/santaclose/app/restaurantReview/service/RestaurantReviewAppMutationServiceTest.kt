@@ -52,7 +52,7 @@ constructor(
           RestaurantRatingDto(1, 2, 3, 4, 5),
           PriceComment.IS_CHEAP,
           10000,
-          mutableListOf()
+          mutableListOf(),
         )
 
       // when
@@ -79,7 +79,7 @@ constructor(
           RestaurantRatingDto(1, 2, 3, 4, 5),
           PriceComment.IS_CHEAP,
           10000,
-          mutableListOf()
+          mutableListOf(),
         )
 
       // when
@@ -107,7 +107,7 @@ constructor(
           RestaurantRatingDto(1, 2, 3, 4, 5),
           PriceComment.IS_CHEAP,
           10000,
-          mutableListOf("url")
+          mutableListOf("url"),
         )
 
       // when
@@ -116,22 +116,20 @@ constructor(
       // then
       val restaurantReview = restaurantReviewAppRepository.findAll()
       restaurantReview shouldHaveSize 1
-      restaurantReview.forEach {
-        it.apply {
-          restaurant.id shouldBe input.restaurantId.toLong()
-          mountain.id shouldBe input.mountainId.toLong()
-          appUser.id shouldBe appUser.id
-          title shouldBe input.title
-          content shouldBe input.content
-          rating.mood shouldBe input.rating.mood.toByte()
-          rating.kind shouldBe input.rating.kind.toByte()
-          rating.parkingSpace shouldBe input.rating.parkingSpace.toByte()
-          rating.clean shouldBe input.rating.clean.toByte()
-          rating.taste shouldBe input.rating.taste.toByte()
-          priceAverage shouldBe input.priceAverage
-          priceComment shouldBe input.priceComment
-          images shouldBe input.images
-        }
+      restaurantReview[0].apply {
+        restaurant.id shouldBe input.restaurantId.toLong()
+        mountain.id shouldBe input.mountainId.toLong()
+        appUser.id shouldBe appUser.id
+        title shouldBe input.title
+        content shouldBe input.content
+        rating.mood shouldBe input.rating.mood.toByte()
+        rating.kind shouldBe input.rating.kind.toByte()
+        rating.parkingSpace shouldBe input.rating.parkingSpace.toByte()
+        rating.clean shouldBe input.rating.clean.toByte()
+        rating.taste shouldBe input.rating.taste.toByte()
+        priceAverage shouldBe input.priceAverage
+        priceComment shouldBe input.priceComment
+        images shouldBe input.images
       }
     }
   }
