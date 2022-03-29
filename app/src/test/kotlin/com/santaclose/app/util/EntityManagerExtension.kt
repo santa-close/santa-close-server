@@ -7,8 +7,9 @@ import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.restaurant.Restaurant
 import javax.persistence.EntityManager
 
-fun EntityManager.createAppUser(user: AppUser? = null): AppUser =
-  (user ?: AppUser("name", "email", "socialId", AppUserRole.USER)).also { this.persist(it) }
+fun EntityManager.createAppUser(
+  user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
+): AppUser = user.also { this.persist(it) }
 
 fun EntityManager.createAppRestaurant(
   appUser: AppUser,
