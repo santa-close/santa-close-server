@@ -1,7 +1,7 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldHaveSize
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
 import org.junit.jupiter.api.Test
@@ -29,7 +29,7 @@ internal class CreateRestaurantReviewAppInputTest {
       validator.validate(dto)
 
     // then
-    violations.forEach { it.message shouldBe "1에서 5 사이여야 합니다" }
+    violations shouldHaveSize 1
   }
 
   @Test
@@ -52,6 +52,6 @@ internal class CreateRestaurantReviewAppInputTest {
       validator.validate(dto)
 
     // then
-    violations.forEach { it.message shouldBe "크기가 0에서 10 사이여야 합니다" }
+    violations shouldHaveSize 1
   }
 }
