@@ -40,11 +40,11 @@ constructor(
             |    title: "title"
             |    content: "content",
             |    rating: {
-            |    taste: 5,
-            |    parkingSpace: 5,
-            |    kind: 5,
-            |    clean: 5,
-            |    mood: 5,
+            |        taste: 5,
+            |        parkingSpace: 5,
+            |        kind: 5,
+            |        clean: 5,
+            |        mood: 5,
             |    }
             |    priceComment: IS_EXPENSIVE
             |    priceAverage: 10000
@@ -75,11 +75,11 @@ constructor(
             |    title: "title"
             |    content: "content",
             |    rating: {
-            |    taste: 5,
-            |    parkingSpace: 5,
-            |    kind: 5,
-            |    clean: 5,
-            |    mood: 5,
+            |        taste: 5,
+            |        parkingSpace: 5,
+            |        kind: 5,
+            |        clean: 5,
+            |        mood: 5,
             |    }
             |    priceComment: IS_EXPENSIVE
             |    priceAverage: 10000

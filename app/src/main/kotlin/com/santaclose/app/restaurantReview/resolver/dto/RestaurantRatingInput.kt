@@ -10,13 +10,13 @@ data class RestaurantRatingInput(
   @field:Range(min = 1, max = 5) val clean: Int,
   @field:Range(min = 1, max = 5) val mood: Int,
 ) {
-  fun toEntity() = let {
+  fun toEntity() = run {
     RestaurantRating(
-      it.taste.toByte(),
-      it.parkingSpace.toByte(),
-      it.kind.toByte(),
-      it.clean.toByte(),
-      it.mood.toByte()
+      taste.toByte(),
+      parkingSpace.toByte(),
+      kind.toByte(),
+      clean.toByte(),
+      mood.toByte()
     )
   }
 }

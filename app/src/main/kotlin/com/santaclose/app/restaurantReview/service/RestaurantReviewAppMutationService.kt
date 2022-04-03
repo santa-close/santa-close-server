@@ -6,6 +6,7 @@ import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAp
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import com.santaclose.lib.id.toLong
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 import org.springframework.stereotype.Service
@@ -17,7 +18,7 @@ class RestaurantReviewAppMutationService(
   private val em: EntityManager
 ) {
   fun register(input: CreateRestaurantReviewAppInput, userId: Long) {
-    val isRestaurantExist = restaurantRepository.existsById(input.restaurantId.value.toLong())
+    val isRestaurantExist = restaurantRepository.existsById(input.restaurantId.toLong())
     if (!isRestaurantExist) {
       throw NoResultException("유효하지 않은 restaurantId 입니다.")
     }
@@ -27,9 +28,9 @@ class RestaurantReviewAppMutationService(
         content = input.content,
         rating = input.rating.toEntity(),
         images = input.images.toMutableList(),
-        restaurant = em.getReference(Restaurant::class.java, input.restaurantId.value.toLong()),
+        restaurant = em.getReference(Restaurant::class.java, input.restaurantId.toLong()),
         appUser = em.getReference(AppUser::class.java, userId),
-        priceAverage = 10000,
+        priceAverage = input.priceAverage,
         priceComment = input.priceComment
       )
       .apply { restaurantReviewAppRepository.save(this) }
