@@ -115,11 +115,10 @@ input CreateMountainReviewAppInput {
 input CreateRestaurantReviewAppInput {
   content: String!
   images: [String!]!
-  mountainId: String!
   priceAverage: Int!
   priceComment: PriceComment!
-  rating: RestaurantRatingDtoInput!
-  restaurantId: String!
+  rating: RestaurantRatingInput!
+  restaurantId: ID!
   title: String!
 }
 
@@ -129,7 +128,7 @@ input CreateSampleAppInput {
   status: SampleStatus!
 }
 
-input RestaurantRatingDtoInput {
+input RestaurantRatingInput {
   clean: Int!
   kind: Int!
   mood: Int!

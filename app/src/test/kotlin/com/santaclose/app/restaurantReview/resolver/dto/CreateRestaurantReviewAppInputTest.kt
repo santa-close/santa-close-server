@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
+import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.matchers.collections.shouldHaveSize
 import javax.validation.ConstraintViolation
@@ -14,11 +15,10 @@ internal class CreateRestaurantReviewAppInputTest {
     // given
     val dto =
       CreateRestaurantReviewAppInput(
-        restaurantId = "1",
-        mountainId = "1",
+        restaurantId = ID("1"),
         title = "",
         content = "content",
-        rating = RestaurantRatingDto(1, 2, 3, 4, 6),
+        rating = RestaurantRatingInput(1, 2, 3, 4, 6),
         images = mutableListOf(),
         priceAverage = 10000,
         priceComment = PriceComment.IS_CHEAP
@@ -37,11 +37,10 @@ internal class CreateRestaurantReviewAppInputTest {
     // given
     val dto =
       CreateRestaurantReviewAppInput(
-        restaurantId = "1",
-        mountainId = "1",
+        restaurantId = ID("1"),
         title = "",
         content = "content",
-        rating = RestaurantRatingDto(1, 2, 3, 4, 5),
+        rating = RestaurantRatingInput(1, 2, 3, 4, 5),
         images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"),
         priceAverage = 10000,
         priceComment = PriceComment.IS_CHEAP

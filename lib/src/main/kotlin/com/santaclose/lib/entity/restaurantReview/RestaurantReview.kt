@@ -3,7 +3,6 @@ package com.santaclose.lib.entity.restaurantReview
 import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.appUser.AppUser
-import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import javax.persistence.Convert
@@ -26,6 +25,5 @@ class RestaurantReview(
   @Convert(converter = StringListConverter::class)
   var images: MutableList<String> = mutableListOf(),
   @ManyToOne(fetch = LAZY) @field:NotNull var restaurant: Restaurant,
-  @ManyToOne(fetch = LAZY) @field:NotNull var mountain: Mountain,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
 ) : BaseEntity()

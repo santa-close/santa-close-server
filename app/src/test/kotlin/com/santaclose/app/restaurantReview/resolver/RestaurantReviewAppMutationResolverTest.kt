@@ -12,7 +12,6 @@ import com.santaclose.lib.web.error.GraphqlErrorCode
 import io.mockk.every
 import io.mockk.justRun
 import javax.persistence.NoResultException
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,7 +37,6 @@ constructor(
           """mutation {
             |  createRestaurantReview(input: { 
             |    restaurantId: "1"
-            |    mountainId: "1"
             |    title: "title"
             |    content: "content",
             |    rating: {
@@ -74,7 +72,6 @@ constructor(
           """mutation {
             |  createRestaurantReview(input: { 
             |    restaurantId: "1"
-            |    mountainId: "1"
             |    title: "title"
             |    content: "content",
             |    rating: {
