@@ -47,6 +47,8 @@ type MountainDifficultyCategory {
 type Mutation {
   "산 리뷰 등록하기"
   createMountainReview(input: CreateMountainReviewAppInput!): Boolean! @auth(role : USER)
+  "음식점 리뷰 등록하기"
+  createRestaurantReview(input: CreateRestaurantReviewAppInput!): Boolean! @auth(role : USER)
   "샘플 데이터"
   createSample(input: CreateSampleAppInput!): Boolean! @auth(role : USER)
   "로그인 및 회원가입"
@@ -77,6 +79,12 @@ enum MountainDifficulty {
   NORMAL
 }
 
+enum PriceComment {
+  IS_CHEAP
+  IS_EXPENSIVE
+  IS_NORMAL
+}
+
 enum SampleStatus {
   CLOSE
   OPEN
@@ -104,10 +112,28 @@ input CreateMountainReviewAppInput {
   tree: Int!
 }
 
+input CreateRestaurantReviewAppInput {
+  content: String!
+  images: [String!]!
+  priceAverage: Int!
+  priceComment: PriceComment!
+  rating: RestaurantRatingInput!
+  restaurantId: ID!
+  title: String!
+}
+
 input CreateSampleAppInput {
   name: String!
   price: Int!
   status: SampleStatus!
+}
+
+input RestaurantRatingInput {
+  clean: Int!
+  kind: Int!
+  mood: Int!
+  parkingSpace: Int!
+  taste: Int!
 }
 
 input SampleAppItemInput {
