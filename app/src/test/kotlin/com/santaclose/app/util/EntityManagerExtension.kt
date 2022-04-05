@@ -14,7 +14,14 @@ fun EntityManager.createAppUser(
 fun EntityManager.createAppRestaurant(
   appUser: AppUser,
   restaurant: Restaurant =
-    Restaurant("name", "description", mutableListOf(), appUser, createAppLocation())
+    Restaurant(
+      "name",
+      "description",
+      mutableListOf(),
+      Mountain("mountainName", "mountainDetail", appUser, createAppLocation()),
+      appUser,
+      createAppLocation()
+    )
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createAppMountain(
