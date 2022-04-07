@@ -36,7 +36,10 @@ constructor(
     fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      val location =
+        Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524").also {
+          em.persist(it)
+        }
       Mountain("name", "detail", appUser, location).also { em.persist(it) }
       val input =
         CreateMountainReviewAppInput(
@@ -67,7 +70,10 @@ constructor(
     fun `mountain id가 유효하면 MountainReview를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = Location.createPoint(10.123, 20.345).also { em.persist(it) }
+      val location =
+        Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524").also {
+          em.persist(it)
+        }
       val mountain =
         mountainAppRepository.save(Mountain("name", "detail", appUser, location)).also {
           em.persist(it)

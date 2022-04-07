@@ -13,10 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 @DataJpaTest
 class LocationSaveTest @Autowired constructor(private val em: EntityManager) {
   @Test
-  fun `산 조회 시 좌표도 함께 가여올 수 있다`() {
+  fun `산 조회 시 좌표도 함께 가져올 수 있다`() {
     // given
     val appUser = em.createAppUser()
-    val location = Location.createPoint(10.123, 20.345)
+    val location = Location(Location.createPoint(10.123, 20.345), "서울 중구 세종대로 110 서울특별시청", "04524")
     var mountain = Mountain("name", "detail", appUser, location)
     em.persist(location)
     em.persist(mountain)
