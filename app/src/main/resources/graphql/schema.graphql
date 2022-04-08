@@ -102,7 +102,7 @@ input CreateMountainReviewAppInput {
   content: String!
   difficulty: MountainDifficulty!
   images: [String!]!
-  mountainId: String!
+  mountainId: ID!
   parking: Int!
   scenery: Int!
   title: String!
