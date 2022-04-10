@@ -1,5 +1,6 @@
 package com.santaclose.app.mountainReview.service
 
+import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
@@ -7,6 +8,7 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
+import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -40,7 +42,19 @@ constructor(
         }
       Mountain("name", "detail", appUser, location).also { em.persist(it) }
       val input =
-        CreateMountainReviewAppInput("-1", "title", 1, 1, 1, 1, 1, 1, "content", emptyList(), EASY)
+        CreateMountainReviewAppInput(
+          ID("-1"),
+          "title",
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "content",
+          emptyList(),
+          EASY
+        )
 
       // when
       val exception =
@@ -66,7 +80,7 @@ constructor(
         }
       val input =
         CreateMountainReviewAppInput(
-          mountain.id.toString(),
+          mountain.id.toID(),
           "title",
           1,
           2,

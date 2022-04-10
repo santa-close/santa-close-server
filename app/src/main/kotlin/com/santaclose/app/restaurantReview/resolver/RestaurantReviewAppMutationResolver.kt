@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated
 class RestaurantReviewAppMutationResolver(
   private val restaurantReviewAppMutationService: RestaurantReviewAppMutationService
 ) : Mutation {
-  val logger = logger()
+  private val logger = logger()
 
   @Auth(AppUserRole.USER)
   @GraphQLDescription("음식점 리뷰 등록하기")

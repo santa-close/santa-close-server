@@ -6,6 +6,7 @@ import aws.sdk.kotlin.runtime.endpoint.AwsEndpoint
 import aws.sdk.kotlin.runtime.endpoint.StaticEndpointResolver
 import aws.sdk.kotlin.services.s3.S3Client
 import aws.sdk.kotlin.services.s3.model.GetObjectRequest
+import aws.smithy.kotlin.runtime.content.ByteStream
 import io.kotest.assertions.throwables.shouldNotThrow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterAll
@@ -59,9 +60,9 @@ internal class S3UploaderTest {
     fun `파일 업로드를 수행한다`() {
       runBlocking {
         // given
-        val multipartFile = MockMultipartFile("fileName", "file content".toByteArray())
+        val file = MockMultipartFile("fileName", "file content".toByteArray())
         // when
-        s3Uploader.upload("test", "path", multipartFile)
+        s3Uploader.upload("test", "path", ByteStream.fromBytes(file.bytes), file.contentType ?: "")
 
         // then
         shouldNotThrow<Throwable> {
