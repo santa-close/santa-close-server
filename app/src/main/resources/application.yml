@@ -26,7 +26,6 @@ kakao:
   redirectUri: "http://localhost:8080/oauth"
 
 s3:
-  endpoint: "http://localhost"
   region: "ap-northeast-2"
   credentialsAccessKey: "accesskey"
   credentialsSecretKey: "secretKey"

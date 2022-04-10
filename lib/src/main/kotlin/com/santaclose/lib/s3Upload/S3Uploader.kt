@@ -10,11 +10,11 @@ import aws.smithy.kotlin.runtime.content.ByteStream
 
 class S3Uploader private constructor(private val s3Client: S3Client) {
   companion object {
-    fun create(endpoint: String, awsRegion: String, accessKey: String, secretKey: String) =
+    fun create(endpoint: String?, awsRegion: String, accessKey: String, secretKey: String) =
       S3Uploader(
         S3Client {
           region = awsRegion
-          endpointResolver = StaticEndpointResolver(AwsEndpoint(url = endpoint))
+          endpointResolver = endpoint?.let { StaticEndpointResolver(AwsEndpoint(url = it)) }
           credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
         }
       )
