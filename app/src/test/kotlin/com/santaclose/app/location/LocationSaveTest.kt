@@ -1,6 +1,7 @@
 package com.santaclose.app.location
 
 import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import io.kotest.matchers.nulls.shouldNotBeNull

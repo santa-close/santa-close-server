@@ -1,14 +1,14 @@
 package com.santaclose.app.mountainReview.repository
 
 import com.santaclose.app.util.createAppUser
-import com.santaclose.lib.entity.location.Location
-import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 import javax.persistence.EntityManager
+import javax.persistence.PersistenceException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -76,7 +76,7 @@ constructor(
       mountainReview.mountain.id = notExistId
 
       // then
-      shouldThrow<IllegalStateException> {
+      shouldThrow<PersistenceException> {
         em.persist(mountainReview)
         em.flush()
       }

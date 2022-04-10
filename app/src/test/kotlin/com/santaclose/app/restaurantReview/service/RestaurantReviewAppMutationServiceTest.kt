@@ -5,8 +5,8 @@ import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
 import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
 import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingInput
-import com.santaclose.app.util.createAppRestaurant
 import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
@@ -60,7 +60,7 @@ constructor(
     fun `RestaurantReview를 저장한다`() {
       // given
       val appUser = em.createAppUser()
-      val restaurant = em.createAppRestaurant(appUser)
+      val restaurant = em.createRestaurant(appUser)
       val input =
         CreateRestaurantReviewAppInput(
           ID(restaurant.id.toString()),

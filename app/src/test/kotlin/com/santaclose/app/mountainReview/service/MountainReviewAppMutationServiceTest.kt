@@ -5,8 +5,7 @@ import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.app.util.createAppUser
-import com.santaclose.lib.entity.location.Location
-import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
