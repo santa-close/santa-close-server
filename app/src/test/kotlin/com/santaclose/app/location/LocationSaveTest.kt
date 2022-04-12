@@ -16,7 +16,7 @@ class LocationSaveTest @Autowired constructor(private val em: EntityManager) {
   fun `산 조회 시 좌표도 함께 가져올 수 있다`() {
     // given
     val appUser = em.createAppUser()
-    val location = Location(Location.createPoint(10.123, 20.345), "서울 중구 세종대로 110 서울특별시청", "04524")
+    val location = Location.create(10.123, 20.345, "서울 중구 세종대로 110 서울특별시청", "04524")
     var mountain = Mountain("name", "detail", appUser, location)
     em.persist(location)
     em.persist(mountain)

@@ -27,7 +27,7 @@ constructor(
     fun `정상적으로 산 리뷰를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524")
+      val location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
       val mountain = Mountain("name", "detail", appUser, location)
       em.persist(mountain)
 
@@ -54,7 +54,7 @@ constructor(
     fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
       // given
       val appUser = em.createAppUser()
-      val location = Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524")
+      val location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
       val mountain = Mountain("name", "detail", appUser, location)
       em.persist(mountain)
 
