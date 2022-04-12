@@ -32,5 +32,5 @@ fun EntityManager.createAppMountain(
 ) = mountain.also { this.persist(it) }
 
 fun EntityManager.createAppLocation(
-  location: Location = Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524")
+  location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
 ) = location.also { this.persist(it) }

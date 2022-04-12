@@ -13,7 +13,10 @@ class Location(@field:NotNull var point: Point, var address: String, var postcod
   companion object {
     private val factory = GeometryFactory()
 
-    fun createPoint(longitude: Double, latitude: Double): Point =
+    private fun createPoint(longitude: Double, latitude: Double): Point =
       factory.createPoint(Coordinate(longitude, latitude))
+
+    fun create(longitude: Double, latitude: Double, address: String, postcode: String): Location =
+      Location(createPoint(longitude, latitude), address, postcode)
   }
 }

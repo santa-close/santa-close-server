@@ -37,9 +37,7 @@ constructor(
       // given
       val appUser = em.createAppUser()
       val location =
-        Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524").also {
-          em.persist(it)
-        }
+        Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524").also { em.persist(it) }
       Mountain("name", "detail", appUser, location).also { em.persist(it) }
       val input =
         CreateMountainReviewAppInput(
@@ -71,9 +69,7 @@ constructor(
       // given
       val appUser = em.createAppUser()
       val location =
-        Location(Location.createPoint(10.0, 20.0), "서울 중구 세종대로 110 서울특별시청", "04524").also {
-          em.persist(it)
-        }
+        Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524").also { em.persist(it) }
       val mountain =
         mountainAppRepository.save(Mountain("name", "detail", appUser, location)).also {
           em.persist(it)
