@@ -17,5 +17,5 @@ class Mountain(
   @Enumerated(EnumType.STRING) @Column(length = 20) var management: MountainManagement,
   @field:NotNull var altitude: Int,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
-  @OneToOne(fetch = LAZY) var location: Location,
+  @OneToOne(fetch = LAZY, cascade = [CascadeType.PERSIST]) var location: Location,
 ) : BaseEntity()

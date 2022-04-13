@@ -5,12 +5,14 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import javax.persistence.EntityManager
+import org.springframework.stereotype.Service
 
+@Service
 class MountainAppMutationService(
   private val em: EntityManager,
 ) {
 
-  fun create(input: CreateMountainAppInput, userId: Long) {
+  fun register(input: CreateMountainAppInput, userId: Long) {
 
     val mountain =
       Mountain(
