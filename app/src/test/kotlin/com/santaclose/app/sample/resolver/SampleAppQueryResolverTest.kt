@@ -6,8 +6,8 @@ import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import com.santaclose.app.sample.service.SampleAppQueryService
 import com.santaclose.app.util.AppContextMocker
-import com.santaclose.app.util.QueryInput
-import com.santaclose.app.util.query
+import com.santaclose.app.util.GraphqlBody
+import com.santaclose.app.util.gqlRequest
 import com.santaclose.app.util.withError
 import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
@@ -36,7 +36,7 @@ constructor(
     fun `권한없는 유저가 요청 시 에러가 발생한다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """query {
             |  sample(input: {price: 123}) {
             |    name
@@ -50,7 +50,7 @@ constructor(
       withAnonymousUser()
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withError(GraphqlErrorCode.UNAUTHORIZED, "접근 권한이 없습니다")
@@ -60,7 +60,7 @@ constructor(
     fun `데이터가 없는 경우 에러가 발생한다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """query {
             |  sample(input: {price: 123}) {
             |    name
@@ -74,7 +74,7 @@ constructor(
       withMockUser(AppUserRole.USER)
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
@@ -84,7 +84,7 @@ constructor(
     fun `데이터가 있는 경우 sample 을 가져온다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """query {
             |  sample(input: {price: 123}) {
             |    name
@@ -99,7 +99,7 @@ constructor(
       withMockUser(AppUserRole.USER)
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withSuccess("sample") {

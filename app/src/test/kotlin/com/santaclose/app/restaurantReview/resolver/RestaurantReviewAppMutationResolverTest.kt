@@ -3,8 +3,8 @@ package com.santaclose.app.restaurantReview.resolver
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.restaurantReview.service.RestaurantReviewAppMutationService
 import com.santaclose.app.util.AppContextMocker
-import com.santaclose.app.util.QueryInput
-import com.santaclose.app.util.query
+import com.santaclose.app.util.GraphqlBody
+import com.santaclose.app.util.gqlRequest
 import com.santaclose.app.util.withError
 import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
@@ -33,7 +33,7 @@ constructor(
     fun `에리가 발생하면 에러를 반환한다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """mutation {
             |  createRestaurantReview(input: { 
             |    restaurantId: "1"
@@ -58,7 +58,7 @@ constructor(
       withMockUser(AppUserRole.USER)
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withError(GraphqlErrorCode.NOT_FOUND, "no result")
@@ -68,7 +68,7 @@ constructor(
     fun `정상적으로 생성된다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """mutation {
             |  createRestaurantReview(input: { 
             |    restaurantId: "1"
@@ -92,7 +92,7 @@ constructor(
       withMockUser(AppUserRole.USER)
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withSuccess("createRestaurantReview")

@@ -6,8 +6,8 @@ import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.context.AppSession
 import com.santaclose.app.auth.service.AuthAppService
 import com.santaclose.app.util.AppContextMocker
-import com.santaclose.app.util.QueryInput
-import com.santaclose.app.util.query
+import com.santaclose.app.util.GraphqlBody
+import com.santaclose.app.util.gqlRequest
 import com.santaclose.app.util.withError
 import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
@@ -36,7 +36,7 @@ constructor(
       // given
       val code = "code"
       val query =
-        QueryInput(
+        GraphqlBody(
           """mutation {
             |  signIn(input: {code: "$code", type: KAKAO}) {
             |    accessToken
@@ -47,7 +47,7 @@ constructor(
       coEvery { authAppService.signIn(code) } returns Exception("error").left()
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withError(GraphqlErrorCode.SERVER_ERROR, "error")
@@ -58,7 +58,7 @@ constructor(
       // given
       val code = "code"
       val query =
-        QueryInput(
+        GraphqlBody(
           """mutation {
             |  signIn(input: {code: "$code", type: KAKAO}) {
             |    accessToken
@@ -69,7 +69,7 @@ constructor(
       coEvery { authAppService.signIn(code) } returns AppSession(123, AppUserRole.USER).right()
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withSuccess("signIn") {
