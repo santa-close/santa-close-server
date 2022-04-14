@@ -4,7 +4,6 @@ import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
-import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import javax.persistence.*
 import javax.persistence.FetchType.LAZY
@@ -17,7 +16,6 @@ class Restaurant(
   @Convert(converter = StringListConverter::class)
   var images: MutableList<String> = mutableListOf(),
   @Enumerated(EnumType.STRING) @field:NotNull var foodType: FoodType,
-  @OneToOne(fetch = LAZY) @JoinColumn(name = "mountain_id") var mountain: Mountain,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
   @OneToOne(fetch = LAZY) var location: Location,
 ) : BaseEntity()
