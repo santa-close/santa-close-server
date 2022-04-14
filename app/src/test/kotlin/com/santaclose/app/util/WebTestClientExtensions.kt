@@ -14,14 +14,14 @@ const val DATA_JSON_PATH = "$.data"
 const val ERRORS_JSON_PATH = "$.errors"
 const val EXTENSIONS_JSON_PATH = "$.extensions"
 
-@JvmInline value class QueryInput(@Language("GraphQL") val query: String)
+@JvmInline value class GraphqlBody(@Language("GraphQL") val body: String)
 
-fun WebTestClient.query(queryInput: QueryInput): WebTestClient.ResponseSpec =
+fun WebTestClient.gqlRequest(queryInput: GraphqlBody): WebTestClient.ResponseSpec =
   this.post()
     .uri(GRAPHQL_ENDPOINT)
     .accept(APPLICATION_JSON)
     .contentType(GRAPHQL_MEDIA_TYPE)
-    .bodyValue(queryInput.query)
+    .bodyValue(queryInput.body)
     .exchange()
     .expectStatus()
     .isOk
