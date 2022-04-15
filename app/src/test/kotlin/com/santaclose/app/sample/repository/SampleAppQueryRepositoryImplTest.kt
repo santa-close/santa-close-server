@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
+internal class SampleAppQueryRepositoryImplTest : TestQueryFactory() {
   private val sampleAppQueryRepository by lazy { SampleAppQueryRepositoryImpl(queryFactory) }
 
   @Nested
