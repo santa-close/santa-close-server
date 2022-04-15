@@ -6,11 +6,11 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.mountain.type.MountainManagement
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import javax.persistence.EntityManager
 
 @DataJpaTest
 internal class MountainAppMutationServiceTest
