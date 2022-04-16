@@ -2,9 +2,9 @@ package com.santaclose.app.mountain.service
 
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
-import com.santaclose.app.util.TestQueryFactory
 import com.santaclose.app.util.createAppMountain
 import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.web.toID
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -17,10 +17,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class MountainAppQueryServiceTest
 @Autowired
 constructor(
-  private val mountainReviewAppRepository: MountainReviewAppRepository,
-  private val entityManager: EntityManager,
-) : TestQueryFactory() {
-  private val mountainAppQueryRepository by lazy { MountainAppQueryRepositoryImpl(queryFactory) }
+  mountainReviewAppRepository: MountainReviewAppRepository,
+  private val em: EntityManager,
+) {
+  private val mountainAppQueryRepository = MountainAppQueryRepositoryImpl(em.createQueryFactory())
   private val mountainAppQueryService =
     MountainAppQueryService(mountainAppQueryRepository, mountainReviewAppRepository)
 
@@ -29,15 +29,15 @@ constructor(
     @Test
     fun `test`() {
       // given
-      val user = entityManager.createAppUser()
-      val mountain = entityManager.createAppMountain(user)
+      val user = em.createAppUser()
+      val mountain = em.createAppMountain(user)
 
       // when
       // mountainAppQueryRepository.findOneWithLocation(mountain.id.toLong())
       mountainAppQueryService.findDetail(mountain.id.toID())
 
       // then
-      mountain.apply { id shouldBe 1L }
+      mountain.apply { id shouldBe mountain.id }
     }
   }
 }
