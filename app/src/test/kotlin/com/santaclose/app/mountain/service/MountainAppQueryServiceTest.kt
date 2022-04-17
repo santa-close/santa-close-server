@@ -1,13 +1,17 @@
 package com.santaclose.app.mountain.service
 
+import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
-import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
+import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
 import com.santaclose.app.util.createAppMountain
+import com.santaclose.app.util.createAppMountainReview
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.web.toID
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
+import javax.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,27 +21,43 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class MountainAppQueryServiceTest
 @Autowired
 constructor(
-  mountainReviewAppRepository: MountainReviewAppRepository,
   private val em: EntityManager,
 ) {
   private val mountainAppQueryRepository = MountainAppQueryRepositoryImpl(em.createQueryFactory())
+  private val mountainReviewAppQueryRepository =
+    MountainReviewAppQueryRepositoryImpl(em.createQueryFactory())
   private val mountainAppQueryService =
-    MountainAppQueryService(mountainAppQueryRepository, mountainReviewAppRepository)
+    MountainAppQueryService(mountainAppQueryRepository, mountainReviewAppQueryRepository)
 
   @Nested
   inner class FindDetail {
     @Test
-    fun `test`() {
+    fun `산 상세 정보를 조회하여 반환한다`() {
       // given
       val user = em.createAppUser()
       val mountain = em.createAppMountain(user)
+      em.createAppMountainReview(user, mountain)
 
       // when
-      // mountainAppQueryRepository.findOneWithLocation(mountain.id.toLong())
-      mountainAppQueryService.findDetail(mountain.id.toID())
+      val result = mountainAppQueryService.findDetail(mountain.id.toID())
 
       // then
-      mountain.apply { id shouldBe mountain.id }
+      println(result)
+      result.apply {
+        name shouldBe mountain.name
+        address shouldBe mountain.location.address
+      }
+    }
+
+    @Test
+    fun `mountainId가 유효하지 않으면 NoResultException 이 발생한다`() {
+      // given
+      // when
+      val exception =
+        shouldThrow<NoResultException> { mountainAppQueryService.findDetail(ID("-1")) }
+
+      // then
+      exception.message shouldBe "No entity found for query"
     }
   }
 }

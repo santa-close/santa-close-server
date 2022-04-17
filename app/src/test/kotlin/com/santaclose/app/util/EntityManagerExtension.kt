@@ -7,7 +7,9 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
-import com.santaclose.lib.entity.mountain.type.MountainManagement
+import com.santaclose.lib.entity.mountainReview.MountainRating
+import com.santaclose.lib.entity.mountainReview.MountainReview
+import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import javax.persistence.EntityManager
@@ -38,3 +40,18 @@ fun EntityManager.createMountain(
 fun EntityManager.createLocation(
   location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
 ) = location.also { this.persist(it) }
+
+fun EntityManager.createAppMountainReview(
+  appUser: AppUser,
+  mountain: Mountain,
+  mountainReview: MountainReview =
+    MountainReview(
+      "title",
+      MountainRating(1, 2, 3, 4, 5, 5),
+      "content",
+      mutableListOf(),
+      MountainDifficulty.HARD,
+      mountain,
+      appUser
+    )
+) = mountainReview.also { this.persist(it) }

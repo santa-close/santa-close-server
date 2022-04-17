@@ -1,13 +1,18 @@
 package com.santaclose.app.mountainReview.repository
 
+import aws.smithy.kotlin.runtime.util.length
+import com.santaclose.app.util.createAppMountain
+import com.santaclose.app.util.createAppMountainReview
 import com.santaclose.app.util.createAppUser
-import com.santaclose.app.util.createLocation
-import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createQueryFactory
+import com.santaclose.lib.entity.location.Location
+import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceException
 import org.junit.jupiter.api.Nested
@@ -22,6 +27,9 @@ constructor(
   private val mountainReviewAppRepository: MountainReviewAppRepository,
   private val em: EntityManager,
 ) {
+  val mountainReviewAppQueryRepository =
+    MountainReviewAppQueryRepositoryImpl(em.createQueryFactory())
+
   @Nested
   inner class Create {
     @Test
@@ -81,6 +89,45 @@ constructor(
         em.persist(mountainReview)
         em.flush()
       }
+    }
+  }
+
+  @Nested
+  inner class FindByMountainId {
+    @Test
+    fun `mountainId가 일치하는 리뷰를 반환한다`() {
+      // given
+      val count = 3
+      val createdAppUser = em.createAppUser()
+      val mountain = em.createAppMountain(createdAppUser)
+      val otherMountain = em.createAppMountain(createdAppUser)
+      repeat(count) {
+        em.createAppMountainReview(createdAppUser, mountain)
+        em.createAppMountainReview(createdAppUser, otherMountain)
+      }
+
+      // when
+      val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 10)
+
+      // then
+      mountainReviews.length shouldBe count
+      mountainReviews.map { it.appUser.id shouldBe createdAppUser.id }
+    }
+
+    @Test
+    fun `mountainId가 일치하는 limit 수 만큼 리뷰를 반환한다`() {
+      // given
+      val limit = 3
+      val createCounts = 10
+      val appUser = em.createAppUser()
+      val mountain = em.createAppMountain(appUser)
+      repeat(createCounts) { em.createAppMountainReview(appUser, mountain) }
+
+      // when
+      val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, limit)
+
+      // then
+      mountainReviews.length shouldBe limit
     }
   }
 }
