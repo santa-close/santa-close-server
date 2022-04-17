@@ -3,20 +3,28 @@ graphql:
     - "com.santaclose.app"
 
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: test
+    password: test
+
   jpa:
-    database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         check_nullability: true
         use_sql_comments: true
         format_sql: true
-        show_sql: false
+        show_sql: true
 
 logging:
   level:
     org:
       hibernate:
-        type: off
+        type: debug
 
 jwt:
   secret: "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
