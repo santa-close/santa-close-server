@@ -18,13 +18,13 @@ spring:
         check_nullability: true
         use_sql_comments: true
         format_sql: true
-        show_sql: true
+        show_sql: false
 
 logging:
   level:
     org:
       hibernate:
-        type: debug
+        type: off
 
 jwt:
   secret: "PdSgVkYp2s5v8y/B?E(H+MbQeThWmZq4"
