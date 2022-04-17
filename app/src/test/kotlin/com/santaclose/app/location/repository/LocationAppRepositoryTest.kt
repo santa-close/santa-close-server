@@ -2,6 +2,7 @@ package com.santaclose.app.location.repository
 
 import com.santaclose.app.util.createAppLocation
 import com.santaclose.lib.entity.location.Location
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Test
@@ -42,6 +43,8 @@ constructor(
     val result = locationAppRepository.findIdsByArea(rectangle)
 
     // then
-    result shouldBe listOf(location.id)
+    result shouldHaveSize 1
+    result.first().id shouldBe location.id
+    result.first().point shouldBe location.point
   }
 }
