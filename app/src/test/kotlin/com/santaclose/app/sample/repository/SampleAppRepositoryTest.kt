@@ -1,5 +1,6 @@
 package com.santaclose.app.sample.repository
 
+import com.santaclose.app.sample.repository.dto.SampleNamePriceDto
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.matchers.shouldBe
@@ -27,6 +28,22 @@ constructor(
 
       // then
       result shouldBe sample
+    }
+  }
+
+  @Nested
+  inner class FindByIdIn {
+    @Test
+    fun `id 에 해당하는 데이터를 dto 에 담는다`() {
+      // given
+      val sample = Sample(name = "name", price = 123, status = SampleStatus.CLOSE)
+      sampleAppRepository.save(sample)
+
+      // when
+      val result = sampleAppRepository.findByIdIn(listOf(sample.id))
+
+      // then
+      result shouldBe listOf(SampleNamePriceDto(sample.name, sample.price))
     }
   }
 }
