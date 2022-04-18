@@ -7,6 +7,8 @@ import com.santaclose.app.location.resolver.dto.MountainAppLocation
 import com.santaclose.app.location.resolver.dto.RestaurantAppLocation
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,13 +21,17 @@ class LocationAppQueryService(
     val locations = this.locationAppRepository.findIdsByArea(input.toPolygon())
     val locationIds = locations.map { it.id }
 
-    val mountains = this.mountainAppRepository.findByIdIn(locationIds)
-    val restaurants = this.restaurantAppRepository.findByIdIn(locationIds)
+    return runBlocking {
+      val service = this@LocationAppQueryService
+      val mountains = async { service.mountainAppRepository.findByIdIn(locationIds) }
+      val restaurants = async { service.restaurantAppRepository.findByIdIn(locationIds) }
 
-    val findPoint = { id: Long ->
-      locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
+      val findPoint = { id: Long ->
+        locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
+      }
+
+      mountains.await().map { MountainAppLocation(it.id, it.name, findPoint(it.id)) } +
+        restaurants.await().map { RestaurantAppLocation(it.id, it.name, findPoint(it.id)) }
     }
-    return mountains.map { MountainAppLocation(it.id, it.name, findPoint(it.id)) } +
-      restaurants.map { RestaurantAppLocation(it.id, it.name, findPoint(it.id)) }
   }
 }
