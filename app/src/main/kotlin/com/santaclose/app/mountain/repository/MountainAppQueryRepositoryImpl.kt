@@ -1,6 +1,7 @@
 package com.santaclose.app.mountain.repository
 
-import com.linecorp.kotlinjdsl.querydsl.from.join
+import com.linecorp.kotlinjdsl.querydsl.expression.col
+import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.santaclose.lib.entity.mountain.Mountain
@@ -16,6 +17,7 @@ class MountainAppQueryRepositoryImpl(
     springDataQueryFactory.singleQuery {
       select(entity(Mountain::class))
       from(Mountain::class)
-      join(Mountain::location, JoinType.INNER)
+      fetch(Mountain::location, JoinType.INNER)
+      where(col(Mountain::id).equal(id))
     }
 }

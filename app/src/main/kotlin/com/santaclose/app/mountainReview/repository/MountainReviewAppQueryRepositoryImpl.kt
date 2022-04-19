@@ -22,7 +22,7 @@ class MountainReviewAppQueryRepositoryImpl(
       from(mountainReview)
       join(MountainReview::mountain, JoinType.INNER)
       where(col(Mountain::id).equal(mountainId))
-      // order by 추가 예정.. 예제를 못찾는중 ㅠ_ㅠ
+      orderBy(col(Mountain::id).desc())
       limit(limit)
     }
 }
