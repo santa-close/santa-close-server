@@ -4,6 +4,7 @@ import com.linecorp.kotlinjdsl.query.spec.expression.EntitySpec
 import com.linecorp.kotlinjdsl.querydsl.expression.avg
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.count
+import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.querydsl.from.join
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
@@ -25,7 +26,7 @@ class MountainReviewAppQueryRepositoryImpl(
       val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
       select(mountainReview)
       from(mountainReview)
-      join(MountainReview::mountain, JoinType.INNER)
+      fetch(MountainReview::mountain, JoinType.INNER)
       where(col(Mountain::id).equal(mountainId))
       orderBy(col(Mountain::id).desc())
       limit(limit)
