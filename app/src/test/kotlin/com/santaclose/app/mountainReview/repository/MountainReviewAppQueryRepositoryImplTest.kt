@@ -30,7 +30,8 @@ constructor(
       // given
       val appUser = em.createAppUser()
       val mountain = em.createAppMountain(appUser)
-      repeat(5) {
+      val count = 5
+      repeat(count) {
         em.createAppMountainReview(
           appUser,
           mountain,
@@ -58,6 +59,7 @@ constructor(
         toilet shouldBe 5
         traffic shouldBe 1
         average shouldBe 16.0 / 6
+        totalCount shouldBe count
       }
     }
   }

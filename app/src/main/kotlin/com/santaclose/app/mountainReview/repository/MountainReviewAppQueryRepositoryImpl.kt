@@ -3,6 +3,7 @@ package com.santaclose.app.mountainReview.repository
 import com.linecorp.kotlinjdsl.query.spec.expression.EntitySpec
 import com.linecorp.kotlinjdsl.querydsl.expression.avg
 import com.linecorp.kotlinjdsl.querydsl.expression.col
+import com.linecorp.kotlinjdsl.querydsl.expression.count
 import com.linecorp.kotlinjdsl.querydsl.from.join
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
@@ -41,6 +42,7 @@ class MountainReviewAppQueryRepositoryImpl(
           avg(MountainRating::parking),
           avg(MountainRating::toilet),
           avg(MountainRating::traffic),
+          count(col(MountainReview::id)),
         )
         associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
         from(mountainReview)

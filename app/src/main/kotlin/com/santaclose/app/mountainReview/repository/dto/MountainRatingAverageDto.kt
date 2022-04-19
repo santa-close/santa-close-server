@@ -7,6 +7,7 @@ data class MountainRatingAverageDto(
   val parking: Double,
   val toilet: Double,
   val traffic: Double,
+  val totalCount: Long
 ) {
   val average: Double
     get() = (scenery + tree + trail + parking + toilet + traffic) / 6
