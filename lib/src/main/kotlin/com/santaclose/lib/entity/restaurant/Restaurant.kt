@@ -17,5 +17,5 @@ class Restaurant(
   var images: MutableList<String> = mutableListOf(),
   @Enumerated(EnumType.STRING) @field:NotNull var foodType: FoodType,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
-  @OneToOne(fetch = LAZY) var location: Location,
+  @OneToOne(fetch = LAZY) @field:NotNull var location: Location,
 ) : BaseEntity()
