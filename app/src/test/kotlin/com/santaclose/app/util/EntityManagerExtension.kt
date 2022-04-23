@@ -16,7 +16,7 @@ fun EntityManager.createAppUser(
 fun EntityManager.createRestaurant(
   appUser: AppUser,
   restaurant: Restaurant =
-    Restaurant("name", "description", mutableListOf(), FoodType.ASIA, appUser, createAppLocation())
+    Restaurant("name", "description", mutableListOf(), FoodType.ASIA, appUser, createLocation())
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createMountain(
@@ -26,6 +26,6 @@ fun EntityManager.createMountain(
     Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
 ) = mountain.also { this.persist(it) }
 
-fun EntityManager.createAppLocation(
+fun EntityManager.createLocation(
   location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
 ) = location.also { this.persist(it) }

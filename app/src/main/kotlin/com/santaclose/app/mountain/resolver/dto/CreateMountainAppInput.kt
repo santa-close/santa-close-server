@@ -13,4 +13,6 @@ data class CreateMountainAppInput(
   @field:Min(1) val altitude: Int,
   @field:Range(min = -180, max = 180) val longitude: Float,
   @field:Range(min = -90, max = 90) val latitude: Float,
+  @field:NotBlank val address: String,
+  @field:NotBlank val postcode: String
 )

@@ -1,10 +1,10 @@
-package com.santaclose.app.mountain.resolver.dto
+package com.santaclose.app.mountain.resolver
 
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.mountain.service.MountainAppMutationService
 import com.santaclose.app.util.AppContextMocker
-import com.santaclose.app.util.QueryInput
-import com.santaclose.app.util.query
+import com.santaclose.app.util.GraphqlBody
+import com.santaclose.app.util.gqlRequest
 import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import io.mockk.justRun
@@ -29,7 +29,7 @@ constructor(
     fun `유저가 산을 등록한다`() {
       // given
       val query =
-        QueryInput(
+        GraphqlBody(
           """mutation {
             | registerMountain(input: { 
             |    name: "name"
@@ -38,6 +38,8 @@ constructor(
             |    altitude: 100 
             |    longitude: 100 
             |    latitude: 50 
+            |    address : "address"
+            |    postcode : "postcode"
             |  })
             |}
             """.trimMargin()
@@ -46,7 +48,7 @@ constructor(
       justRun { mountainAppMutationService.register(any(), session.id) }
 
       // when
-      val response = webTestClient.query(query)
+      val response = webTestClient.gqlRequest(query)
 
       // then
       response.withSuccess("registerMountain") {}

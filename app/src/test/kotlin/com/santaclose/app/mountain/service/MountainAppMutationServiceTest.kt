@@ -34,7 +34,9 @@ constructor(
           management = MountainManagement.MUNICIPAL,
           altitude = 100,
           longitude = 100F,
-          latitude = 100F
+          latitude = 100F,
+          address = "address",
+          postcode = "postcode"
         )
 
       // when

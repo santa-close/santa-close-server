@@ -108,12 +108,14 @@ enum SignInType {
 scalar DateTime
 
 input CreateMountainAppInput {
+  address: String!
   altitude: Int!
   images: [String!]!
   latitude: Float!
   longitude: Float!
   management: MountainManagement!
   name: String!
+  postcode: String!
 }
 
 input CreateMountainReviewAppInput {

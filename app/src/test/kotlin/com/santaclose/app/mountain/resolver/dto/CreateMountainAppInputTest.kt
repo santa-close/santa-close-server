@@ -20,6 +20,8 @@ internal class CreateMountainAppInputTest {
         altitude = 1,
         longitude = 180f,
         latitude = 90f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
@@ -41,6 +43,8 @@ internal class CreateMountainAppInputTest {
         altitude = 1,
         longitude = 180f,
         latitude = 90f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
@@ -62,6 +66,8 @@ internal class CreateMountainAppInputTest {
         altitude = 0,
         longitude = 180f,
         latitude = 90f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
@@ -83,6 +89,8 @@ internal class CreateMountainAppInputTest {
         altitude = 1,
         longitude = -181f,
         latitude = -90f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
@@ -104,6 +112,8 @@ internal class CreateMountainAppInputTest {
         altitude = 1,
         longitude = -180f,
         latitude = -91f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
@@ -125,6 +135,8 @@ internal class CreateMountainAppInputTest {
         altitude = 1,
         longitude = 180f,
         latitude = 90f,
+        address = "address",
+        postcode = "postcode"
       )
 
     // when
