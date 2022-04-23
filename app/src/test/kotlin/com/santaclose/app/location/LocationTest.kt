@@ -10,9 +10,11 @@ import org.locationtech.jts.geom.GeometryFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.context.ActiveProfiles
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("mysql")
 class LocationTest @Autowired constructor(private val em: EntityManager) {
   @Test
   fun `주어진 영역 안의 location 을 가져온다`() {

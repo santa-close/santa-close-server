@@ -4,9 +4,8 @@ import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
+import com.santaclose.app.util.createAppMountain
 import com.santaclose.app.util.createAppUser
-import com.santaclose.app.util.createLocation
-import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
@@ -36,8 +35,6 @@ constructor(
     fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createLocation()
-      em.createMountain(appUser, location)
       val input =
         CreateMountainReviewAppInput(
           ID("-1"),
@@ -67,8 +64,7 @@ constructor(
     fun `mountain id가 유효하면 MountainReview를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createLocation()
-      val mountain = em.createMountain(appUser, location)
+      val mountain = em.createAppMountain(appUser)
       val input =
         CreateMountainReviewAppInput(
           mountain.id.toID(),
