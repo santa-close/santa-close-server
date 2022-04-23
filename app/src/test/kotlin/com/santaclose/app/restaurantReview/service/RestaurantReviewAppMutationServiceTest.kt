@@ -34,7 +34,7 @@ constructor(
     @Test
     fun `restaurantId가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
-      val appUser = em.createAppUser()
+      val appUser = em.createUser()
       val input =
         CreateRestaurantReviewAppInput(
           restaurantId = ID("-1"),

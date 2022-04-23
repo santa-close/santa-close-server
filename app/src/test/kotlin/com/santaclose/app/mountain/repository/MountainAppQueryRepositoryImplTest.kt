@@ -1,9 +1,9 @@
 package com.santaclose.app.mountain.repository
 
-import com.santaclose.app.util.createAppLocation
-import com.santaclose.app.util.createAppMountain
-import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createLocation
+import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import io.kotest.assertions.throwables.shouldThrow
@@ -28,10 +28,9 @@ constructor(
     @Test
     fun `mountainId 값으로 mountain 과 location 을 조회한다`() {
       // given
-      val appUser = em.createAppUser()
-      val savedLocation = em.createAppLocation(Location.create(1.0, 2.0, "address", "postcode"))
-      val mountain =
-        em.createAppMountain(appUser, Mountain("name", "detail", appUser, savedLocation))
+      val appUser = em.createUser()
+      val savedLocation = em.createLocation(Location.create(1.0, 2.0, "address", "postcode"))
+      val mountain = em.createMountain(appUser, Mountain("name", "detail", appUser, savedLocation))
 
       // when
       val result = mountainAppQueryRepository.findOneWithLocation(mountain.id)

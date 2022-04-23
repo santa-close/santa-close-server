@@ -1,10 +1,10 @@
 package com.santaclose.app.mountainReview.repository
 
 import aws.smithy.kotlin.runtime.util.length
-import com.santaclose.app.util.createAppMountain
-import com.santaclose.app.util.createAppMountainReview
-import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
@@ -98,12 +98,12 @@ constructor(
     fun `mountainId가 일치하는 리뷰를 반환한다`() {
       // given
       val count = 3
-      val createdAppUser = em.createAppUser()
-      val mountain = em.createAppMountain(createdAppUser)
-      val otherMountain = em.createAppMountain(createdAppUser)
+      val createdAppUser = em.createUser()
+      val mountain = em.createMountain(createdAppUser)
+      val otherMountain = em.createMountain(createdAppUser)
       repeat(count) {
-        em.createAppMountainReview(createdAppUser, mountain)
-        em.createAppMountainReview(createdAppUser, otherMountain)
+        em.createMountainReview(createdAppUser, mountain)
+        em.createMountainReview(createdAppUser, otherMountain)
       }
 
       // when
@@ -119,9 +119,9 @@ constructor(
       // given
       val limit = 3
       val createCounts = 10
-      val appUser = em.createAppUser()
-      val mountain = em.createAppMountain(appUser)
-      repeat(createCounts) { em.createAppMountainReview(appUser, mountain) }
+      val appUser = em.createUser()
+      val mountain = em.createMountain(appUser)
+      repeat(createCounts) { em.createMountainReview(appUser, mountain) }
 
       // when
       val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, limit)

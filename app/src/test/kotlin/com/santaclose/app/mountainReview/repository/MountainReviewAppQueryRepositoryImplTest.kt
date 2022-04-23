@@ -1,9 +1,9 @@
 package com.santaclose.app.mountainReview.repository
 
-import com.santaclose.app.util.createAppMountain
-import com.santaclose.app.util.createAppMountainReview
-import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createUser
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
@@ -28,11 +28,11 @@ constructor(
     @Test
     fun `산 후기의 점수 평균을 조회한다`() {
       // given
-      val appUser = em.createAppUser()
-      val mountain = em.createAppMountain(appUser)
+      val appUser = em.createUser()
+      val mountain = em.createMountain(appUser)
       val count = 5
       repeat(count) {
-        em.createAppMountainReview(
+        em.createMountainReview(
           appUser,
           mountain,
           MountainReview(

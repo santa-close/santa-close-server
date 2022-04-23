@@ -20,7 +20,7 @@ fun EntityManager.createQueryFactory() =
     subqueryCreator = SubqueryCreatorImpl()
   )
 
-fun EntityManager.createAppUser(
+fun EntityManager.createUser(
   user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
 ): AppUser = user.also { this.persist(it) }
 
@@ -32,16 +32,14 @@ fun EntityManager.createRestaurant(
 
 fun EntityManager.createMountain(
   appUser: AppUser,
-  location: Location = createLocation(),
-  mountain: Mountain =
-    Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
+  mountain: Mountain = Mountain("mountainName", "mountainDetail", appUser, createLocation())
 ) = mountain.also { this.persist(it) }
 
 fun EntityManager.createLocation(
   location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
 ) = location.also { this.persist(it) }
 
-fun EntityManager.createAppMountainReview(
+fun EntityManager.createMountainReview(
   appUser: AppUser,
   mountain: Mountain,
   mountainReview: MountainReview =
