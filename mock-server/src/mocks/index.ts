@@ -1,4 +1,4 @@
-import { categories, sample } from './query';
+import { categories, locations, sample } from './query';
 import { signIn } from './mutation';
 import { toDateTime } from './util';
 import faker from '@faker-js/faker';
@@ -13,6 +13,7 @@ export const mocks = {
   Query: {
     sample,
     categories,
+    locations,
   },
   Mutation: {
     signIn,
