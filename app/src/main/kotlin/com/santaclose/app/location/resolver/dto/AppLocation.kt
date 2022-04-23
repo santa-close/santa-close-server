@@ -6,6 +6,5 @@ import com.santaclose.app.location.resolver.enum.LocationType
 interface AppLocation {
   val type: LocationType
   fun id(): ID
-  fun name(): String
   fun coordinate(): AppCoordinate
 }

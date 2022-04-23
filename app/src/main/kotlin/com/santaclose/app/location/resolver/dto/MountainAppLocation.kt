@@ -7,14 +7,11 @@ import org.locationtech.jts.geom.Point
 
 class MountainAppLocation(
   private val id: Long,
-  private val name: String,
   private val point: Point,
 ) : AppLocation {
   override val type = LocationType.MOUNTAIN
 
   override fun id(): ID = id.toID()
-
-  override fun name(): String = name
 
   override fun coordinate(): AppCoordinate = AppCoordinate(longitude = point.x, latitude = point.y)
 }
