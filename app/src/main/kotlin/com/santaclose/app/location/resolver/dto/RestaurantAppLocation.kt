@@ -16,5 +16,5 @@ class RestaurantAppLocation(
 
   override fun name(): String = name
 
-  override fun coordinate(): AppCoordinate = AppCoordinate(latitude = point.x, longitude = point.y)
+  override fun coordinate(): AppCoordinate = AppCoordinate(longitude = point.x, latitude = point.y)
 }
