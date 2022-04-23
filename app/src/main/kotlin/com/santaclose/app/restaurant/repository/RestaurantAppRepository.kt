@@ -4,5 +4,5 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface RestaurantAppRepository : JpaRepository<Restaurant, Long> {
-  fun findByIdIn(ids: List<Long>): List<Restaurant>
+  fun findByLocationIdIn(ids: List<Long>): List<Restaurant>
 }

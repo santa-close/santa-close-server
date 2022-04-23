@@ -19,19 +19,23 @@ class LocationAppQueryService(
 ) {
   fun find(input: LocationAppInput): List<AppLocation> {
     val locations = this.locationAppRepository.findIdsByArea(input.toPolygon())
-    val locationIds = locations.map { it.id }
+
+    if (locations.isEmpty()) {
+      return emptyList()
+    }
 
     return runBlocking {
       val service = this@LocationAppQueryService
-      val mountains = async { service.mountainAppRepository.findByIdIn(locationIds) }
-      val restaurants = async { service.restaurantAppRepository.findByIdIn(locationIds) }
+      val ids = locations.map { it.id }
+      val mountains = async { service.mountainAppRepository.findByLocationIdIn(ids) }
+      val restaurants = async { service.restaurantAppRepository.findByLocationIdIn(ids) }
 
       val findPoint = { id: Long ->
         locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
       }
 
-      mountains.await().map { MountainAppLocation(it.id, it.name, findPoint(it.id)) } +
-        restaurants.await().map { RestaurantAppLocation(it.id, it.name, findPoint(it.id)) }
+      mountains.await().map { MountainAppLocation(it.id, it.name, findPoint(it.location.id)) } +
+        restaurants.await().map { RestaurantAppLocation(it.id, it.name, findPoint(it.location.id)) }
     }
   }
 }

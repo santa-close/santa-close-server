@@ -15,8 +15,11 @@ data class LocationAppInput(
   fun toPolygon(): Polygon =
     factory.createPolygon(
       arrayOf(
-        Coordinate(nw.latitude, nw.longitude),
-        Coordinate(nw.latitude, nw.longitude),
+        Coordinate(nw.longitude, nw.latitude),
+        Coordinate(nw.longitude, se.latitude),
+        Coordinate(se.longitude, se.latitude),
+        Coordinate(se.longitude, nw.latitude),
+        Coordinate(nw.longitude, nw.latitude),
       )
     )
 }
