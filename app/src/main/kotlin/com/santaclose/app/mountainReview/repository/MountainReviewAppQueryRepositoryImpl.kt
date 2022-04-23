@@ -3,7 +3,6 @@ package com.santaclose.app.mountainReview.repository
 import com.linecorp.kotlinjdsl.query.spec.expression.EntitySpec
 import com.linecorp.kotlinjdsl.querydsl.expression.avg
 import com.linecorp.kotlinjdsl.querydsl.expression.col
-import com.linecorp.kotlinjdsl.querydsl.expression.count
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.querydsl.from.join
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
@@ -32,9 +31,9 @@ class MountainReviewAppQueryRepositoryImpl(
       limit(limit)
     }
 
-  override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto {
-    val selectQuery =
-      springDataQueryFactory.selectQuery<MountainRatingAverageDto> {
+  override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
+    springDataQueryFactory
+      .selectQuery<MountainRatingAverageDto> {
         val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
         selectMulti(
           avg(MountainRating::scenery),
@@ -50,6 +49,5 @@ class MountainReviewAppQueryRepositoryImpl(
         join(MountainReview::mountain, JoinType.INNER)
         where(col(Mountain::id).equal(mountainId))
       }
-    return selectQuery.singleResult
-  }
+      .singleResult
 }

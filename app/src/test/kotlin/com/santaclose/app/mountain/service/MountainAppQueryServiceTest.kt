@@ -42,7 +42,6 @@ constructor(
       val result = mountainAppQueryService.findDetail(mountain.id.toID())
 
       // then
-      println(result)
       result.apply {
         name shouldBe mountain.name
         address shouldBe mountain.location.address
@@ -52,9 +51,10 @@ constructor(
     @Test
     fun `mountainId가 유효하지 않으면 NoResultException 이 발생한다`() {
       // given
+      val id = ID("-1")
+
       // when
-      val exception =
-        shouldThrow<NoResultException> { mountainAppQueryService.findDetail(ID("-1")) }
+      val exception = shouldThrow<NoResultException> { mountainAppQueryService.findDetail(id) }
 
       // then
       exception.message shouldBe "No entity found for query"

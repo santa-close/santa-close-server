@@ -55,7 +55,7 @@ constructor(
         }
 
       // then
-      exception.apply { message shouldBe "No entity found for query" }
+      exception.message shouldBe "No entity found for query"
     }
   }
 }
