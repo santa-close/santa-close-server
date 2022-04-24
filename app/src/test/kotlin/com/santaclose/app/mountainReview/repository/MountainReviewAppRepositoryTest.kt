@@ -1,12 +1,10 @@
 package com.santaclose.app.mountainReview.repository
 
 import aws.smithy.kotlin.runtime.util.length
+import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
-import com.santaclose.app.util.createUser
-import com.santaclose.lib.entity.location.Location
-import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
@@ -36,9 +34,7 @@ constructor(
     fun `정상적으로 산 리뷰를 생성한다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createLocation()
-      val mountain = em.createMountain(appUser, location)
-      em.persist(mountain)
+      val mountain = em.createMountain(appUser)
 
       val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
@@ -63,9 +59,7 @@ constructor(
     fun `mountainReview 에서 mountainId 을 수정할 수 없다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createLocation()
-      val mountain = em.createMountain(appUser, location)
-      em.persist(mountain)
+      val mountain = em.createMountain(appUser)
 
       val mountainRating = MountainRating(1, 2, 3, 4, 5, 3)
       val mountainReview =
@@ -98,7 +92,7 @@ constructor(
     fun `mountainId가 일치하는 리뷰를 반환한다`() {
       // given
       val count = 3
-      val createdAppUser = em.createUser()
+      val createdAppUser = em.createAppUser()
       val mountain = em.createMountain(createdAppUser)
       val otherMountain = em.createMountain(createdAppUser)
       repeat(count) {
@@ -119,7 +113,7 @@ constructor(
       // given
       val limit = 3
       val createCounts = 10
-      val appUser = em.createUser()
+      val appUser = em.createAppUser()
       val mountain = em.createMountain(appUser)
       repeat(createCounts) { em.createMountainReview(appUser, mountain) }
 

@@ -7,6 +7,7 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
+import com.santaclose.lib.entity.mountain.type.MountainManagement
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
@@ -20,7 +21,7 @@ fun EntityManager.createQueryFactory() =
     subqueryCreator = SubqueryCreatorImpl()
   )
 
-fun EntityManager.createUser(
+fun EntityManager.createAppUser(
   user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
 ): AppUser = user.also { this.persist(it) }
 
@@ -32,7 +33,9 @@ fun EntityManager.createRestaurant(
 
 fun EntityManager.createMountain(
   appUser: AppUser,
-  mountain: Mountain = Mountain("mountainName", "mountainDetail", appUser, createLocation())
+  location: Location = createLocation(),
+  mountain: Mountain =
+    Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
 ) = mountain.also { this.persist(it) }
 
 fun EntityManager.createLocation(

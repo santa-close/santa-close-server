@@ -23,10 +23,10 @@ internal class RestaurantReviewAppMutationServiceTest
 @Autowired
 constructor(
   private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
-  private val restaurantRepository: RestaurantAppRepository,
+  restaurantRepository: RestaurantAppRepository,
   private val em: EntityManager
 ) {
-  private val RestaurantReviewAppMutationService =
+  private val restaurantReviewAppMutationService =
     RestaurantReviewAppMutationService(restaurantReviewAppRepository, restaurantRepository, em)
 
   @Nested
@@ -34,7 +34,7 @@ constructor(
     @Test
     fun `restaurantId가 유효하지 않으면 NoResultException을 반환한다`() {
       // given
-      val appUser = em.createUser()
+      val appUser = em.createAppUser()
       val input =
         CreateRestaurantReviewAppInput(
           restaurantId = ID("-1"),
@@ -49,7 +49,7 @@ constructor(
       // when
       val exception =
         shouldThrow<NoResultException> {
-          RestaurantReviewAppMutationService.register(input, appUser.id)
+          restaurantReviewAppMutationService.register(input, appUser.id)
         }
 
       // then
@@ -73,7 +73,7 @@ constructor(
         )
 
       // when
-      RestaurantReviewAppMutationService.register(input, appUser.id)
+      restaurantReviewAppMutationService.register(input, appUser.id)
 
       // then
       val restaurantReview = restaurantReviewAppRepository.findAll()

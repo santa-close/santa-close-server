@@ -3,10 +3,10 @@ package com.santaclose.app.mountain.service
 import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
+import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
-import com.santaclose.app.util.createUser
 import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -34,7 +34,7 @@ constructor(
     @Test
     fun `산 상세 정보를 조회하여 반환한다`() {
       // given
-      val user = em.createUser()
+      val user = em.createAppUser()
       val mountain = em.createMountain(user)
       em.createMountainReview(user, mountain)
 
