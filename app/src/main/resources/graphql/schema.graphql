@@ -77,10 +77,10 @@ type Mutation {
 type Query {
   "category 데이터"
   categories: CategoryAppList!
-  "산 상세 조회"
-  mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
   "지도 위치 데이터"
   locations(input: LocationAppInput!): [AppLocation!]! @auth(role : USER)
+  "산 상세 조회"
+  mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
 }
@@ -144,6 +144,17 @@ input AppCoordinateInput {
   longitude: Float!
 }
 
+input CreateMountainAppInput {
+  address: String!
+  altitude: Int!
+  images: [String!]!
+  latitude: Float!
+  longitude: Float!
+  management: MountainManagement!
+  name: String!
+  postcode: String!
+}
+
 input CreateMountainReviewAppInput {
   content: String!
   difficulty: MountainDifficulty!
@@ -177,6 +188,10 @@ input CreateSampleAppInput {
 input LocationAppInput {
   nw: AppCoordinateInput!
   se: AppCoordinateInput!
+}
+
+input MountainDetailAppInput {
+  id: ID!
 }
 
 input RestaurantRatingInput {
