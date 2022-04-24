@@ -13,8 +13,8 @@ import org.locationtech.jts.geom.Point
 @Table(indexes = [Index(columnList = "point")])
 class Location(
   @field:NotNull var point: Point,
-  var address: String?,
-  var postcode: String?,
+  @field:NotNull var address: String,
+  @field:NotNull var postcode: String,
 ) : BaseEntity() {
   companion object {
     private val factory = GeometryFactory()
@@ -25,8 +25,8 @@ class Location(
     fun create(
       longitude: Double,
       latitude: Double,
-      address: String? = null,
-      postcode: String? = null,
+      address: String = "",
+      postcode: String = "",
     ): Location = Location(createPoint(longitude, latitude), address, postcode)
   }
 }

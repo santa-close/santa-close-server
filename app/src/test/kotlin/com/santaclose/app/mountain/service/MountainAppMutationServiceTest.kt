@@ -33,8 +33,8 @@ constructor(
           images = mutableListOf("image"),
           management = MountainManagement.MUNICIPAL,
           altitude = 100,
-          longitude = 100F,
-          latitude = 100F,
+          longitude = 100.0,
+          latitude = 100.0,
           address = "address",
           postcode = "postcode"
         )
