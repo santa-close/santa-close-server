@@ -3,11 +3,10 @@ package com.santaclose.app.file.controller
 import arrow.core.flatMap
 import arrow.core.lastOrNone
 import arrow.core.toOption
-import com.santaclose.app.auth.context.parser.ServerRequestParser
 import com.santaclose.app.file.controller.dto.UploadImageResponse
 import com.santaclose.app.file.service.FileAppService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.error.UnauthorizedException
+import com.santaclose.lib.web.error.HttpException.UnauthorizedException
 import com.santaclose.lib.web.req.UploadImageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*
 class FileAppController
 constructor(
   private val fileAppService: FileAppService,
-  private val serverRequestParser: ServerRequestParser,
 ) {
   private val logger = logger()
 

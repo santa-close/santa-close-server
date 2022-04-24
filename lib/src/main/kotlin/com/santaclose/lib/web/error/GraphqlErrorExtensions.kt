@@ -23,8 +23,8 @@ fun Throwable.toGraphQLException(): Throwable =
         "code" to
           when (this) {
             is NoResultException -> GraphqlErrorCode.NOT_FOUND
-            is UnauthorizedException -> GraphqlErrorCode.UNAUTHORIZED
-            is NumberFormatException -> GraphqlErrorCode.BAD_REQUEST
+            is NumberFormatException, is IllegalArgumentException -> GraphqlErrorCode.BAD_REQUEST
+            is HttpException -> code
             else -> GraphqlErrorCode.SERVER_ERROR
           }
       ) as
