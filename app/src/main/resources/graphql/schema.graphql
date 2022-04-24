@@ -51,6 +51,8 @@ type Mutation {
   createRestaurantReview(input: CreateRestaurantReviewAppInput!): Boolean! @auth(role : USER)
   "샘플 데이터"
   createSample(input: CreateSampleAppInput!): Boolean! @auth(role : USER)
+  "산 등록하기"
+  registerMountain(input: CreateMountainAppInput!): Boolean! @auth(role : USER)
   "로그인 및 회원가입"
   signIn(input: SignInAppInput!): AppAuthInfo!
 }
@@ -79,6 +81,13 @@ enum MountainDifficulty {
   NORMAL
 }
 
+enum MountainManagement {
+  MUNICIPAL
+  NATIONAL
+  NORMAL
+  PROVINCIAL
+}
+
 enum PriceComment {
   IS_CHEAP
   IS_EXPENSIVE
@@ -97,6 +106,17 @@ enum SignInType {
 
 "A type representing a formatted java.time.LocalDateTime"
 scalar DateTime
+
+input CreateMountainAppInput {
+  address: String!
+  altitude: Int!
+  images: [String!]!
+  latitude: Float!
+  longitude: Float!
+  management: MountainManagement!
+  name: String!
+  postcode: String!
+}
 
 input CreateMountainReviewAppInput {
   content: String!

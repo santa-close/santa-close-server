@@ -8,7 +8,7 @@ import javax.validation.Validation
 import org.junit.jupiter.api.Test
 
 internal class CreateRestaurantReviewAppInputTest {
-  val validator = Validation.buildDefaultValidatorFactory().validator
+  private val validator = Validation.buildDefaultValidatorFactory().validator
 
   @Test
   fun `rating에 6이 포함되어 있으면 에러가 발생한다`() {
