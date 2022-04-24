@@ -28,9 +28,22 @@ fun EntityManager.createAppUser(
 
 fun EntityManager.createRestaurant(
   appUser: AppUser,
-  location: Location = createLocation(),
+  foodTypes: List<FoodType>,
   restaurant: Restaurant =
-    Restaurant("name", "description", mutableListOf(), null, appUser, createAppLocation())
+    Restaurant(
+      "name",
+      "description",
+      mutableListOf(),
+      foodTypes.map {
+        RestaurantFoodType(
+          restaurant = null,
+          foodType = it,
+          appUser = appUser,
+        )
+      },
+      appUser,
+      createLocation()
+    )
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createAppRestaurantFoodType(

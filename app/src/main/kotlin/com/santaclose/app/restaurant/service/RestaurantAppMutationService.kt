@@ -21,23 +21,34 @@ class RestaurantAppMutationService(
       throw NoResultException("유효하지 않은 mountainId 입니다.")
     }
 
-    //    val isRestaurantExist = restaurantRepository.existsById(input.restaurantId.toLong())
-    //    if (!isRestaurantExist) {
-    //      throw NoResultException("유효하지 않은 restaurantId 입니다.")
-    //    }
+    val restaurantFoodTypes: List<RestaurantFoodType> =
+      input.foodTypes.map {
+        RestaurantFoodType(
+          restaurant = null,
+          foodType = it,
+          appUser = em.getReference(AppUser::class.java, userId),
+        )
+      }
 
-    //      @Entity
-    //      class Restaurant(
-    //          @field:NotNull var name: String,
-    //          @Column(length = 100) var description: String,
-    //          @Convert(converter = StringListConverter::class)
-    //          var images: MutableList<String> = mutableListOf(),
-    //          @Enumerated(EnumType.STRING) @field:NotNull var foodType: FoodType,
-    //          @ManyToOne(fetch = FetchType.LAZY) @field:NotNull var appUser: AppUser,
-    //          @OneToOne(fetch = FetchType.LAZY) var location: Location,
-    //      ) : BaseEntity()
+    val restaurant =
+      Restaurant(
+        name = input.name,
+        description = input.description,
+        images = input.images.toList(),
+        restaurantFoodType = restaurantFoodTypes,
+        appUser = em.getReference(AppUser::class.java, userId),
+        location =
+          Location.create(
+            input.longitude.toDouble(),
+            input.latitude.toDouble(),
+            input.address,
+            input.postcode
+          ),
+      )
 
-    //    Restaurant(name = input.name).apply { restaurantReviewAppRepository.save(this) }
+    // TODO: JPARepository 대신 EntityManager persist 사용하는 이유?
+    //    em.persist(restaurant)
+    restaurantRepository.save(restaurant)
   }
 
   fun createRestaurantFoodType(input: CreateRestaurantAppInput, userId: Long) {}

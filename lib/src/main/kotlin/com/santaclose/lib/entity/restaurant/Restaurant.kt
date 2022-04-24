@@ -12,11 +12,9 @@ import javax.validation.constraints.NotNull
 class Restaurant(
   @field:NotNull var name: String,
   @Column(length = 100) var description: String,
-  @Convert(converter = StringListConverter::class)
-  var images: MutableList<String> = mutableListOf(),
-  @OneToMany(fetch = LAZY)
-  @JoinColumn(name = "restaurant_id")
-  var restaurantFoodType: RestaurantFoodType? = null,
+  @Convert(converter = StringListConverter::class) var images: List<String> = listOf(),
+  @OneToMany(fetch = LAZY, mappedBy = "restaurant", cascade = [CascadeType.ALL])
+  val restaurantFoodType: List<RestaurantFoodType>,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
   @OneToOne(fetch = LAZY) @field:NotNull var location: Location,
 ) : BaseEntity()
