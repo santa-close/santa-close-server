@@ -21,13 +21,7 @@ class MountainAppMutationService(
         management = input.management,
         altitude = input.altitude,
         appUser = em.getReference(AppUser::class.java, userId),
-        location =
-          Location.create(
-            input.longitude.toDouble(),
-            input.latitude.toDouble(),
-            input.address,
-            input.postcode
-          ),
+        location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
       )
 
     em.persist(mountain)
