@@ -1,20 +1,26 @@
 package com.santaclose.app.sample.repository
 
 import com.santaclose.app.sample.resolver.dto.SampleAppDetail
-import com.santaclose.app.util.TestQueryFactory
+import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.string.shouldContain
+import javax.persistence.EntityManager
 import javax.validation.ConstraintViolationException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
-  private val sampleAppQueryRepository by lazy { SampleAppQueryRepositoryImpl(queryFactory) }
+internal class SampleAppQueryRepositoryImplTest
+@Autowired
+constructor(
+  private val em: EntityManager,
+) {
+  private val sampleAppQueryRepository = SampleAppQueryRepositoryImpl(em.createQueryFactory())
 
   @Nested
   inner class FindByPrice {

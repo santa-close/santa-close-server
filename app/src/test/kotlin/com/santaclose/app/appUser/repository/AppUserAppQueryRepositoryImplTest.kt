@@ -1,15 +1,21 @@
 package com.santaclose.app.appUser.repository
 
-import com.santaclose.app.util.TestQueryFactory
+import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.appUser.AppUser
 import io.kotest.assertions.arrow.core.shouldBeRight
+import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
-internal class AppUserAppQueryRepositoryImplTest : TestQueryFactory() {
-  private val appUserAppRepository by lazy { AppUserAppQueryRepositoryImpl(queryFactory) }
+internal class AppUserAppQueryRepositoryImplTest
+@Autowired
+constructor(
+  private val em: EntityManager,
+) {
+  private val appUserAppRepository = AppUserAppQueryRepositoryImpl(em.createQueryFactory())
 
   @Nested
   inner class FindBySocialId {
