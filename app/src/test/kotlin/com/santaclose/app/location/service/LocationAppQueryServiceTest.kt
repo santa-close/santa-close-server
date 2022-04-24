@@ -7,10 +7,10 @@ import com.santaclose.app.location.resolver.dto.MountainAppLocation
 import com.santaclose.app.location.resolver.dto.RestaurantAppLocation
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
-import com.santaclose.app.util.createAppLocation
-import com.santaclose.app.util.createAppMountain
-import com.santaclose.app.util.createAppRestaurant
 import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createLocation
+import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -42,8 +42,8 @@ constructor(
     fun `주어진 좌표 밖의 정보는 가져오지 않는다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createAppLocation(Location.create(longitude = 126.0, latitude = 37.0))
-      em.createAppMountain(appUser, location)
+      val location = em.createLocation(Location.create(longitude = 126.0, latitude = 37.0))
+      em.createMountain(appUser, location)
       val input =
         LocationAppInput(
           nw = AppCoordinate(longitude = 126.3, latitude = 37.6),
@@ -61,8 +61,8 @@ constructor(
     fun `주어진 좌표 안의 산 정보를 가져온다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createAppLocation(Location.create(longitude = 126.4, latitude = 37.5))
-      em.createAppMountain(appUser, location)
+      val location = em.createLocation(Location.create(longitude = 126.4, latitude = 37.5))
+      em.createMountain(appUser, location)
       val input =
         LocationAppInput(
           nw = AppCoordinate(longitude = 126.3, latitude = 37.6),
@@ -81,8 +81,8 @@ constructor(
     fun `주어진 좌표 안의 식당 정보를 가져온다`() {
       // given
       val appUser = em.createAppUser()
-      val location = em.createAppLocation(Location.create(longitude = 126.4, latitude = 37.5))
-      em.createAppRestaurant(appUser, location)
+      val location = em.createLocation(Location.create(longitude = 126.4, latitude = 37.5))
+      em.createRestaurant(appUser, location)
       val input =
         LocationAppInput(
           nw = AppCoordinate(longitude = 126.3, latitude = 37.6),

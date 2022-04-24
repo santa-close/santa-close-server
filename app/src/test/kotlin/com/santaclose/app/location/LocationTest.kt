@@ -1,6 +1,6 @@
 package com.santaclose.app.location
 
-import com.santaclose.app.util.createAppLocation
+import com.santaclose.app.util.createLocation
 import com.santaclose.lib.entity.location.Location
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -19,8 +19,8 @@ class LocationTest @Autowired constructor(private val em: EntityManager) {
   @Test
   fun `주어진 영역 안의 location 을 가져온다`() {
     // given
-    val location = em.createAppLocation(Location.create(1.0, 1.0))
-    em.createAppLocation(Location.create(3.0, 3.0))
+    val location = em.createLocation(Location.create(1.0, 1.0))
+    em.createLocation(Location.create(3.0, 3.0))
     val factory = GeometryFactory()
     val rectangle =
       factory.createPolygon(
