@@ -186,8 +186,8 @@ input CreateSampleAppInput {
 }
 
 input LocationAppInput {
-  northWest: AppCoordinateInput!
-  southEast: AppCoordinateInput!
+  diagonalFrom: AppCoordinateInput!
+  diagonalTo: AppCoordinateInput!
 }
 
 input MountainDetailAppInput {

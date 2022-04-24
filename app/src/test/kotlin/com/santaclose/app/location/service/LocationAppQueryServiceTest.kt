@@ -46,8 +46,8 @@ constructor(
       em.createMountain(appUser, location)
       val input =
         LocationAppInput(
-          northWest = AppCoordinate(longitude = 126.3, latitude = 37.6),
-          southEast = AppCoordinate(longitude = 126.5, latitude = 37.4),
+          diagonalFrom = AppCoordinate(longitude = 126.3, latitude = 37.6),
+          diagonalTo = AppCoordinate(longitude = 126.5, latitude = 37.4),
         )
 
       // when
@@ -65,8 +65,8 @@ constructor(
       em.createMountain(appUser, location)
       val input =
         LocationAppInput(
-          northWest = AppCoordinate(longitude = 126.3, latitude = 37.6),
-          southEast = AppCoordinate(longitude = 126.5, latitude = 37.4),
+          diagonalFrom = AppCoordinate(longitude = 126.3, latitude = 37.6),
+          diagonalTo = AppCoordinate(longitude = 126.5, latitude = 37.4),
         )
 
       // when
@@ -85,8 +85,8 @@ constructor(
       em.createRestaurant(appUser, location)
       val input =
         LocationAppInput(
-          northWest = AppCoordinate(longitude = 126.3, latitude = 37.6),
-          southEast = AppCoordinate(longitude = 126.5, latitude = 37.4),
+          diagonalFrom = AppCoordinate(longitude = 126.3, latitude = 37.6),
+          diagonalTo = AppCoordinate(longitude = 126.5, latitude = 37.4),
         )
 
       // when

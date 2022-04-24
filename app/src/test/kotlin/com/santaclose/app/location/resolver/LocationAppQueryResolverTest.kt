@@ -35,7 +35,7 @@ constructor(
       val query =
         GraphqlBody(
           """query {
-            |  locations(input: {northWest: {latitude: 37.5, longitude: 127.5}, southEast: {latitude: 37.6, longitude: 127.6}}) {
+            |  locations(input: {diagonalFrom: {latitude: 37.5, longitude: 127.5}, diagonalTo: {latitude: 37.6, longitude: 127.6}}) {
             |    id
             |    type
             |    coordinate {
