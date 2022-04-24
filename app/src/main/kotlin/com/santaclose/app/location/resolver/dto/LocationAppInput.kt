@@ -5,8 +5,8 @@ import org.locationtech.jts.geom.GeometryFactory
 import org.locationtech.jts.geom.Polygon
 
 data class LocationAppInput(
-  val nw: AppCoordinate,
-  val se: AppCoordinate,
+  val northWest: AppCoordinate,
+  val southEast: AppCoordinate,
 ) {
   companion object {
     private val factory = GeometryFactory()
@@ -15,11 +15,11 @@ data class LocationAppInput(
   fun toPolygon(): Polygon =
     factory.createPolygon(
       arrayOf(
-        Coordinate(nw.longitude, nw.latitude),
-        Coordinate(nw.longitude, se.latitude),
-        Coordinate(se.longitude, se.latitude),
-        Coordinate(se.longitude, nw.latitude),
-        Coordinate(nw.longitude, nw.latitude),
+        Coordinate(northWest.longitude, northWest.latitude),
+        Coordinate(northWest.longitude, southEast.latitude),
+        Coordinate(southEast.longitude, southEast.latitude),
+        Coordinate(southEast.longitude, northWest.latitude),
+        Coordinate(northWest.longitude, northWest.latitude),
       )
     )
 }
