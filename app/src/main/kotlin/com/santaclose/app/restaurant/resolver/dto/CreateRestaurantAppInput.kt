@@ -13,7 +13,7 @@ data class CreateRestaurantAppInput(
   val description: String,
   // FIXME: 최대 등록 이미지 개수 10개 확정인지?
   @field:Size(max = 10) val images: List<String>,
-  @field:NotEmpty @field:NotNull val foodTypes: List<FoodType>,
+  @field:NotEmpty val foodTypes: List<FoodType>,
   @field:NotNull val longitude: Double,
   @field:NotNull val latitude: Double,
   // FIXME: 주소 및 우편번호 필수?
