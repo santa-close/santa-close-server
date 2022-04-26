@@ -73,8 +73,8 @@ internal class LocationAppInputTest {
     // given
     val input =
       LocationAppInput(
-        diagonalFrom = AppCoordinate(longitude = 10.0, latitude = 10.0),
-        diagonalTo = AppCoordinate(longitude = 20.0, latitude = 20.0),
+        diagonalFrom = AppCoordinate(longitude = 10.0, latitude = 20.0),
+        diagonalTo = AppCoordinate(longitude = 20.0, latitude = 10.0),
       )
 
     // when
