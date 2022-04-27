@@ -34,13 +34,15 @@ fun EntityManager.createRestaurant(
       "name",
       "description",
       mutableListOf(),
-      foodTypes.map {
-        RestaurantFoodType(
-          restaurant = null,
-          foodType = it,
-          appUser = appUser,
-        )
-      },
+      foodTypes
+        .map {
+          RestaurantFoodType(
+            restaurant = null,
+            foodType = it,
+            appUser = appUser,
+          )
+        }
+        .toMutableList(),
       appUser,
       createLocation()
     )

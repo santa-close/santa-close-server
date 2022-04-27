@@ -14,7 +14,7 @@ class Restaurant(
   @Column(length = 100) var description: String,
   @Convert(converter = StringListConverter::class) var images: List<String> = listOf(),
   @OneToMany(fetch = LAZY, mappedBy = "restaurant", cascade = [CascadeType.ALL])
-  val restaurantFoodType: List<RestaurantFoodType>,
+  var restaurantFoodType: MutableList<RestaurantFoodType>,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
   @OneToOne(fetch = LAZY) @field:NotNull var location: Location,
 ) : BaseEntity()

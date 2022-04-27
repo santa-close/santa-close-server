@@ -21,29 +21,26 @@ class RestaurantAppMutationService(
       throw NoResultException("유효하지 않은 mountainId 입니다.")
     }
 
-    val restaurantFoodTypes: List<RestaurantFoodType> =
-      input.foodTypes.map {
-        RestaurantFoodType(
-          restaurant = null,
-          foodType = it,
-          appUser = em.getReference(AppUser::class.java, userId),
-        )
-      }
+    val restaurantFoodTypes: MutableList<RestaurantFoodType> =
+      input
+        .foodTypes
+        .map {
+          RestaurantFoodType(
+            restaurant = null,
+            foodType = it,
+            appUser = em.getReference(AppUser::class.java, userId),
+          )
+        }
+        .toMutableList()
 
     val restaurant =
       Restaurant(
         name = input.name,
         description = input.description,
-        images = input.images.toList(),
+        images = input.images,
         restaurantFoodType = restaurantFoodTypes,
         appUser = em.getReference(AppUser::class.java, userId),
-        location =
-          Location.create(
-            input.longitude.toDouble(),
-            input.latitude.toDouble(),
-            input.address,
-            input.postcode
-          ),
+        location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
       )
 
     // TODO: JPARepository 대신 EntityManager persist 사용하는 이유?
