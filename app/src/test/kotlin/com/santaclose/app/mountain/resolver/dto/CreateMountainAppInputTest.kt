@@ -18,8 +18,8 @@ internal class CreateMountainAppInputTest {
         images = emptyList(),
         management = MountainManagement.MUNICIPAL,
         altitude = 1,
-        longitude = 180f,
-        latitude = 90f,
+        longitude = 180.0,
+        latitude = 90.0,
         address = "address",
         postcode = "postcode"
       )
@@ -41,8 +41,8 @@ internal class CreateMountainAppInputTest {
         images = listOf("test.png"),
         management = MountainManagement.MUNICIPAL,
         altitude = 1,
-        longitude = 180f,
-        latitude = 90f,
+        longitude = 180.0,
+        latitude = 90.0,
         address = "address",
         postcode = "postcode"
       )
@@ -64,8 +64,8 @@ internal class CreateMountainAppInputTest {
         images = listOf("test.png"),
         management = MountainManagement.MUNICIPAL,
         altitude = 0,
-        longitude = 180f,
-        latitude = 90f,
+        longitude = 180.0,
+        latitude = 90.0,
         address = "address",
         postcode = "postcode"
       )
@@ -87,8 +87,8 @@ internal class CreateMountainAppInputTest {
         images = listOf("test.png"),
         management = MountainManagement.MUNICIPAL,
         altitude = 1,
-        longitude = -181f,
-        latitude = -90f,
+        longitude = -181.0,
+        latitude = -90.0,
         address = "address",
         postcode = "postcode"
       )
@@ -110,8 +110,8 @@ internal class CreateMountainAppInputTest {
         images = listOf("test.png"),
         management = MountainManagement.MUNICIPAL,
         altitude = 1,
-        longitude = -180f,
-        latitude = -91f,
+        longitude = -180.0,
+        latitude = -91.0,
         address = "address",
         postcode = "postcode"
       )
@@ -133,8 +133,8 @@ internal class CreateMountainAppInputTest {
         images = listOf("test.png"),
         management = MountainManagement.MUNICIPAL,
         altitude = 1,
-        longitude = 180f,
-        latitude = 90f,
+        longitude = 180.0,
+        latitude = 90.0,
         address = "address",
         postcode = "postcode"
       )

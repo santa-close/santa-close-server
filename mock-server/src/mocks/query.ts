@@ -14,3 +14,38 @@ export const categories = () =>
       join(__dirname, '../../../app/src/main/resources/graphql/categories.json')
     )}`
   ).data.categories;
+
+export const locations = () => [
+  {
+    __typename: 'MountainAppLocation',
+    type: 'MOUNTAIN',
+    coordinate: {
+      latitude: 37.38018,
+      longitude: 127.012006,
+    },
+  },
+  {
+    __typename: 'RestaurantAppLocation',
+    type: 'RESTAURANT',
+    coordinate: {
+      latitude: 37.378974,
+      longitude: 127.009305,
+    },
+  },
+  {
+    __typename: 'RestaurantAppLocation',
+    type: 'RESTAURANT',
+    coordinate: {
+      latitude: 37.383322,
+      longitude: 127.011579,
+    },
+  },
+  {
+    __typename: 'RestaurantAppLocation',
+    type: 'RESTAURANT',
+    coordinate: {
+      latitude: 37.380593,
+      longitude: 127.013768,
+    },
+  },
+];

@@ -2,7 +2,7 @@ package com.santaclose.app.auth.context
 
 import arrow.core.Option
 import arrow.core.getOrElse
-import com.santaclose.lib.web.error.UnauthorizedException
+import com.santaclose.lib.web.error.HttpException.UnauthorizedException
 import com.santaclose.lib.web.error.toGraphQLException
 import graphql.schema.DataFetchingEnvironment
 

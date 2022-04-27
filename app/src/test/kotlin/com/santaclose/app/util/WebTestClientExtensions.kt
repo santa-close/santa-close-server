@@ -63,13 +63,22 @@ class BodySpec(
   val query: String,
   val spec: WebTestClient.BodyContentSpec,
 ) {
-  fun expect(@Language("JSONPath") path: String): JsonPathAssertions =
-    spec.jsonPath("$DATA_JSON_PATH.$query.$path")
+  fun expect(@Language("JSONPath") path: String, withDot: Boolean = true): JsonPathAssertions =
+    spec.jsonPath("$DATA_JSON_PATH.$query${if (withDot) "." else ""}$path")
 
-  inline fun <reified T> parse(@Language("JSONPath") path: String): T {
+  inline fun <reified T> parse(@Language("JSONPath") path: String, withDot: Boolean = true): T {
     var result: T? = null
-    spec.jsonPath("$DATA_JSON_PATH.$query.$path").value({ result = it }, T::class.java)
+    spec
+      .jsonPath("$DATA_JSON_PATH.$query${if (withDot) "." else ""}$path")
+      .value({ result = it }, T::class.java)
 
     return result ?: throw Exception("failed to parse path: $path")
+  }
+
+  inline fun <reified T> parse(): T {
+    var result: T? = null
+    spec.jsonPath("$DATA_JSON_PATH.$query").value({ result = it }, T::class.java)
+
+    return result ?: throw Exception("failed to parse path: $query")
   }
 }

@@ -5,7 +5,7 @@ import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnviron
 import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveWiring
 import com.santaclose.app.auth.context.AppSession
 import com.santaclose.lib.entity.appUser.type.AppUserRole
-import com.santaclose.lib.web.error.UnauthorizedException
+import com.santaclose.lib.web.error.HttpException.UnauthorizedException
 import com.santaclose.lib.web.error.toGraphQLException
 import graphql.GraphQLException
 import graphql.schema.DataFetcher

@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: test
+    password: test
+
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        check_nullability: true
+        use_sql_comments: true
+        format_sql: true
+        show_sql: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: off

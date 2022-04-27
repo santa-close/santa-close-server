@@ -30,13 +30,30 @@ directive @specifiedBy(
     url: String!
   ) on SCALAR
 
+interface AppLocation {
+  coordinate: AppCoordinate!
+  id: ID!
+  type: LocationType!
+}
+
 type AppAuthInfo {
   accessToken: String!
   expiredAt: DateTime!
 }
 
+type AppCoordinate {
+  latitude: Float!
+  longitude: Float!
+}
+
 type CategoryAppList {
   mountainDifficulty: [MountainDifficultyCategory!]!
+}
+
+type MountainAppLocation implements AppLocation {
+  coordinate: AppCoordinate!
+  id: ID!
+  type: LocationType!
 }
 
 type MountainDifficultyCategory {
@@ -60,10 +77,18 @@ type Mutation {
 type Query {
   "category 데이터"
   categories: CategoryAppList!
+  "지도 위치 데이터"
+  locations(input: LocationAppInput!): [AppLocation!]! @auth(role : USER)
   "산 상세 조회"
   mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
+}
+
+type RestaurantAppLocation implements AppLocation {
+  coordinate: AppCoordinate!
+  id: ID!
+  type: LocationType!
 }
 
 type SampleAppDetail {
@@ -75,6 +100,11 @@ type SampleAppDetail {
 enum AppUserRole {
   USER
   VIEWER
+}
+
+enum LocationType {
+  MOUNTAIN
+  RESTAURANT
 }
 
 enum MountainDifficulty {
@@ -108,6 +138,11 @@ enum SignInType {
 
 "A type representing a formatted java.time.LocalDateTime"
 scalar DateTime
+
+input AppCoordinateInput {
+  latitude: Float!
+  longitude: Float!
+}
 
 input CreateMountainAppInput {
   address: String!
@@ -148,6 +183,11 @@ input CreateSampleAppInput {
   name: String!
   price: Int!
   status: SampleStatus!
+}
+
+input LocationAppInput {
+  diagonalFrom: AppCoordinateInput!
+  diagonalTo: AppCoordinateInput!
 }
 
 input MountainDetailAppInput {
