@@ -13,9 +13,9 @@ dependencies {
   runtimeOnly("com.h2database:h2")
   runtimeOnly("mysql:mysql-connector-java")
   testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-  testImplementation("org.testcontainers:testcontainers:1.16.3")
-  testImplementation("org.testcontainers:junit-jupiter:1.16.3")
-  testImplementation("org.testcontainers:localstack:1.16.3")
+  testImplementation(platform("org.testcontainers:testcontainers-bom:1.17.1"))
+  testImplementation("org.testcontainers:junit-jupiter")
+  testImplementation("org.testcontainers:localstack")
 }
 
 allOpen {
