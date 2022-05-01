@@ -15,7 +15,6 @@ data class CreateRestaurantAppInput(
   @field:NotEmpty val foodTypes: List<FoodType>,
   val longitude: Double,
   val latitude: Double,
-  // FIXME: 주소 및 우편번호 필수?
   val address: String,
   val postcode: String
 )
