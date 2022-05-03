@@ -47,17 +47,7 @@ fun EntityManager.createRestaurant(
     )
 ) = restaurant.also { this.persist(it) }
 
-fun EntityManager.createAppRestaurantFoodType(
-  appUser: AppUser,
-  restaurantFoodType: RestaurantFoodType =
-    RestaurantFoodType(
-      Restaurant("name", "description", mutableListOf(), null, appUser, createAppLocation()),
-      FoodType.FOOD_COURT,
-      appUser,
-    )
-) = restaurantFoodType.also { this.persist(it) }
-
-fun EntityManager.createAppMountain(
+fun EntityManager.createMountain(
   appUser: AppUser,
   location: Location = createLocation(),
   mountain: Mountain =

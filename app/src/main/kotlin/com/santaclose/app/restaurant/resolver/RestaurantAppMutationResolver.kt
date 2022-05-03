@@ -28,7 +28,7 @@ class RestaurantAppMutationResolver(
     dfe: DataFetchingEnvironment
   ): Boolean {
     try {
-      restaurantAppMutationService.create(input, dfe.userId())
+      restaurantAppMutationService.createRestaurant(input, dfe.userId())
       return true
     } catch (e: Throwable) {
       logger.error(e.message, e)

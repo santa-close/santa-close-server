@@ -1,8 +1,13 @@
 package com.santaclose.app.restaurant.service
 
+import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantFoodTypeAppRepository
 import com.santaclose.app.restaurant.resolver.dto.CreateRestaurantAppInput
+import com.santaclose.lib.entity.appUser.AppUser
+import com.santaclose.lib.entity.location.Location
+import com.santaclose.lib.entity.restaurant.Restaurant
+import com.santaclose.lib.entity.restaurant.RestaurantFoodType
 import com.santaclose.lib.web.toLong
 import javax.persistence.*
 import org.springframework.stereotype.Service
@@ -10,14 +15,15 @@ import org.springframework.stereotype.Service
 @Service
 class RestaurantAppMutationService(
   private val restaurantRepository: RestaurantAppRepository,
-  private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository
+  private val mountainAppRepository: MountainAppRepository,
+  private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
+  private val em: EntityManager
 ) {
 
   fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
     val id = input.mountainId.toLong()
-    val isExist = restaurantRepository.existsById(id)
-
-    if (!isExist) {
+    val isExistMountain = mountainAppRepository.existsById(id)
+    if (!isExistMountain) {
       throw NoResultException("유효하지 않은 mountainId 입니다.")
     }
 
@@ -46,6 +52,4 @@ class RestaurantAppMutationService(
     //    em.persist(restaurant)
     restaurantRepository.save(restaurant)
   }
-
-  fun createRestaurantFoodType(input: CreateRestaurantAppInput, userId: Long) {}
 }
