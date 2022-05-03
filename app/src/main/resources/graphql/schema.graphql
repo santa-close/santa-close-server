@@ -119,6 +119,11 @@ enum FoodType {
   SOUTH_AMERICAN
 }
 
+enum LocationType {
+  MOUNTAIN
+  RESTAURANT
+}
+
 enum MountainDifficulty {
   EASY
   HARD
