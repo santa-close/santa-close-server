@@ -39,7 +39,6 @@ fun EntityManager.createRestaurant(
           RestaurantFoodType(
             restaurant = null,
             foodType = it,
-            appUser = appUser,
           )
         }
         .toMutableList(),

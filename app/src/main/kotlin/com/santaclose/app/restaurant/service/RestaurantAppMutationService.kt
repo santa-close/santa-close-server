@@ -28,7 +28,6 @@ class RestaurantAppMutationService(
           RestaurantFoodType(
             restaurant = null,
             foodType = it,
-            appUser = em.getReference(AppUser::class.java, userId),
           )
         }
         .toMutableList()

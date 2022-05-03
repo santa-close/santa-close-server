@@ -10,7 +10,6 @@ data class CreateRestaurantAppInput(
   @field:NumberFormat(style = NumberFormat.Style.NUMBER) val mountainId: ID,
   val name: String,
   val description: String,
-  // FIXME: 최대 등록 이미지 개수 10개 확정인지?
   @field:Size(max = 10) val images: List<String>,
   @field:NotEmpty val foodTypes: List<FoodType>,
   val longitude: Double,
