@@ -1,11 +1,11 @@
 package com.santaclose.lib.s3Upload
 
 import arrow.core.Either.Companion.catch
-import aws.sdk.kotlin.runtime.auth.credentials.Credentials
 import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
 import aws.sdk.kotlin.runtime.endpoint.AwsEndpoint
 import aws.sdk.kotlin.runtime.endpoint.StaticEndpointResolver
 import aws.sdk.kotlin.services.s3.S3Client
+import aws.smithy.kotlin.runtime.auth.awscredentials.Credentials
 import aws.smithy.kotlin.runtime.content.ByteStream
 
 class S3Uploader private constructor(private val s3Client: S3Client) {
