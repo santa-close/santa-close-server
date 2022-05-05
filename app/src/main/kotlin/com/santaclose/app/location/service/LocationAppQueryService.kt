@@ -25,10 +25,9 @@ class LocationAppQueryService(
     }
 
     return runBlocking {
-      val service = this@LocationAppQueryService
       val ids = locations.map { it.id }
-      val mountains = async { service.mountainAppRepository.findByLocationIdIn(ids) }
-      val restaurants = async { service.restaurantAppRepository.findByLocationIdIn(ids) }
+      val mountains = async { mountainAppRepository.findByLocationIdIn(ids) }
+      val restaurants = async { restaurantAppRepository.findByLocationIdIn(ids) }
 
       val findPoint = { id: Long ->
         locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
