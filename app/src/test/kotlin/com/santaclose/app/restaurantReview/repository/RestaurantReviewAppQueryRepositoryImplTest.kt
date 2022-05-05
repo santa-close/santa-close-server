@@ -41,7 +41,7 @@ constructor(private val em: EntityManager) {
   @Nested
   inner class FindRestaurantRatingAverages {
     @Test
-    fun `식당에 대한 평균 리뷰를 조회한다`() {
+    fun `식당에 대한 평균 리뷰 및 리뷰 수를 조회한다`() {
       // given
       val appUser = em.createAppUser()
       val restaurant = em.createRestaurant(appUser)
