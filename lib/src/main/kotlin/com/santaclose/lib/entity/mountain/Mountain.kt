@@ -5,6 +5,7 @@ import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.type.MountainManagement
+import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import javax.persistence.*
 import javax.persistence.FetchType.LAZY
 import javax.validation.constraints.NotNull
@@ -18,4 +19,6 @@ class Mountain(
   @field:NotNull var altitude: Int,
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
   @OneToOne(fetch = LAZY, cascade = [CascadeType.PERSIST]) var location: Location,
+  @OneToMany(fetch = LAZY, mappedBy = "mountain")
+  var mountainRestaurant: MutableList<MountainRestaurant> = mutableListOf(),
 ) : BaseEntity()
