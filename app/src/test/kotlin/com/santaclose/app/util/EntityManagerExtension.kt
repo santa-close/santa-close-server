@@ -13,6 +13,11 @@ import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import com.santaclose.lib.entity.restaurant.Restaurant
+import com.santaclose.lib.entity.restaurant.RestaurantFoodType
+import com.santaclose.lib.entity.restaurant.type.FoodType
+import com.santaclose.lib.entity.restaurantReview.RestaurantRating
+import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import javax.persistence.EntityManager
 
 fun EntityManager.createQueryFactory() =
@@ -57,6 +62,19 @@ fun EntityManager.createMountainReview(
       appUser
     )
 ) = mountainReview.also { persist(it) }
+
+fun EntityManager.createRestaurantReview(appUser: AppUser, restaurant: Restaurant) =
+  RestaurantReview(
+      "title",
+      "content",
+      PriceComment.IS_CHEAP,
+      1,
+      RestaurantRating(1, 2, 3, 4, 5),
+      mutableListOf(),
+      restaurant,
+      appUser
+    )
+    .also { persist(it) }
 
 fun EntityManager.createMountainRestaurant(
   mountain: Mountain,

@@ -7,7 +7,7 @@ import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.querydsl.from.join
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
-import com.linecorp.kotlinjdsl.spring.data.selectQuery
+import com.linecorp.kotlinjdsl.spring.data.singleQuery
 import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
@@ -32,22 +32,20 @@ class MountainReviewAppQueryRepositoryImpl(
     }
 
   override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
-    springDataQueryFactory
-      .selectQuery<MountainRatingAverageDto> {
-        val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
-        selectMulti(
-          avg(MountainRating::scenery),
-          avg(MountainRating::tree),
-          avg(MountainRating::trail),
-          avg(MountainRating::parking),
-          avg(MountainRating::toilet),
-          avg(MountainRating::traffic),
-          count(col(MountainReview::id)),
-        )
-        associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
-        from(mountainReview)
-        join(MountainReview::mountain, JoinType.INNER)
-        where(col(Mountain::id).equal(mountainId))
-      }
-      .singleResult
+    springDataQueryFactory.singleQuery {
+      val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
+      selectMulti(
+        avg(MountainRating::scenery),
+        avg(MountainRating::tree),
+        avg(MountainRating::trail),
+        avg(MountainRating::parking),
+        avg(MountainRating::toilet),
+        avg(MountainRating::traffic),
+        count(col(MountainReview::id)),
+      )
+      associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
+      from(mountainReview)
+      join(MountainReview::mountain, JoinType.INNER)
+      where(col(Mountain::id).equal(mountainId))
+    }
 }

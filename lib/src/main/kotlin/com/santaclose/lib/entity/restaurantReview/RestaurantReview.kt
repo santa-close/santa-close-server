@@ -5,13 +5,8 @@ import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
-import javax.persistence.Convert
-import javax.persistence.Embedded
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
+import javax.persistence.*
 import javax.persistence.FetchType.LAZY
-import javax.persistence.ManyToOne
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
