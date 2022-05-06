@@ -83,6 +83,8 @@ type Query {
   locations(input: LocationAppInput!): [AppLocation!]! @auth(role : USER)
   "산 상세 조회"
   mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
+  "맛집 상세 조회"
+  restaurantDetail(input: RestaurantDetailAppInput!): Boolean! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
 }
@@ -220,6 +222,10 @@ input LocationAppInput {
 }
 
 input MountainDetailAppInput {
+  id: ID!
+}
+
+input RestaurantDetailAppInput {
   id: ID!
 }
 

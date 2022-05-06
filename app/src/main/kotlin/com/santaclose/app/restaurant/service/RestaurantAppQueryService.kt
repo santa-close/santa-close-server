@@ -33,7 +33,7 @@ class RestaurantAppQueryService(
       restaurant.foodType,
       restaurantRatingAverage,
       restaurantReviews,
-      mountains
+      mountains,
     )
   }
 }

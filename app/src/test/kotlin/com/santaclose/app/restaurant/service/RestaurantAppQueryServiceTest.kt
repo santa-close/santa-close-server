@@ -26,7 +26,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(private val 
     RestaurantAppQueryService(
       restaurantAppQueryRepository,
       restaurantReviewAppQueryRepository,
-      mountainRestaurantAppQueryRepository
+      mountainRestaurantAppQueryRepository,
     )
 
   @Nested

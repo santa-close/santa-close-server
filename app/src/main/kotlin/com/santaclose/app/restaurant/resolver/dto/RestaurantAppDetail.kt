@@ -11,5 +11,5 @@ data class RestaurantAppDetail(
   val foodType: FoodType,
   val restaurantRatingAverage: RestaurantRatingAverageDto,
   val restaurantReviews: List<LatestRestaurantReviewDto>,
-  val mountains: List<LatestMountainDto>
+  val mountains: List<LatestMountainDto>,
 )
