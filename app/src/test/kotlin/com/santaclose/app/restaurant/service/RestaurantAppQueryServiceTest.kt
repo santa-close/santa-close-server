@@ -3,10 +3,11 @@ package com.santaclose.app.restaurant.service
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepositoryImpl
+import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverageDto
 import com.santaclose.app.util.*
-import com.santaclose.lib.web.toID
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -41,14 +42,15 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(private val 
       em.createMountainRestaurant(mountain, restaurant)
 
       // when
-      val result = restaurantAppQueryService.findDetail(restaurant.id.toID())
+      val result = restaurantAppQueryService.findDetail(restaurant.id)
 
       // then
       result.apply {
         name shouldBe restaurant.name
         address shouldBe restaurant.location.address
         foodType shouldBe restaurant.foodType
-        restaurantRatingAverage.apply { kind shouldBe restaurantReview.rating.kind }
+        restaurantRatingAverage.shouldBeInstanceOf<RestaurantRatingAverageDto>()
+        restaurantRatingAverage.kind shouldBe restaurantReview.rating.kind
         restaurantReviews shouldHaveSize 1
         mountains shouldHaveSize 1
       }

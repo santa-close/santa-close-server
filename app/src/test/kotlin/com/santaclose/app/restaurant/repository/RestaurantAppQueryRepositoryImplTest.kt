@@ -31,10 +31,10 @@ constructor(private val em: EntityManager) {
       val result = restaurantAppQueryRepository.findOneWithLocation(restaurant.id)
 
       // then
-      result.also {
-        it.id shouldBe restaurant.id
-        it.location.id shouldBe restaurant.location.id
-        it.location.point shouldBe restaurant.location.point
+      result.apply {
+        id shouldBe restaurant.id
+        location.id shouldBe restaurant.location.id
+        location.point shouldBe restaurant.location.point
       }
     }
   }

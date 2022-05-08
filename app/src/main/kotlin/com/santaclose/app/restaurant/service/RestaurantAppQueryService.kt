@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurant.service
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
 import com.santaclose.app.restaurant.resolver.dto.RestaurantAppDetail
@@ -17,7 +16,7 @@ class RestaurantAppQueryService(
   private val restaurantReviewLimit = 5
   private val mountainLimit = 5
 
-  fun findDetail(id: ID): RestaurantAppDetail {
+  fun findDetail(id: Long): RestaurantAppDetail {
     val restaurant = restaurantAppQueryRepository.findOneWithLocation(id.toLong())
     val restaurantReviews =
       restaurantReviewAppQueryRepository.findAllByRestaurant(restaurant.id, restaurantReviewLimit)

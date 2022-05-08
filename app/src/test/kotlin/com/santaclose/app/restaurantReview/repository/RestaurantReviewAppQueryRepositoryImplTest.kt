@@ -51,15 +51,15 @@ constructor(private val em: EntityManager) {
       val result = restaurantReviewAppQueryRepository.findRestaurantRatingAverages(restaurant.id)
 
       // then
-      result.also {
+      result.apply {
         val rating = restaurantReview.rating
-        it.taste shouldBe rating.taste
-        it.parkingSpace shouldBe rating.parkingSpace
-        it.kind shouldBe rating.kind
-        it.clean shouldBe rating.clean
-        it.mood shouldBe rating.mood
-        it.totalCount shouldBe 1
-        it.average shouldBe 3.0
+        taste shouldBe rating.taste
+        parkingSpace shouldBe rating.parkingSpace
+        kind shouldBe rating.kind
+        clean shouldBe rating.clean
+        mood shouldBe rating.mood
+        totalCount shouldBe 1
+        average shouldBe 3.0
       }
     }
   }
