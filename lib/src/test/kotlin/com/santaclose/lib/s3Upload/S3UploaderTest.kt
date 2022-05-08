@@ -53,7 +53,7 @@ internal class S3UploaderTest {
   inner class Upload {
 
     @Test
-    fun `ÆÄÀÏ ¾÷·Îµå¸¦ ¼öÇàÇÑ´Ù`() {
+    fun `íŒŒì¼ ì—…ë¡œë“œë¥¼ ìˆ˜í–‰í•œë‹¤`() {
       runBlocking {
         // given
         val file = MockMultipartFile("fileName", "file content".toByteArray())
