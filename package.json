@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node mock-server/src/index.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate": "ts-node mock-server/src/generateIntrospection.ts"
   },
   "dependencies": {
     "apollo-server": "^3.6.1",
