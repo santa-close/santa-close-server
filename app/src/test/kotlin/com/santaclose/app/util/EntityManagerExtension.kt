@@ -12,6 +12,7 @@ import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import com.santaclose.lib.entity.restaurant.Restaurant
+import com.santaclose.lib.entity.restaurant.RestaurantFoodType
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import javax.persistence.EntityManager
 
@@ -27,9 +28,23 @@ fun EntityManager.createAppUser(
 
 fun EntityManager.createRestaurant(
   appUser: AppUser,
-  location: Location = createLocation(),
+  foodTypes: List<FoodType>,
   restaurant: Restaurant =
-    Restaurant("name", "description", mutableListOf(), FoodType.ASIA, appUser, location)
+    Restaurant(
+      "name",
+      "description",
+      mutableListOf(),
+      foodTypes
+        .map {
+          RestaurantFoodType(
+            restaurant = null,
+            foodType = it,
+          )
+        }
+        .toMutableList(),
+      appUser,
+      createLocation()
+    )
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createMountain(

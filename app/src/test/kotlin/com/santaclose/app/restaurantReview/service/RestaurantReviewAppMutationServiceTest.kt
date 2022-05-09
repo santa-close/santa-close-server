@@ -7,6 +7,7 @@ import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAp
 import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingInput
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createRestaurant
+import com.santaclose.lib.entity.restaurant.type.FoodType
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
@@ -60,7 +61,8 @@ constructor(
     fun `RestaurantReview를 저장한다`() {
       // given
       val appUser = em.createAppUser()
-      val restaurant = em.createRestaurant(appUser)
+      val foodTypes = listOf(FoodType.ASIA, FoodType.FOOD_COURT, FoodType.AMERICAN)
+      val restaurant = em.createRestaurant(appUser, foodTypes)
       val input =
         CreateRestaurantReviewAppInput(
           ID(restaurant.id.toString()),
