@@ -10,8 +10,8 @@ async function generateIntrospection() {
     buildSchema(schema.toString())
   );
   writeFileSync(
-    __dirname + '/introspection.json',
-    JSON.stringify(introspectionQuery)
+    'introspection.json',
+    JSON.stringify({ data: introspectionQuery })
   );
 }
 
