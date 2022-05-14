@@ -50,6 +50,17 @@ type CategoryAppList {
   mountainDifficulty: [MountainDifficultyCategory!]!
 }
 
+type LatestMountain {
+  id: ID!
+  name: String!
+}
+
+type LatestRestaurantReview {
+  content: String!
+  id: ID!
+  title: String!
+}
+
 type MountainAppLocation implements AppLocation {
   coordinate: AppCoordinate!
   id: ID!
@@ -84,15 +95,34 @@ type Query {
   "산 상세 조회"
   mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
   "맛집 상세 조회"
-  restaurantDetail(input: RestaurantDetailAppInput!): Boolean! @auth(role : USER)
+  restaurantDetail(input: RestaurantDetailAppInput!): RestaurantAppDetail! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
+}
+
+type RestaurantAppDetail {
+  address: String!
+  foodType: [FoodType!]!
+  mountains: [LatestMountain!]!
+  name: String!
+  restaurantRatingAverage: RestaurantRatingAverage!
+  restaurantReviews: [LatestRestaurantReview!]!
 }
 
 type RestaurantAppLocation implements AppLocation {
   coordinate: AppCoordinate!
   id: ID!
   type: LocationType!
+}
+
+type RestaurantRatingAverage {
+  average: Float!
+  clean: Float!
+  kind: Float!
+  mood: Float!
+  parkingSpace: Float!
+  taste: Float!
+  totalCount: ID!
 }
 
 type SampleAppDetail {

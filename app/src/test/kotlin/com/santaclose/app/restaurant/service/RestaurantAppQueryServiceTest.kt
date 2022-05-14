@@ -3,8 +3,10 @@ package com.santaclose.app.restaurant.service
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepositoryImpl
-import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverageDto
+import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingAverage
 import com.santaclose.app.util.*
+import com.santaclose.lib.entity.restaurant.type.FoodType
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -36,7 +38,8 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(private val 
     fun `식당 상세 정보를 조회한다`() {
       // given
       val appUser = em.createAppUser()
-      val restaurant = em.createRestaurant(appUser)
+      val foodTypes = listOf(FoodType.ASIA)
+      val restaurant = em.createRestaurant(appUser, foodTypes)
       val mountain = em.createMountain(appUser)
       val restaurantReview = em.createRestaurantReview(appUser, restaurant)
       em.createMountainRestaurant(mountain, restaurant)
@@ -45,11 +48,11 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(private val 
       val result = restaurantAppQueryService.findDetail(restaurant.id)
 
       // then
-      result.apply {
+      assertSoftly(result) {
         name shouldBe restaurant.name
         address shouldBe restaurant.location.address
-        foodType shouldBe restaurant.foodType
-        restaurantRatingAverage.shouldBeInstanceOf<RestaurantRatingAverageDto>()
+        foodType shouldBe restaurant.restaurantFoodType.map { it.foodType }
+        restaurantRatingAverage.shouldBeInstanceOf<RestaurantRatingAverage>()
         restaurantRatingAverage.kind shouldBe restaurantReview.rating.kind
         restaurantReviews shouldHaveSize 1
         mountains shouldHaveSize 1

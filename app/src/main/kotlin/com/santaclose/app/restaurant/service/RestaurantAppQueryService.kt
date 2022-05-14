@@ -4,7 +4,6 @@ import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQue
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
 import com.santaclose.app.restaurant.resolver.dto.RestaurantAppDetail
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepository
-import com.santaclose.lib.web.toLong
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,7 +16,7 @@ class RestaurantAppQueryService(
   private val mountainLimit = 5
 
   fun findDetail(id: Long): RestaurantAppDetail {
-    val restaurant = restaurantAppQueryRepository.findOneWithLocation(id.toLong())
+    val restaurant = restaurantAppQueryRepository.findOneWithLocation(id)
     val restaurantReviews =
       restaurantReviewAppQueryRepository.findAllByRestaurant(restaurant.id, restaurantReviewLimit)
     val restaurantRatingAverage =
@@ -26,10 +25,8 @@ class RestaurantAppQueryService(
     val mountains =
       mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, mountainLimit)
 
-    return RestaurantAppDetail(
-      restaurant.name,
-      restaurant.location.address,
-      restaurant.foodType,
+    return RestaurantAppDetail.by(
+      restaurant,
       restaurantRatingAverage,
       restaurantReviews,
       mountains,

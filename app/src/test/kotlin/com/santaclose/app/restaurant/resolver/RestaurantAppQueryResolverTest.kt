@@ -3,13 +3,14 @@
 // import com.ninjasquad.springmockk.MockkBean
 // import com.santaclose.app.restaurant.resolver.dto.RestaurantAppDetail
 // import com.santaclose.app.restaurant.service.RestaurantAppQueryService
-// import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverageDto
+// import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingAverage
 // import com.santaclose.app.util.AppContextMocker
 // import com.santaclose.app.util.GraphqlBody
 // import com.santaclose.app.util.gqlRequest
 // import com.santaclose.app.util.withSuccess
 // import com.santaclose.lib.entity.appUser.type.AppUserRole
 // import com.santaclose.lib.entity.restaurant.type.FoodType
+// import com.santaclose.lib.web.toID
 // import io.mockk.every
 // import org.junit.jupiter.api.Nested
 // import org.junit.jupiter.api.Test
@@ -34,17 +35,39 @@
 //      val query =
 //        GraphqlBody(
 //          """query{
-//              | restaurantDetail(input: {
-//              | id: "1"
-//              | })
-//              |}""".trimMargin()
+//              | restaurantDetail(input: { id: "1" }) {
+//              |     address
+//              |     foodType
+//              |     name
+//              |     mountains {
+//              |       id
+//              |       name
+//              |     }
+//              |     restaurantRatingAverage {
+//              |         average
+//              |         clean
+//              |         kind
+//              |         mood
+//              |         parkingSpace
+//              |         taste
+//              |         totalCount
+//              |     }
+//              |     restaurantReviews: {
+//              |         content
+//              |         id
+//              |         title
+//              |     }
+//              | }
+//              |}
+//          """.trimMargin()
 //        )
 //      every { restaurantAppQueryService.findDetail(any()) } returns
 //        RestaurantAppDetail(
 //          name = "name",
 //          address = "address",
-//          foodType = FoodType.FOOD_COURT,
-//          restaurantRatingAverage = RestaurantRatingAverageDto(1.0, 2.0, 3.0, 4.0, 5.0, 6),
+//          foodType = listOf(FoodType.FOOD_COURT),
+//          restaurantRatingAverage =
+//            RestaurantRatingAverage(1.0, 2.0, 3.0, 4.0, 5.0, 6L.toID(), 7.0),
 //          restaurantReviews = listOf(),
 //          mountains = listOf()
 //        )

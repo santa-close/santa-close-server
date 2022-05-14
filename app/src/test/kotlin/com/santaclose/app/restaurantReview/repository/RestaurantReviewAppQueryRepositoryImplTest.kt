@@ -4,6 +4,8 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
+import com.santaclose.lib.entity.restaurant.type.FoodType
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -25,7 +27,8 @@ constructor(private val em: EntityManager) {
     fun `식당에 대한 최신 리뷰순으로 조회한다`() {
       // given
       val appUser = em.createAppUser()
-      val restaurant = em.createRestaurant(appUser)
+      val foodTypes = listOf(FoodType.ASIA)
+      val restaurant = em.createRestaurant(appUser, foodTypes)
       val limit = 5
       repeat(limit) { em.createRestaurantReview(appUser, restaurant) }
 
@@ -44,14 +47,15 @@ constructor(private val em: EntityManager) {
     fun `식당에 대한 평균 리뷰 및 리뷰 수를 조회한다`() {
       // given
       val appUser = em.createAppUser()
-      val restaurant = em.createRestaurant(appUser)
+      val foodTypes = listOf(FoodType.ASIA)
+      val restaurant = em.createRestaurant(appUser, foodTypes)
       val restaurantReview = em.createRestaurantReview(appUser, restaurant)
 
       // when
       val result = restaurantReviewAppQueryRepository.findRestaurantRatingAverages(restaurant.id)
 
       // then
-      result.apply {
+      assertSoftly(result) {
         val rating = restaurantReview.rating
         taste shouldBe rating.taste
         parkingSpace shouldBe rating.parkingSpace
