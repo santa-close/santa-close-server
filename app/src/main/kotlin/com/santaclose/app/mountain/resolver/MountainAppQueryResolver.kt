@@ -1,21 +1,27 @@
 package com.santaclose.app.mountain.resolver
 
+import arrow.core.Either.Companion.catch
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.operations.Query
 import com.santaclose.app.auth.directive.Auth
 import com.santaclose.app.mountain.resolver.dto.MountainDetailAppInput
+import com.santaclose.app.mountain.resolver.dto.MountainSummary
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.logger.logger
+import com.santaclose.lib.web.error.getOrThrow
 import com.santaclose.lib.web.error.toGraphQLException
+import com.santaclose.lib.web.toLong
 import javax.validation.Valid
 import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
 
 @Component
 @Validated
-class MountainAppQueryResolver(private val mountainAppQueryService: MountainAppQueryService) :
-  Query {
+class MountainAppQueryResolver(
+  private val mountainAppQueryService: MountainAppQueryService,
+) : Query {
   val logger = logger()
 
   @Auth(AppUserRole.USER)
@@ -31,4 +37,10 @@ class MountainAppQueryResolver(private val mountainAppQueryService: MountainAppQ
       throw e.toGraphQLException()
     }
   }
+
+  @Auth(AppUserRole.USER)
+  @GraphQLDescription("산 요약 정보")
+  suspend fun mountainSummary(id: ID): MountainSummary =
+    catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainSummary::by) }
+      .getOrThrow()
 }
