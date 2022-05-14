@@ -11,4 +11,8 @@ data class MountainRatingAverageDto(
 ) {
   val average: Double
     get() = (scenery + tree + trail + parking + toilet + traffic) / 6
+
+  companion object {
+    val empty = MountainRatingAverageDto(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0)
+  }
 }

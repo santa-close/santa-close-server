@@ -32,20 +32,26 @@ class MountainReviewAppQueryRepositoryImpl(
     }
 
   override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
-    springDataQueryFactory.singleQuery {
-      val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
-      selectMulti(
-        avg(MountainRating::scenery),
-        avg(MountainRating::tree),
-        avg(MountainRating::trail),
-        avg(MountainRating::parking),
-        avg(MountainRating::toilet),
-        avg(MountainRating::traffic),
-        count(col(MountainReview::id)),
-      )
-      associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
-      from(mountainReview)
-      join(MountainReview::mountain, JoinType.INNER)
-      where(col(Mountain::id).equal(mountainId))
+    try {
+      springDataQueryFactory
+        .selectQuery<MountainRatingAverageDto> {
+          val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
+          selectMulti(
+            avg(MountainRating::scenery),
+            avg(MountainRating::tree),
+            avg(MountainRating::trail),
+            avg(MountainRating::parking),
+            avg(MountainRating::toilet),
+            avg(MountainRating::traffic),
+            count(col(MountainReview::id)),
+          )
+          associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
+          from(mountainReview)
+          join(MountainReview::mountain, JoinType.INNER)
+          where(col(Mountain::id).equal(mountainId))
+        }
+        .singleResult
+    } catch (e: IllegalArgumentException) {
+      MountainRatingAverageDto.empty
     }
 }
