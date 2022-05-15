@@ -55,4 +55,4 @@ jobs:
       - name: Trigger dispatch to generate graphql schema
         run: gh api /repos/santa-close/santa-close.github.io/dispatches -f event_type='schema'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_PAGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SCHEMA_PAGE_TOKEN }}
