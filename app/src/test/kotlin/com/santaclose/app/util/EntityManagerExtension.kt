@@ -12,8 +12,6 @@ import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import com.santaclose.lib.entity.restaurant.Restaurant
-import com.santaclose.lib.entity.restaurant.RestaurantFoodType
-import com.santaclose.lib.entity.restaurant.type.FoodType
 import javax.persistence.EntityManager
 
 fun EntityManager.createQueryFactory() =
@@ -28,23 +26,9 @@ fun EntityManager.createAppUser(
 
 fun EntityManager.createRestaurant(
   appUser: AppUser,
-  foodTypes: List<FoodType>,
+  location: Location = createLocation(),
   restaurant: Restaurant =
-    Restaurant(
-      "name",
-      "description",
-      mutableListOf(),
-      foodTypes
-        .map {
-          RestaurantFoodType(
-            restaurant = null,
-            foodType = it,
-          )
-        }
-        .toMutableList(),
-      appUser,
-      createLocation()
-    )
+    Restaurant("name", "description", mutableListOf(), mutableListOf(), appUser, location)
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createMountain(

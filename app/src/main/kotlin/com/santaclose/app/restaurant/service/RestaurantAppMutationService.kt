@@ -17,7 +17,7 @@ class RestaurantAppMutationService(
   private val restaurantRepository: RestaurantAppRepository,
   private val mountainAppRepository: MountainAppRepository,
   private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
-  private val em: EntityManager
+  private val em: EntityManager,
 ) {
 
   fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
@@ -27,29 +27,18 @@ class RestaurantAppMutationService(
       throw NoResultException("유효하지 않은 mountainId 입니다.")
     }
 
-    val restaurantFoodTypes: MutableList<RestaurantFoodType> =
-      input
-        .foodTypes
-        .map {
-          RestaurantFoodType(
-            restaurant = null,
-            foodType = it,
-          )
-        }
-        .toMutableList()
-
     val restaurant =
       Restaurant(
         name = input.name,
         description = input.description,
         images = input.images,
-        restaurantFoodType = restaurantFoodTypes,
         appUser = em.getReference(AppUser::class.java, userId),
         location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
       )
+    val restaurantFoodTypes =
+      input.foodTypes.map { RestaurantFoodType(restaurant = restaurant, foodType = it) }
 
-    // TODO: JPARepository 대신 EntityManager persist 사용하는 이유?
-    //    em.persist(restaurant)
     restaurantRepository.save(restaurant)
+    restaurantFoodTypeAppRepository.saveAll(restaurantFoodTypes)
   }
 }

@@ -12,7 +12,6 @@ import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
-import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.types.shouldBeInstanceOf
 import javax.persistence.EntityManager
@@ -83,8 +82,8 @@ constructor(
       // given
       val appUser = em.createAppUser()
       val location = em.createLocation(Location.create(longitude = 126.4, latitude = 37.5))
-      val foodTypes = listOf(FoodType.ASIA, FoodType.FOOD_COURT, FoodType.AMERICAN)
-      em.createRestaurant(appUser, foodTypes)
+      em.createRestaurant(appUser, location)
+
       val input =
         LocationAppInput(
           diagonalFrom = AppCoordinate(longitude = 126.3, latitude = 37.6),
