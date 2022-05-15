@@ -28,9 +28,9 @@ data class RestaurantAppDetail(
         restaurant.name,
         restaurant.location.address,
         restaurant.restaurantFoodType.map { it.foodType },
-        averageDto.toDetail(),
-        restaurantReviewDtos.map { it.toDetail() },
-        mountainDtos.map { it.toDetail() }
+        RestaurantRatingAverage.by(averageDto),
+        restaurantReviewDtos.map { LatestRestaurantReview.by(it) },
+        mountainDtos.map { LatestMountain.by(it) }
       )
   }
 }
