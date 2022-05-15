@@ -21,7 +21,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantReviewAppMutationResolverTest
+internal class 공RestaurantReviewAppMutationResolverTest
 @Autowired
 constructor(
   private val webTestClient: WebTestClient,
