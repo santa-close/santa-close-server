@@ -4,7 +4,6 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
-import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
@@ -25,9 +24,8 @@ constructor(private val em: EntityManager) {
     fun `식당과 함께 위치 정보를 조회한다`() {
       // given
       val appUser = em.createAppUser()
-      val foodTypes = listOf(FoodType.ASIA)
       val location = em.createLocation()
-      val restaurant = em.createRestaurant(appUser, foodTypes, location)
+      val restaurant = em.createRestaurant(appUser, location)
 
       // when
       val result = restaurantAppQueryRepository.findOneWithLocation(restaurant.id)

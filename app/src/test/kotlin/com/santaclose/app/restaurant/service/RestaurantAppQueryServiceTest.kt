@@ -5,7 +5,6 @@ import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingAverage
 import com.santaclose.app.util.*
-import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -38,8 +37,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(private val 
     fun `식당 상세 정보를 조회한다`() {
       // given
       val appUser = em.createAppUser()
-      val foodTypes = listOf(FoodType.ASIA)
-      val restaurant = em.createRestaurant(appUser, foodTypes)
+      val restaurant = em.createRestaurant(appUser)
       val mountain = em.createMountain(appUser)
       val restaurantReview = em.createRestaurantReview(appUser, restaurant)
       em.createMountainRestaurant(mountain, restaurant)

@@ -10,7 +10,6 @@ import com.santaclose.app.util.gqlRequest
 import com.santaclose.app.util.withSuccess
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.restaurant.type.FoodType
-import com.santaclose.lib.web.toID
 import io.mockk.every
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -66,8 +65,7 @@ constructor(
           name = "name",
           address = "address",
           foodType = listOf(FoodType.FOOD_COURT),
-          restaurantRatingAverage =
-            RestaurantRatingAverage(1.0, 2.0, 3.0, 4.0, 5.0, 6L.toID(), 7.0),
+          restaurantRatingAverage = RestaurantRatingAverage(1.0, 2.0, 3.0, 4.0, 5.0, 6, 7.0),
           restaurantReviews = listOf(),
           mountains = listOf()
         )

@@ -13,8 +13,6 @@ import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import com.santaclose.lib.entity.restaurant.Restaurant
-import com.santaclose.lib.entity.restaurant.RestaurantFoodType
-import com.santaclose.lib.entity.restaurant.type.FoodType
 import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment

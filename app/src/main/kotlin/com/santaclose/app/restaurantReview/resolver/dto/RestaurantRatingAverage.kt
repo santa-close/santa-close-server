@@ -1,8 +1,6 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverageDto
-import com.santaclose.lib.web.toID
 
 data class RestaurantRatingAverage(
   val taste: Double,
@@ -10,7 +8,7 @@ data class RestaurantRatingAverage(
   val kind: Double,
   val clean: Double,
   val mood: Double,
-  val totalCount: ID,
+  val totalCount: Int,
   val average: Double,
 ) {
   companion object {
@@ -21,7 +19,7 @@ data class RestaurantRatingAverage(
         dto.kind,
         dto.clean,
         dto.mood,
-        dto.totalCount.toID(),
+        dto.totalCount.toInt(),
         dto.average
       )
   }
