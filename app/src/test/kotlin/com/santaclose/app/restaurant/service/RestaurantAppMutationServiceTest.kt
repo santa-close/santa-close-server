@@ -8,6 +8,7 @@ import com.santaclose.app.restaurant.resolver.dto.CreateRestaurantAppInput
 import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -61,19 +62,16 @@ constructor(
       // then
       val restaurant = restaurantRepository.findAll()
       restaurant shouldHaveSize 1
-      restaurant.firstOrNull()?.let {
-        //        restaurant.id.toString() shouldBe input.restaurantId.value
-        //        appUser.id shouldBe appUser.id
-        //        title shouldBe input.title
-        //        content shouldBe input.content
-        //        rating.mood shouldBe input.rating.mood.toByte()
-        //        rating.kind shouldBe input.rating.kind.toByte()
-        //        rating.parkingSpace shouldBe input.rating.parkingSpace.toByte()
-        //        rating.clean shouldBe input.rating.clean.toByte()
-        //        rating.taste shouldBe input.rating.taste.toByte()
-        //        priceAverage shouldBe input.priceAverage
-        //        priceComment shouldBe input.priceComment
-        //        images shouldBe input.images
+      restaurant.firstOrNull()?.also {
+        it.name shouldBe input.name
+        it.description shouldBe input.description
+        it.images shouldBe input.images
+        it.restaurantFoodType shouldBe input.foodTypes
+        it.location.point.x shouldBe input.latitude
+        it.location.point.y shouldBe input.longitude
+        it.location.address shouldBe input.address
+        it.location.postcode shouldBe input.postcode
+        it.appUser.id shouldBe appUser.id
       }
     }
   }
