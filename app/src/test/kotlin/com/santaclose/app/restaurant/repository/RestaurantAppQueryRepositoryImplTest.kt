@@ -1,10 +1,7 @@
 package com.santaclose.app.restaurant.repository
 
-import com.santaclose.app.util.createAppUser
-import com.santaclose.app.util.createMountain
-import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
-import com.santaclose.app.util.createRestaurant
+import com.santaclose.app.util.*
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -51,14 +48,14 @@ constructor(
       val restaurant = em.createRestaurant(appUser, location)
       // when
 
-
       val result = restaurantAppQueryRepository.findOneWithLocation(restaurant.id)
+
       // then
+      assertSoftly(result) {
         id shouldBe restaurant.id
-      result.apply {
         location.id shouldBe restaurant.location.id
-      }
         location.point shouldBe restaurant.location.point
+      }
     }
   }
 }

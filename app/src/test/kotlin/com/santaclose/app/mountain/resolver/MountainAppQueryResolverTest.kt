@@ -84,9 +84,9 @@ constructor(
 
       // then
       result.withSuccess("mountainSummary") {
-        //        expect("address").isEqualTo("test address")
-        //        expect("reviewCount").isEqualTo(0)
-        //        expect("rating").isEqualTo(0)
+        expect("address").isEqualTo("test address")
+        expect("reviewCount").isEqualTo(0)
+        expect("rating").isEqualTo(0)
       }
     }
   }

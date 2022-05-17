@@ -103,12 +103,17 @@ type Query {
   locations(input: LocationAppInput!): [AppLocation!]! @auth(role : USER)
   "산 상세 조회"
   mountainDetail(input: MountainDetailAppInput!): Boolean! @auth(role : USER)
-  "맛집 상세 조회"
-  restaurantDetail(id: ID!): RestaurantAppDetail! @auth(role : USER)
   "산 요약 정보"
   mountainSummary(id: ID!): MountainAppSummary! @auth(role : USER)
+  "맛집 상세 조회"
+  restaurantDetail(id: ID!): RestaurantAppDetail! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
+}
+
+type RestaurantAppCoordinate {
+  coordinate: AppCoordinate!
+  id: ID!
 }
 
 type RestaurantAppDetail {
@@ -118,11 +123,6 @@ type RestaurantAppDetail {
   name: String!
   restaurantRatingAverage: RestaurantRatingAverage!
   restaurantReviews: [LatestRestaurantReview!]!
-}
-
-type RestaurantAppCoordinate {
-  coordinate: AppCoordinate!
-  id: ID!
 }
 
 type RestaurantAppLocation implements AppLocation {
