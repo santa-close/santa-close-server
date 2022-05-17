@@ -5,8 +5,8 @@ import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.scalars.ID
 import com.expediagroup.graphql.server.operations.Query
 import com.santaclose.app.auth.directive.Auth
+import com.santaclose.app.mountain.resolver.dto.MountainAppSummary
 import com.santaclose.app.mountain.resolver.dto.MountainDetailAppInput
-import com.santaclose.app.mountain.resolver.dto.MountainSummary
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.logger.logger
@@ -40,7 +40,8 @@ class MountainAppQueryResolver(
 
   @Auth(AppUserRole.USER)
   @GraphQLDescription("산 요약 정보")
-  suspend fun mountainSummary(id: ID): MountainSummary =
-    catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainSummary::by) }
+  suspend fun mountainSummary(id: ID): MountainAppSummary =
+    catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
+      .tapLeft { logger.error(it.message, it) }
       .getOrThrow()
 }

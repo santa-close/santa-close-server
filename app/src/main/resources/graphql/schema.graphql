@@ -67,15 +67,18 @@ type MountainAppLocation implements AppLocation {
   type: LocationType!
 }
 
-type MountainDifficultyCategory {
-  code: MountainDifficulty!
-  name: String!
-}
-
-type MountainSummary {
+type MountainAppSummary {
   address: String!
   id: ID!
   imageUrl: String!
+  locations: [RestaurantAppCoordinate!]!
+  rating: Float!
+  reviewCount: Int!
+}
+
+type MountainDifficultyCategory {
+  code: MountainDifficulty!
+  name: String!
 }
 
 type Mutation {
@@ -103,7 +106,7 @@ type Query {
   "맛집 상세 조회"
   restaurantDetail(id: ID!): RestaurantAppDetail! @auth(role : USER)
   "산 요약 정보"
-  mountainSummary(id: ID!): MountainSummary! @auth(role : USER)
+  mountainSummary(id: ID!): MountainAppSummary! @auth(role : USER)
   "샘플 데이터"
   sample(input: SampleAppItemInput!): SampleAppDetail! @auth(role : USER)
 }
@@ -115,6 +118,11 @@ type RestaurantAppDetail {
   name: String!
   restaurantRatingAverage: RestaurantRatingAverage!
   restaurantReviews: [LatestRestaurantReview!]!
+}
+
+type RestaurantAppCoordinate {
+  coordinate: AppCoordinate!
+  id: ID!
 }
 
 type RestaurantAppLocation implements AppLocation {
