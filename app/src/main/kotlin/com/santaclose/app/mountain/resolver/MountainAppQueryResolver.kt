@@ -40,7 +40,7 @@ class MountainAppQueryResolver(
 
   @Auth(AppUserRole.USER)
   @GraphQLDescription("산 요약 정보")
-  suspend fun mountainSummary(id: ID): MountainAppSummary =
+  fun mountainSummary(id: ID): MountainAppSummary =
     catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
       .tapLeft { logger.error(it.message, it) }
       .getOrThrow()

@@ -8,7 +8,7 @@ import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryReposi
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
 import com.santaclose.lib.web.toLong
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
 
 @Service
@@ -32,7 +32,7 @@ class MountainAppQueryService(
     )
   }
 
-  suspend fun findOneSummary(mountainId: Long): MountainSummaryDto = coroutineScope {
+  fun findOneSummary(mountainId: Long): MountainSummaryDto = runBlocking {
     val mountain = async { mountainAppQueryRepository.findOneWithLocation(mountainId) }
     val locations = async { restaurantAppQueryRepository.findLocationByMountain(mountainId) }
     val ratings = async { mountainReviewAppQueryRepository.findMountainRatingAverages(mountainId) }

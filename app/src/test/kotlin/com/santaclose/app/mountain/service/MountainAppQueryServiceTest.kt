@@ -16,7 +16,6 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
-import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -70,7 +69,7 @@ constructor(
   @Nested
   inner class FindOneSummary {
     @Test
-    fun `산 기본정보를 가져온다`() = runTest {
+    fun `산 기본정보를 가져온다`() {
       // given
       val appUser = em.createAppUser()
       val mountain = em.createMountain(appUser)
@@ -83,7 +82,7 @@ constructor(
     }
 
     @Test
-    fun `산 후기의 평균과 개수정보를 가져온다`() = runTest {
+    fun `산 후기의 평균과 개수정보를 가져온다`() {
       // given
       val appUser = em.createAppUser()
       val mountain = em.createMountain(appUser)
@@ -98,7 +97,7 @@ constructor(
     }
 
     @Test
-    fun `산과 연결된 식당의 위치정보를 가져온다`() = runTest {
+    fun `산과 연결된 식당의 위치정보를 가져온다`() {
       // given
       val appUser = em.createAppUser()
       val mountain = em.createMountain(appUser)
