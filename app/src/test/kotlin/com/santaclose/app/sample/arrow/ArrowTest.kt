@@ -3,7 +3,7 @@ package com.santaclose.app.sample.arrow
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
-import arrow.core.computations.option
+import arrow.core.continuations.option.eager
 import arrow.core.filterOption
 import arrow.core.some
 import io.kotest.assertions.arrow.core.shouldBeSome
@@ -38,14 +38,13 @@ internal class ArrowTest {
       //     .map { it + 10 }
 
       // when
-      val result =
-        option.eager<Int> {
-          val foo = getFoo().bind()
-          val bar = foo.bar.bind()
-          val result = divideBy100(bar.number).bind()
+      val result = eager {
+        val foo = getFoo().bind()
+        val bar = foo.bar.bind()
+        val result = divideBy100(bar.number).bind()
 
-          result + 100
-        }
+        result + 100
+      }
 
       // then
       result shouldBeSome 102

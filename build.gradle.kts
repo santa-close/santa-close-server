@@ -34,7 +34,7 @@ subprojects {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("io.arrow-kt:arrow-core:1.0.1")
+    implementation("io.arrow-kt:arrow-core:1.1.2")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("aws.sdk.kotlin:s3:0.+")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.200")
