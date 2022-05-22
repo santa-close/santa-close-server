@@ -6,7 +6,9 @@ import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantFoodTypeAppRepository
 import com.santaclose.app.restaurant.resolver.dto.CreateRestaurantAppInput
 import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.restaurant.type.FoodType
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
@@ -42,10 +44,10 @@ constructor(
     fun `정상적으로 식당 정보를 저장한다 - 성공`() {
       // given
       val appUser = em.createAppUser()
-
+      val mountain = em.createMountain(appUser)
       val input =
         CreateRestaurantAppInput(
-          mountainId = ID("1"),
+          mountainId = ID(mountain.id.toString()),
           name = "식당 이름",
           description = "식당 설명",
           images = images,
@@ -62,16 +64,16 @@ constructor(
       // then
       val restaurant = restaurantRepository.findAll()
       restaurant shouldHaveSize 1
-      restaurant.firstOrNull()?.also {
-        it.name shouldBe input.name
-        it.description shouldBe input.description
-        it.images shouldBe input.images
-        it.restaurantFoodType shouldBe input.foodTypes
-        it.location.point.x shouldBe input.latitude
-        it.location.point.y shouldBe input.longitude
-        it.location.address shouldBe input.address
-        it.location.postcode shouldBe input.postcode
-        it.appUser.id shouldBe appUser.id
+      assertSoftly(restaurant.first()) {
+        name shouldBe input.name
+        description shouldBe input.description
+        images shouldBe input.images
+        restaurantFoodType shouldBe input.foodTypes
+        location.point.x shouldBe input.latitude
+        location.point.y shouldBe input.longitude
+        location.address shouldBe input.address
+        location.postcode shouldBe input.postcode
+        appUser.id shouldBe appUser.id
       }
     }
   }

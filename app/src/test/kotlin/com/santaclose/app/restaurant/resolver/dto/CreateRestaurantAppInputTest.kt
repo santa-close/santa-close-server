@@ -90,7 +90,7 @@ internal class CreateRestaurantAppInputTest {
 
     // then
     violations shouldHaveSize 1
-    violations.map { it.propertyPath.toString() shouldBe "images" }
+    violations.first().propertyPath.toString() shouldBe "images"
   }
 
   @Test
@@ -138,7 +138,7 @@ internal class CreateRestaurantAppInputTest {
 
     // then
     violations shouldHaveSize 1
-    violations.map { it.propertyPath.toString() shouldBe "postcode" }
+    violations.first().propertyPath.toString() shouldBe "postcode"
   }
 
   @Test
@@ -161,11 +161,7 @@ internal class CreateRestaurantAppInputTest {
     val violations = validator.validate(dto)
 
     // then
-    // FIXME: 세부적인 오류 메세지 유형 검증까지? 아니면 shouldHaveSize 1만? 아니면 검증 실패한 변수명 비교만?
     violations shouldHaveSize 1
-    violations.forEach {
-      it.messageTemplate shouldBe "{javax.validation.constraints.NotEmpty.message}"
-    }
-    violations.map { it.propertyPath.toString() shouldBe "foodTypes" }
+    violations.first().propertyPath.toString() shouldBe "foodTypes"
   }
 }
