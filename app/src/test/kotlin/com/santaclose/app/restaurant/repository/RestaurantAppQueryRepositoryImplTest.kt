@@ -46,8 +46,8 @@ constructor(
       val appUser = em.createAppUser()
       val location = em.createLocation()
       val restaurant = em.createRestaurant(appUser, location)
-      // when
 
+      // when
       val result = restaurantAppQueryRepository.findOneWithLocation(restaurant.id)
 
       // then
