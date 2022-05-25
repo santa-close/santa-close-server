@@ -13,8 +13,8 @@ class Restaurant(
   @field:NotNull var name: String,
   @Column(length = 100) var description: String,
   @Convert(converter = StringListConverter::class) var images: List<String> = listOf(),
-  @OneToMany(fetch = LAZY, mappedBy = "restaurant")
+  @OneToMany(fetch = LAZY, mappedBy = "restaurant", cascade = [CascadeType.PERSIST])
   var restaurantFoodType: MutableList<RestaurantFoodType> = mutableListOf(),
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
-  @OneToOne(fetch = LAZY) @field:NotNull var location: Location,
+  @OneToOne(fetch = LAZY, cascade = [CascadeType.PERSIST]) @field:NotNull var location: Location,
 ) : BaseEntity()

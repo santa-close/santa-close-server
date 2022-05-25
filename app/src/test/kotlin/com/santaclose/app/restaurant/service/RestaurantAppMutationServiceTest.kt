@@ -9,7 +9,9 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.collections.shouldBeSameSizeAs
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.collections.shouldStartWith
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
@@ -68,9 +70,10 @@ constructor(
         name shouldBe input.name
         description shouldBe input.description
         images shouldBe input.images
-        restaurantFoodType shouldBe input.foodTypes
-        location.point.x shouldBe input.latitude
-        location.point.y shouldBe input.longitude
+        restaurantFoodType shouldBeSameSizeAs input.foodTypes
+        restaurantFoodType.map { it.foodType } shouldStartWith input.foodTypes
+        location.point.x shouldBe input.longitude
+        location.point.y shouldBe input.latitude
         location.address shouldBe input.address
         location.postcode shouldBe input.postcode
         appUser.id shouldBe appUser.id
