@@ -9,9 +9,7 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.assertions.assertSoftly
-import io.kotest.matchers.collections.shouldBeSameSizeAs
 import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.collections.shouldStartWith
 import io.kotest.matchers.shouldBe
 import javax.persistence.EntityManager
 import org.junit.jupiter.api.Nested
@@ -24,7 +22,7 @@ internal class RestaurantAppMutationServiceTest
 @Autowired
 constructor(
   private val restaurantRepository: RestaurantAppRepository,
-  private val mountainAppRepository: MountainAppRepository,
+  mountainAppRepository: MountainAppRepository,
   private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
   private val em: EntityManager
 ) {
@@ -38,9 +36,9 @@ constructor(
     )
 
   @Nested
-  inner class Register {
-    val foodTypes = listOf(FoodType.ASIA, FoodType.FOOD_COURT, FoodType.AMERICAN)
-    val images = listOf("image1", "image2", "image3", "image4")
+  inner class CreateRestaurant {
+    private val foodTypes = listOf(FoodType.ASIA, FoodType.FOOD_COURT, FoodType.AMERICAN)
+    private val images = listOf("image1", "image2", "image3", "image4")
 
     @Test
     fun `정상적으로 식당 정보를 저장한다 - 성공`() {
@@ -70,14 +68,14 @@ constructor(
         name shouldBe input.name
         description shouldBe input.description
         images shouldBe input.images
-        restaurantFoodType shouldBeSameSizeAs input.foodTypes
-        restaurantFoodType.map { it.foodType } shouldStartWith input.foodTypes
         location.point.x shouldBe input.longitude
         location.point.y shouldBe input.latitude
         location.address shouldBe input.address
         location.postcode shouldBe input.postcode
         appUser.id shouldBe appUser.id
       }
+      val foodTypes = restaurantFoodTypeAppRepository.findAll()
+      foodTypes.map { it.foodType } shouldBe input.foodTypes
     }
   }
 }

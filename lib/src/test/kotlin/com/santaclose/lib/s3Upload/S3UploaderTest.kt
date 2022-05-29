@@ -10,6 +10,7 @@ import aws.smithy.kotlin.runtime.content.ByteStream
 import io.kotest.assertions.throwables.shouldNotThrow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.mock.web.MockMultipartFile
@@ -19,6 +20,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 
 @Testcontainers
+@Disabled
 internal class S3UploaderTest {
   companion object {
     @Container
