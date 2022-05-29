@@ -1,5 +1,6 @@
 package com.santaclose.app.mountainReview.repository
 
+import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainReview
@@ -61,6 +62,19 @@ constructor(
         average shouldBe 16.0 / 6
         totalCount shouldBe count
       }
+    }
+
+    @Test
+    fun `산 후기가 하나도 없는 경우 empty 를 반환한다`() {
+      // given
+      val appUser = em.createAppUser()
+      val mountain = em.createMountain(appUser)
+
+      // when
+      val dto = mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
+
+      // then
+      dto shouldBe MountainRatingAverageDto.empty
     }
   }
 }

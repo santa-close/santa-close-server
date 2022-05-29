@@ -2,7 +2,7 @@ package com.santaclose.lib.auth.kakao
 
 import arrow.core.Either
 import arrow.core.Either.Companion.catch
-import arrow.core.computations.either
+import arrow.core.continuations.either
 import com.santaclose.lib.auth.Profile
 import com.santaclose.lib.logger.logger
 import io.netty.channel.ChannelOption

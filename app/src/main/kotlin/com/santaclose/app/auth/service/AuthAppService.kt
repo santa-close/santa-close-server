@@ -2,7 +2,7 @@ package com.santaclose.app.auth.service
 
 import arrow.core.Either
 import arrow.core.Either.Companion.catch
-import arrow.core.computations.either
+import arrow.core.continuations.either
 import com.santaclose.app.appUser.repository.AppUserAppQueryRepository
 import com.santaclose.app.appUser.repository.AppUserAppRepository
 import com.santaclose.app.auth.context.AppSession
