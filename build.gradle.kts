@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   id("org.springframework.boot") version "2.6.6" apply false
   id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
-  id("com.expediagroup.graphql") version "5.3.2" apply false
+  id("com.expediagroup.graphql") version "5.4.1" apply false
   id("com.ncorti.ktfmt.gradle") version "0.8.0"
 
-  kotlin("jvm") version "1.6.20"
-  kotlin("plugin.spring") version "1.6.20" apply false
-  kotlin("plugin.jpa") version "1.6.20" apply false
+  kotlin("jvm") version "1.6.21"
+  kotlin("plugin.spring") version "1.6.21" apply false
+  kotlin("plugin.jpa") version "1.6.21" apply false
 
   jacoco
 }
@@ -26,7 +26,7 @@ subprojects {
   apply(plugin = "jacoco")
   apply(plugin = "com.ncorti.ktfmt.gradle")
 
-  java.sourceCompatibility = JavaVersion.VERSION_11
+  java.sourceCompatibility = JavaVersion.VERSION_17
 
   dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -54,7 +54,7 @@ subprojects {
   tasks.withType<KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjsr305=strict")
-      jvmTarget = "11"
+      jvmTarget = "17"
     }
   }
 
