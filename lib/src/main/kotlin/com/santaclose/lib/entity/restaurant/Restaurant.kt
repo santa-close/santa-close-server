@@ -16,5 +16,5 @@ class Restaurant(
   @OneToMany(fetch = LAZY, mappedBy = "restaurant")
   var restaurantFoodType: MutableList<RestaurantFoodType> = mutableListOf(),
   @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
-  @OneToOne(fetch = LAZY) @field:NotNull var location: Location,
+  @OneToOne(fetch = LAZY, cascade = [CascadeType.PERSIST]) @field:NotNull var location: Location,
 ) : BaseEntity()

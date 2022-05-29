@@ -36,7 +36,7 @@ subprojects {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.arrow-kt:arrow-core:1.1.2")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("aws.sdk.kotlin:s3:0.+")
+    implementation("aws.sdk.kotlin:s3:0.15.2-beta")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.200")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
