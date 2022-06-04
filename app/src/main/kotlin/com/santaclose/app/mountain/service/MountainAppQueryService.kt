@@ -13,30 +13,30 @@ import org.springframework.stereotype.Service
 
 @Service
 class MountainAppQueryService(
-  private val mountainAppQueryRepository: MountainAppQueryRepository,
-  private val mountainReviewAppQueryRepository: MountainReviewAppQueryRepository,
-  private val restaurantAppQueryRepository: RestaurantAppQueryRepository,
+    private val mountainAppQueryRepository: MountainAppQueryRepository,
+    private val mountainReviewAppQueryRepository: MountainReviewAppQueryRepository,
+    private val restaurantAppQueryRepository: RestaurantAppQueryRepository,
 ) {
-  fun findDetail(id: ID): MountainAppDetail {
-    val mountain = mountainAppQueryRepository.findOneWithLocation(id.toLong())
-    val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 5)
-    val mountainRatingAverageDto =
-      mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
-    // 음식점 추가 예정
+    fun findDetail(id: ID): MountainAppDetail {
+        val mountain = mountainAppQueryRepository.findOneWithLocation(id.toLong())
+        val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 5)
+        val mountainRatingAverageDto =
+            mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
+        // 음식점 추가 예정
 
-    return MountainAppDetail(
-      mountain.name,
-      mountain.location.address,
-      mountainReviews,
-      mountainRatingAverageDto
-    )
-  }
+        return MountainAppDetail(
+            mountain.name,
+            mountain.location.address,
+            mountainReviews,
+            mountainRatingAverageDto
+        )
+    }
 
-  fun findOneSummary(mountainId: Long): MountainSummaryDto = runBlocking {
-    val mountain = async { mountainAppQueryRepository.findOneWithLocation(mountainId) }
-    val locations = async { restaurantAppQueryRepository.findLocationByMountain(mountainId) }
-    val ratings = async { mountainReviewAppQueryRepository.findMountainRatingAverages(mountainId) }
+    fun findOneSummary(mountainId: Long): MountainSummaryDto = runBlocking {
+        val mountain = async { mountainAppQueryRepository.findOneWithLocation(mountainId) }
+        val locations = async { restaurantAppQueryRepository.findLocationByMountain(mountainId) }
+        val ratings = async { mountainReviewAppQueryRepository.findMountainRatingAverages(mountainId) }
 
-    MountainSummaryDto(mountain.await(), locations.await(), ratings.await())
-  }
+        MountainSummaryDto(mountain.await(), locations.await(), ratings.await())
+    }
 }

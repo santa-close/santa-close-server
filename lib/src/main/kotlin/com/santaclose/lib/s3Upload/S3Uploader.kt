@@ -9,25 +9,25 @@ import aws.smithy.kotlin.runtime.auth.awscredentials.Credentials
 import aws.smithy.kotlin.runtime.content.ByteStream
 
 class S3Uploader private constructor(private val s3Client: S3Client) {
-  companion object {
-    fun create(endpoint: String?, awsRegion: String, accessKey: String, secretKey: String) =
-      S3Uploader(
-        S3Client {
-          region = awsRegion
-          endpointResolver = endpoint?.let { StaticEndpointResolver(AwsEndpoint(url = it)) }
-          credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
-        }
-      )
+    companion object {
+        fun create(endpoint: String?, awsRegion: String, accessKey: String, secretKey: String) =
+            S3Uploader(
+                S3Client {
+                    region = awsRegion
+                    endpointResolver = endpoint?.let { StaticEndpointResolver(AwsEndpoint(url = it)) }
+                    credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
+                }
+            )
 
-    fun createByClient(s3Client: S3Client) = S3Uploader(s3Client)
-  }
-
-  suspend fun upload(bucket: String, path: String, data: ByteStream, contentType: String) = catch {
-    s3Client.putObject {
-      this.bucket = bucket
-      key = path
-      body = data
-      this.contentType = contentType
+        fun createByClient(s3Client: S3Client) = S3Uploader(s3Client)
     }
-  }
+
+    suspend fun upload(bucket: String, path: String, data: ByteStream, contentType: String) = catch {
+        s3Client.putObject {
+            this.bucket = bucket
+            key = path
+            body = data
+            this.contentType = contentType
+        }
+    }
 }

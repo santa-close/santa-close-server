@@ -26,18 +26,18 @@ import org.springframework.test.web.reactive.server.WebTestClient
 internal class MountainAppQueryResolverTest
 @Autowired
 constructor(
-  private val webTestClient: WebTestClient,
-  @MockkBean private val mountainAppQueryService: MountainAppQueryService,
+    private val webTestClient: WebTestClient,
+    @MockkBean private val mountainAppQueryService: MountainAppQueryService,
 ) : AppContextMocker() {
 
-  @Nested
-  inner class MountainSummary {
-    @Test
-    fun `산 요약정보를 가져온다`() {
-      // given
-      val query =
-        GraphqlBody(
-          """query {
+    @Nested
+    inner class MountainSummary {
+        @Test
+        fun `산 요약정보를 가져온다`() {
+            // given
+            val query =
+                GraphqlBody(
+                    """query {
             |  mountainSummary(id: "123") {
             |    id
             |    address
@@ -54,40 +54,40 @@ constructor(
             |  }
             |}
             """.trimMargin()
-        )
-      withMockUser(AppUserRole.USER)
-      val dto =
-        MountainSummaryDto(
-          mountain =
-            Mountain(
-              name = "test mountain",
-              images = mutableListOf("test.jpg"),
-              management = MountainManagement.MUNICIPAL,
-              altitude = 1000,
-              appUser = AppUser("name", "email", "socialId", AppUserRole.USER),
-              location =
-                Location.create(
-                  longitude = 10.0,
-                  latitude = 10.0,
-                  address = "test address",
-                  postcode = "123-1234",
-                ),
-            ),
-          restaurantLocations = emptyList(),
-          mountainRating = MountainRatingAverageDto.empty,
-        )
+                )
+            withMockUser(AppUserRole.USER)
+            val dto =
+                MountainSummaryDto(
+                    mountain =
+                    Mountain(
+                        name = "test mountain",
+                        images = mutableListOf("test.jpg"),
+                        management = MountainManagement.MUNICIPAL,
+                        altitude = 1000,
+                        appUser = AppUser("name", "email", "socialId", AppUserRole.USER),
+                        location =
+                        Location.create(
+                            longitude = 10.0,
+                            latitude = 10.0,
+                            address = "test address",
+                            postcode = "123-1234",
+                        ),
+                    ),
+                    restaurantLocations = emptyList(),
+                    mountainRating = MountainRatingAverageDto.empty,
+                )
 
-      coEvery { mountainAppQueryService.findOneSummary(123) } returns dto
+            coEvery { mountainAppQueryService.findOneSummary(123) } returns dto
 
-      // when
-      val result = webTestClient.gqlRequest(query)
+            // when
+            val result = webTestClient.gqlRequest(query)
 
-      // then
-      result.withSuccess("mountainSummary") {
-        expect("address").isEqualTo("test address")
-        expect("reviewCount").isEqualTo(0)
-        expect("rating").isEqualTo(0)
-      }
+            // then
+            result.withSuccess("mountainSummary") {
+                expect("address").isEqualTo("test address")
+                expect("reviewCount").isEqualTo(0)
+                expect("rating").isEqualTo(0)
+            }
+        }
     }
-  }
 }

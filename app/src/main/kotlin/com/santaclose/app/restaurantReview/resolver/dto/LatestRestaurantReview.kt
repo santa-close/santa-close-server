@@ -5,12 +5,12 @@ import com.santaclose.app.restaurantReview.repository.dto.LatestRestaurantReview
 import com.santaclose.lib.web.toID
 
 data class LatestRestaurantReview(
-  val id: ID,
-  val title: String,
-  val content: String,
+    val id: ID,
+    val title: String,
+    val content: String,
 ) {
-  companion object {
-    fun by(dto: LatestRestaurantReviewDto) =
-      LatestRestaurantReview(dto.id.toID(), dto.title, dto.content)
-  }
+    companion object {
+        fun by(dto: LatestRestaurantReviewDto) =
+            LatestRestaurantReview(dto.id.toID(), dto.title, dto.content)
+    }
 }

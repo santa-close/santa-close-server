@@ -10,29 +10,29 @@ import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.error.toGraphQLException
 import graphql.schema.DataFetchingEnvironment
-import javax.validation.Valid
 import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
+import javax.validation.Valid
 
 @Component
 @Validated
 class MountainReviewAppMutationResolver(
-  private val mountainAppMutationService: MountainReviewAppMutationService,
+    private val mountainAppMutationService: MountainReviewAppMutationService,
 ) : Mutation {
-  val logger = logger()
+    val logger = logger()
 
-  @Auth(AppUserRole.USER)
-  @GraphQLDescription("산 리뷰 등록하기")
-  fun createMountainReview(
-    @Valid input: CreateMountainReviewAppInput,
-    dfe: DataFetchingEnvironment
-  ): Boolean {
-    try {
-      mountainAppMutationService.register(input, dfe.userId())
-      return true
-    } catch (e: Throwable) {
-      logger.error(e.message, e)
-      throw e.toGraphQLException()
+    @Auth(AppUserRole.USER)
+    @GraphQLDescription("산 리뷰 등록하기")
+    fun createMountainReview(
+        @Valid input: CreateMountainReviewAppInput,
+        dfe: DataFetchingEnvironment
+    ): Boolean {
+        try {
+            mountainAppMutationService.register(input, dfe.userId())
+            return true
+        } catch (e: Throwable) {
+            logger.error(e.message, e)
+            throw e.toGraphQLException()
+        }
     }
-  }
 }

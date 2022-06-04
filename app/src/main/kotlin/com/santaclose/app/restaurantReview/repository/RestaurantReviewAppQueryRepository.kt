@@ -4,7 +4,7 @@ import com.santaclose.app.restaurantReview.repository.dto.LatestRestaurantReview
 import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverageDto
 
 interface RestaurantReviewAppQueryRepository {
-  fun findAllByRestaurant(restaurantId: Long, limit: Int): List<LatestRestaurantReviewDto>
+    fun findAllByRestaurant(restaurantId: Long, limit: Int): List<LatestRestaurantReviewDto>
 
-  fun findRestaurantRatingAverages(restaurantId: Long): RestaurantRatingAverageDto
+    fun findRestaurantRatingAverages(restaurantId: Long): RestaurantRatingAverageDto
 }

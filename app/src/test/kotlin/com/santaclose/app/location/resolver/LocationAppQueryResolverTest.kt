@@ -24,17 +24,17 @@ import org.springframework.test.web.reactive.server.WebTestClient
 internal class LocationAppQueryResolverTest
 @Autowired
 constructor(
-  private val webTestClient: WebTestClient,
-  @MockkBean private val locationAppQueryService: LocationAppQueryService
+    private val webTestClient: WebTestClient,
+    @MockkBean private val locationAppQueryService: LocationAppQueryService
 ) : AppContextMocker() {
-  @Nested
-  inner class Locations {
-    @Test
-    fun `요청한 지역안의 위치 정보를 가져온다`() {
-      // given
-      val query =
-        GraphqlBody(
-          """query {
+    @Nested
+    inner class Locations {
+        @Test
+        fun `요청한 지역안의 위치 정보를 가져온다`() {
+            // given
+            val query =
+                GraphqlBody(
+                    """query {
             |  locations(input: {diagonalFrom: {latitude: 37.5, longitude: 127.5}, diagonalTo: {latitude: 37.6, longitude: 127.6}}) {
             |    id
             |    type
@@ -45,26 +45,26 @@ constructor(
             |  }
             |}
             """.trimMargin()
-        )
-      every { locationAppQueryService.find(any()) } returns
-        listOf(
-          MountainAppLocation(
-            id = 123,
-            point = GeometryFactory().createPoint(Coordinate(127.5, 35.5))
-          )
-        )
-      withMockUser(AppUserRole.USER)
+                )
+            every { locationAppQueryService.find(any()) } returns
+                listOf(
+                    MountainAppLocation(
+                        id = 123,
+                        point = GeometryFactory().createPoint(Coordinate(127.5, 35.5))
+                    )
+                )
+            withMockUser(AppUserRole.USER)
 
-      // when
-      val response = webTestClient.gqlRequest(query)
+            // when
+            val response = webTestClient.gqlRequest(query)
 
-      // then
-      response.withSuccess("locations") {
-        expect("[0].id", false).isEqualTo(123)
-        expect("[0].type", false).isEqualTo(LocationType.MOUNTAIN.name)
-        expect("[0].coordinate.longitude", false).isEqualTo(127.5)
-        expect("[0].coordinate.latitude", false).isEqualTo(35.5)
-      }
+            // then
+            response.withSuccess("locations") {
+                expect("[0].id", false).isEqualTo(123)
+                expect("[0].type", false).isEqualTo(LocationType.MOUNTAIN.name)
+                expect("[0].coordinate.longitude", false).isEqualTo(127.5)
+                expect("[0].coordinate.latitude", false).isEqualTo(35.5)
+            }
+        }
     }
-  }
 }

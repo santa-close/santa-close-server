@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive
 
 @Entity
 class Sample(
-  @Column(columnDefinition = "TEXT") @field:NotNull var name: String,
-  @field:Positive var price: Int,
-  @Enumerated(EnumType.STRING) @Column(length = 20) @field:NotNull var status: SampleStatus,
+    @Column(columnDefinition = "TEXT") @field:NotNull var name: String,
+    @field:Positive var price: Int,
+    @Enumerated(EnumType.STRING) @Column(length = 20) @field:NotNull var status: SampleStatus,
 ) : BaseEntity()

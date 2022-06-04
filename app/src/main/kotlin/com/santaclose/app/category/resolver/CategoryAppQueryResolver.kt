@@ -7,5 +7,5 @@ import org.springframework.stereotype.Component
 
 @Component
 class CategoryAppQueryResolver : Query {
-  @GraphQLDescription("category 데이터") fun categories() = CategoryAppList()
+    @GraphQLDescription("category 데이터") fun categories() = CategoryAppList()
 }

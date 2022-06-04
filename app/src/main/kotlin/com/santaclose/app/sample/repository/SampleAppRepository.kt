@@ -5,5 +5,5 @@ import com.santaclose.lib.entity.sample.Sample
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface SampleAppRepository : JpaRepository<Sample, Long> {
-  fun findByIdIn(ids: List<Long>): List<SampleNamePriceDto>
+    fun findByIdIn(ids: List<Long>): List<SampleNamePriceDto>
 }

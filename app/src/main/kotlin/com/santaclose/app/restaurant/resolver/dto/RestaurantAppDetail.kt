@@ -10,27 +10,27 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.type.FoodType
 
 data class RestaurantAppDetail(
-  val name: String,
-  val address: String,
-  val foodType: List<FoodType>,
-  val restaurantRatingAverage: RestaurantRatingAverage,
-  val restaurantReviews: List<LatestRestaurantReview>,
-  val mountains: List<LatestMountain>,
+    val name: String,
+    val address: String,
+    val foodType: List<FoodType>,
+    val restaurantRatingAverage: RestaurantRatingAverage,
+    val restaurantReviews: List<LatestRestaurantReview>,
+    val mountains: List<LatestMountain>,
 ) {
-  companion object {
-    fun by(
-      restaurant: Restaurant,
-      averageDto: RestaurantRatingAverageDto,
-      restaurantReviewDtos: List<LatestRestaurantReviewDto>,
-      mountainDtos: List<LatestMountainDto>,
-    ) =
-      RestaurantAppDetail(
-        restaurant.name,
-        restaurant.location.address,
-        restaurant.restaurantFoodType.map { it.foodType },
-        RestaurantRatingAverage.by(averageDto),
-        restaurantReviewDtos.map { LatestRestaurantReview.by(it) },
-        mountainDtos.map { LatestMountain.by(it) }
-      )
-  }
+    companion object {
+        fun by(
+            restaurant: Restaurant,
+            averageDto: RestaurantRatingAverageDto,
+            restaurantReviewDtos: List<LatestRestaurantReviewDto>,
+            mountainDtos: List<LatestMountainDto>,
+        ) =
+            RestaurantAppDetail(
+                restaurant.name,
+                restaurant.location.address,
+                restaurant.restaurantFoodType.map { it.foodType },
+                RestaurantRatingAverage.by(averageDto),
+                restaurantReviewDtos.map { LatestRestaurantReview.by(it) },
+                mountainDtos.map { LatestMountain.by(it) }
+            )
+    }
 }

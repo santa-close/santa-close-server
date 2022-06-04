@@ -20,17 +20,17 @@ import org.springframework.test.web.reactive.server.WebTestClient
 internal class MountainAppMutationResolverTest
 @Autowired
 constructor(
-  private val webTestClient: WebTestClient,
-  @MockkBean private val mountainAppMutationService: MountainAppMutationService
+    private val webTestClient: WebTestClient,
+    @MockkBean private val mountainAppMutationService: MountainAppMutationService
 ) : AppContextMocker() {
-  @Nested
-  inner class Register {
-    @Test
-    fun `유저가 산을 등록한다`() {
-      // given
-      val query =
-        GraphqlBody(
-          """mutation {
+    @Nested
+    inner class Register {
+        @Test
+        fun `유저가 산을 등록한다`() {
+            // given
+            val query =
+                GraphqlBody(
+                    """mutation {
             | registerMountain(input: { 
             |    name: "name"
             |    images: ["images"] 
@@ -43,15 +43,15 @@ constructor(
             |  })
             |}
             """.trimMargin()
-        )
-      val session = withMockUser(AppUserRole.USER)
-      justRun { mountainAppMutationService.register(any(), session.id) }
+                )
+            val session = withMockUser(AppUserRole.USER)
+            justRun { mountainAppMutationService.register(any(), session.id) }
 
-      // when
-      val response = webTestClient.gqlRequest(query)
+            // when
+            val response = webTestClient.gqlRequest(query)
 
-      // then
-      response.withSuccess("registerMountain") {}
+            // then
+            response.withSuccess("registerMountain") {}
+        }
     }
-  }
 }
