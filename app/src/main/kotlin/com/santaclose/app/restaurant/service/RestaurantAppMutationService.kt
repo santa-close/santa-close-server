@@ -9,36 +9,37 @@ import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.RestaurantFoodType
 import com.santaclose.lib.web.toLong
-import javax.persistence.*
 import org.springframework.stereotype.Service
+import javax.persistence.EntityManager
+import javax.persistence.NoResultException
 
 @Service
 class RestaurantAppMutationService(
-  private val restaurantRepository: RestaurantAppRepository,
-  private val mountainAppRepository: MountainAppRepository,
-  private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
-  private val em: EntityManager,
+    private val restaurantRepository: RestaurantAppRepository,
+    private val mountainAppRepository: MountainAppRepository,
+    private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
+    private val em: EntityManager,
 ) {
 
-  fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
-    val id = input.mountainId.toLong()
-    val isExistMountain = mountainAppRepository.existsById(id)
-    if (!isExistMountain) {
-      throw NoResultException("유효하지 않은 mountainId 입니다.")
+    fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
+        val id = input.mountainId.toLong()
+        val isExistMountain = mountainAppRepository.existsById(id)
+        if (!isExistMountain) {
+            throw NoResultException("유효하지 않은 mountainId 입니다.")
+        }
+
+        val restaurant =
+            Restaurant(
+                name = input.name,
+                description = input.description,
+                images = input.images,
+                appUser = em.getReference(AppUser::class.java, userId),
+                location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
+            )
+        val restaurantFoodTypes =
+            input.foodTypes.map { RestaurantFoodType(restaurant = restaurant, foodType = it) }
+
+        restaurantRepository.save(restaurant)
+        restaurantFoodTypeAppRepository.saveAll(restaurantFoodTypes)
     }
-
-    val restaurant =
-      Restaurant(
-        name = input.name,
-        description = input.description,
-        images = input.images,
-        appUser = em.getReference(AppUser::class.java, userId),
-        location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
-      )
-    val restaurantFoodTypes =
-      input.foodTypes.map { RestaurantFoodType(restaurant = restaurant, foodType = it) }
-
-    restaurantRepository.save(restaurant)
-    restaurantFoodTypeAppRepository.saveAll(restaurantFoodTypes)
-  }
 }

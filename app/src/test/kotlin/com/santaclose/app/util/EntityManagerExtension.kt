@@ -19,62 +19,62 @@ import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import javax.persistence.EntityManager
 
 fun EntityManager.createQueryFactory() =
-  SpringDataQueryFactoryImpl(
-    criteriaQueryCreator = CriteriaQueryCreatorImpl(this),
-    subqueryCreator = SubqueryCreatorImpl()
-  )
+    SpringDataQueryFactoryImpl(
+        criteriaQueryCreator = CriteriaQueryCreatorImpl(this),
+        subqueryCreator = SubqueryCreatorImpl()
+    )
 
 fun EntityManager.createAppUser(
-  user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
+    user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
 ): AppUser = user.also { persist(it) }
 
 fun EntityManager.createRestaurant(
-  appUser: AppUser,
-  location: Location = createLocation(),
-  restaurant: Restaurant =
-    Restaurant("name", "description", mutableListOf(), mutableListOf(), appUser, location)
+    appUser: AppUser,
+    location: Location = createLocation(),
+    restaurant: Restaurant =
+        Restaurant("name", "description", mutableListOf(), mutableListOf(), appUser, location)
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createMountain(
-  appUser: AppUser,
-  location: Location = createLocation(),
-  mountain: Mountain =
-    Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
+    appUser: AppUser,
+    location: Location = createLocation(),
+    mountain: Mountain =
+        Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
 ) = mountain.also { persist(it) }
 
 fun EntityManager.createLocation(
-  location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
+    location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
 ) = location.also { persist(it) }
 
 fun EntityManager.createMountainReview(
-  appUser: AppUser,
-  mountain: Mountain,
-  mountainReview: MountainReview =
-    MountainReview(
-      "title",
-      MountainRating(1, 2, 3, 4, 5, 5),
-      "content",
-      mutableListOf(),
-      MountainDifficulty.HARD,
-      mountain,
-      appUser
-    )
+    appUser: AppUser,
+    mountain: Mountain,
+    mountainReview: MountainReview =
+        MountainReview(
+            "title",
+            MountainRating(1, 2, 3, 4, 5, 5),
+            "content",
+            mutableListOf(),
+            MountainDifficulty.HARD,
+            mountain,
+            appUser
+        )
 ) = mountainReview.also { persist(it) }
 
 fun EntityManager.createRestaurantReview(appUser: AppUser, restaurant: Restaurant) =
-  RestaurantReview(
-      "title",
-      "content",
-      PriceComment.IS_CHEAP,
-      1,
-      RestaurantRating(1, 2, 3, 4, 5),
-      mutableListOf(),
-      restaurant,
-      appUser
+    RestaurantReview(
+        "title",
+        "content",
+        PriceComment.IS_CHEAP,
+        1,
+        RestaurantRating(1, 2, 3, 4, 5),
+        mutableListOf(),
+        restaurant,
+        appUser
     )
-    .also { persist(it) }
+        .also { persist(it) }
 
 fun EntityManager.createMountainRestaurant(
-  mountain: Mountain,
-  restaurant: Restaurant,
+    mountain: Mountain,
+    restaurant: Restaurant,
 ) = MountainRestaurant(mountain, restaurant).also { persist(it) }

@@ -26,7 +26,7 @@ jobs:
       - name: Run lint check
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: ktfmtCheck
+          arguments: ktlintCheck
 
       - name: Run test
         uses: gradle/gradle-build-action@v2

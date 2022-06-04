@@ -5,6 +5,6 @@ import com.santaclose.app.auth.context.AppSession
 import org.springframework.web.reactive.function.server.ServerRequest
 
 interface ServerRequestParser {
-  fun parse(request: ServerRequest): Option<AppSession>
-  fun parseJwt(token: String): Option<AppSession>
+    fun parse(request: ServerRequest): Option<AppSession>
+    fun parseJwt(token: String): Option<AppSession>
 }

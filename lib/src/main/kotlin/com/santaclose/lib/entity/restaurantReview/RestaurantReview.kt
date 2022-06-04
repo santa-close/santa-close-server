@@ -17,13 +17,30 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class RestaurantReview(
-  var title: String,
-  var content: String,
-  @Enumerated(EnumType.STRING) @field:NotNull var priceComment: PriceComment,
-  @field:NotNull var priceAverage: Int,
-  @Valid @Embedded @field:NotNull var rating: RestaurantRating,
-  @Convert(converter = StringListConverter::class)
-  var images: MutableList<String> = mutableListOf(),
-  @ManyToOne(fetch = LAZY) @field:NotNull var restaurant: Restaurant,
-  @ManyToOne(fetch = LAZY) @field:NotNull var appUser: AppUser,
+    var title: String,
+
+    var content: String,
+
+    @Enumerated(EnumType.STRING)
+    @field:NotNull
+    var priceComment: PriceComment,
+
+    @field:NotNull
+    var priceAverage: Int,
+
+    @Valid
+    @Embedded
+    @field:NotNull
+    var rating: RestaurantRating,
+
+    @Convert(converter = StringListConverter::class)
+    var images: MutableList<String> = mutableListOf(),
+
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var restaurant: Restaurant,
+
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var appUser: AppUser,
 ) : BaseEntity()

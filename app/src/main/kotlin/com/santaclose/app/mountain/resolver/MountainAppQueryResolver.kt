@@ -13,35 +13,35 @@ import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.error.getOrThrow
 import com.santaclose.lib.web.error.toGraphQLException
 import com.santaclose.lib.web.toLong
-import javax.validation.Valid
 import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
+import javax.validation.Valid
 
 @Component
 @Validated
 class MountainAppQueryResolver(
-  private val mountainAppQueryService: MountainAppQueryService,
+    private val mountainAppQueryService: MountainAppQueryService,
 ) : Query {
-  val logger = logger()
+    val logger = logger()
 
-  @Auth(AppUserRole.USER)
-  @GraphQLDescription("산 상세 조회")
-  fun mountainDetail(
-    @Valid input: MountainDetailAppInput,
-  ): Boolean {
-    try {
-      mountainAppQueryService.findDetail(input.id)
-      return true
-    } catch (e: Throwable) {
-      logger.error(e.message, e)
-      throw e.toGraphQLException()
+    @Auth(AppUserRole.USER)
+    @GraphQLDescription("산 상세 조회")
+    fun mountainDetail(
+        @Valid input: MountainDetailAppInput,
+    ): Boolean {
+        try {
+            mountainAppQueryService.findDetail(input.id)
+            return true
+        } catch (e: Throwable) {
+            logger.error(e.message, e)
+            throw e.toGraphQLException()
+        }
     }
-  }
 
-  @Auth(AppUserRole.USER)
-  @GraphQLDescription("산 요약 정보")
-  fun mountainSummary(id: ID): MountainAppSummary =
-    catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
-      .tapLeft { logger.error(it.message, it) }
-      .getOrThrow()
+    @Auth(AppUserRole.USER)
+    @GraphQLDescription("산 요약 정보")
+    fun mountainSummary(id: ID): MountainAppSummary =
+        catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
+            .tapLeft { logger.error(it.message, it) }
+            .getOrThrow()
 }

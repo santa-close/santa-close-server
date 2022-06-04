@@ -15,23 +15,23 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 internal class SampleAppQueryServiceTest {
-  @InjectMockKs private lateinit var sampleAppQueryService: SampleAppQueryService
+    @InjectMockKs private lateinit var sampleAppQueryService: SampleAppQueryService
 
-  @MockK private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
+    @MockK private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
 
-  private val sut = KFixtureMonkey.create()
+    private val sut = KFixtureMonkey.create()
 
-  @Test
-  fun `정상적으로 데이터를 가져온다`() {
-    // given
-    val sampleAppDetail = sut.giveMeOne<SampleAppDetail>()
-    every { sampleAppQueryRepository.findByPrice(sampleAppDetail.price) } returns
-      sampleAppDetail.right()
+    @Test
+    fun `정상적으로 데이터를 가져온다`() {
+        // given
+        val sampleAppDetail = sut.giveMeOne<SampleAppDetail>()
+        every { sampleAppQueryRepository.findByPrice(sampleAppDetail.price) } returns
+            sampleAppDetail.right()
 
-    // when
-    val result = sampleAppQueryService.findByPrice(sampleAppDetail.price)
+        // when
+        val result = sampleAppQueryService.findByPrice(sampleAppDetail.price)
 
-    // then
-    result shouldBeRight sampleAppDetail
-  }
+        // then
+        result shouldBeRight sampleAppDetail
+    }
 }

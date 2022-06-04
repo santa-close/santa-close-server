@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class LocationAppQueryResolver(
-  private val locationAppQueryService: LocationAppQueryService,
+    private val locationAppQueryService: LocationAppQueryService,
 ) : Query {
-  @Auth(AppUserRole.USER)
-  @GraphQLDescription("지도 위치 데이터")
-  fun locations(input: LocationAppInput): List<AppLocation> =
-    catch { locationAppQueryService.find(input) }.getOrThrow()
+    @Auth(AppUserRole.USER)
+    @GraphQLDescription("지도 위치 데이터")
+    fun locations(input: LocationAppInput): List<AppLocation> =
+        catch { locationAppQueryService.find(input) }.getOrThrow()
 }

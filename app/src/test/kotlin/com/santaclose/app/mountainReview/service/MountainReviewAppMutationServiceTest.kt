@@ -11,93 +11,91 @@ import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import javax.persistence.EntityManager
+import javax.persistence.NoResultException
 
 @DataJpaTest
-internal class MountainReviewAppMutationServiceTest
-@Autowired
-constructor(
-  private val mountainAppRepository: MountainAppRepository,
-  private val mountainReviewAppRepository: MountainReviewAppRepository,
-  private val em: EntityManager,
+internal class MountainReviewAppMutationServiceTest @Autowired constructor(
+    private val mountainAppRepository: MountainAppRepository,
+    private val mountainReviewAppRepository: MountainReviewAppRepository,
+    private val em: EntityManager,
 ) {
-  private val mountainReviewAppMutationService =
-    MountainReviewAppMutationService(mountainAppRepository, em)
+    private val mountainReviewAppMutationService =
+        MountainReviewAppMutationService(mountainAppRepository, em)
 
-  @Nested
-  inner class Register {
-    @Test
-    fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
-      // given
-      val appUser = em.createAppUser()
-      val input =
-        CreateMountainReviewAppInput(
-          ID("-1"),
-          "title",
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          "content",
-          emptyList(),
-          EASY
-        )
+    @Nested
+    inner class Register {
+        @Test
+        fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
+            // given
+            val appUser = em.createAppUser()
+            val input =
+                CreateMountainReviewAppInput(
+                    ID("-1"),
+                    "title",
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    "content",
+                    emptyList(),
+                    EASY
+                )
 
-      // when
-      val exception =
-        shouldThrow<NoResultException> {
-          mountainReviewAppMutationService.register(input, appUser.id)
+            // when
+            val exception =
+                shouldThrow<NoResultException> {
+                    mountainReviewAppMutationService.register(input, appUser.id)
+                }
+
+            // then
+            exception.message shouldBe "유효하지 않은 mountainId 입니다."
         }
 
-      // then
-      exception.message shouldBe "유효하지 않은 mountainId 입니다."
+        @Test
+        fun `mountain id가 유효하면 MountainReview를 생성한다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = em.createMountain(appUser)
+            val input =
+                CreateMountainReviewAppInput(
+                    mountain.id.toID(),
+                    "title",
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    3,
+                    "content",
+                    listOf("a", "b", "c"),
+                    EASY
+                )
+
+            // when
+            mountainReviewAppMutationService.register(input, appUser.id)
+
+            // then
+            val mountainReviews = mountainReviewAppRepository.findAll()
+            mountainReviews shouldHaveSize 1
+            mountainReviews[0].apply {
+                title shouldBe input.title
+                rating.scenery shouldBe input.scenery.toByte()
+                rating.tree shouldBe input.tree.toByte()
+                rating.trail shouldBe input.trail.toByte()
+                rating.parking shouldBe input.parking.toByte()
+                rating.toilet shouldBe input.toilet.toByte()
+                rating.traffic shouldBe input.traffic.toByte()
+                content shouldBe input.content
+                images shouldBe input.images
+                difficulty shouldBe input.difficulty
+            }
+        }
     }
-
-    @Test
-    fun `mountain id가 유효하면 MountainReview를 생성한다`() {
-      // given
-      val appUser = em.createAppUser()
-      val mountain = em.createMountain(appUser)
-      val input =
-        CreateMountainReviewAppInput(
-          mountain.id.toID(),
-          "title",
-          1,
-          2,
-          3,
-          4,
-          5,
-          3,
-          "content",
-          listOf("a", "b", "c"),
-          EASY
-        )
-
-      // when
-      mountainReviewAppMutationService.register(input, appUser.id)
-
-      // then
-      val mountainReviews = mountainReviewAppRepository.findAll()
-      mountainReviews shouldHaveSize 1
-      mountainReviews[0].apply {
-        title shouldBe input.title
-        rating.scenery shouldBe input.scenery.toByte()
-        rating.tree shouldBe input.tree.toByte()
-        rating.trail shouldBe input.trail.toByte()
-        rating.parking shouldBe input.parking.toByte()
-        rating.toilet shouldBe input.toilet.toByte()
-        rating.traffic shouldBe input.traffic.toByte()
-        content shouldBe input.content
-        images shouldBe input.images
-        difficulty shouldBe input.difficulty
-      }
-    }
-  }
 }

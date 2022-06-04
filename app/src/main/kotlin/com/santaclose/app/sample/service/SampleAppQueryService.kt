@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class SampleAppQueryService(
-  private val sampleAppRepository: SampleAppQueryRepository,
+    private val sampleAppRepository: SampleAppQueryRepository,
 ) {
-  fun findByPrice(price: Int): Either<Throwable, SampleAppDetail> =
-    sampleAppRepository.findByPrice(price)
+    fun findByPrice(price: Int): Either<Throwable, SampleAppDetail> =
+        sampleAppRepository.findByPrice(price)
 }

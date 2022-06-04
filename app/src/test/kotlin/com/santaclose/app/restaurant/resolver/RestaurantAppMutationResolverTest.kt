@@ -17,21 +17,19 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantAppMutationResolverTest
-@Autowired
-constructor(
-  private val webTestClient: WebTestClient,
-  @MockkBean private val restaurantAppMutationService: RestaurantAppMutationService
+internal class RestaurantAppMutationResolverTest @Autowired constructor(
+    private val webTestClient: WebTestClient,
+    @MockkBean private val restaurantAppMutationService: RestaurantAppMutationService
 ) : AppContextMocker() {
 
-  @Nested
-  inner class Register {
-    @Test
-    fun `정상적으로 사용자가 식당을 등록한다 - 성공`() {
-      // given
-      val query =
-        GraphqlBody(
-          """mutation {
+    @Nested
+    inner class Register {
+        @Test
+        fun `정상적으로 사용자가 식당을 등록한다 - 성공`() {
+            // given
+            val query =
+                GraphqlBody(
+                    """mutation {
             |  createRestaurant(input: { 
             |    mountainId: "1"
             |    name: "식당 이름"
@@ -45,15 +43,15 @@ constructor(
             |  })
             |}
             """.trimMargin()
-        )
-      justRun { restaurantAppMutationService.createRestaurant(any(), any()) }
-      withMockUser(AppUserRole.USER)
+                )
+            justRun { restaurantAppMutationService.createRestaurant(any(), any()) }
+            withMockUser(AppUserRole.USER)
 
-      // when
-      val response = webTestClient.gqlRequest(query)
+            // when
+            val response = webTestClient.gqlRequest(query)
 
-      // then
-      response.withSuccess("createRestaurant")
+            // then
+            response.withSuccess("createRestaurant")
+        }
     }
-  }
 }

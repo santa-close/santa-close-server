@@ -14,19 +14,19 @@ import org.springframework.stereotype.Component
 
 @Component
 class RestaurantAppQueryResolver(private val restaurantAppQueryService: RestaurantAppQueryService) :
-  Query {
-  val logger = logger()
+    Query {
+    val logger = logger()
 
-  @Auth(AppUserRole.USER)
-  @GraphQLDescription("맛집 상세 조회")
-  fun restaurantDetail(
-    @NumberFormat(style = NumberFormat.Style.NUMBER) id: ID,
-  ): RestaurantAppDetail {
-    try {
-      return restaurantAppQueryService.findDetail(id.toLong())
-    } catch (e: Throwable) {
-      logger.error(e.message, e)
-      throw e.toGraphQLException()
+    @Auth(AppUserRole.USER)
+    @GraphQLDescription("맛집 상세 조회")
+    fun restaurantDetail(
+        @NumberFormat(style = NumberFormat.Style.NUMBER) id: ID,
+    ): RestaurantAppDetail {
+        try {
+            return restaurantAppQueryService.findDetail(id.toLong())
+        } catch (e: Throwable) {
+            logger.error(e.message, e)
+            throw e.toGraphQLException()
+        }
     }
-  }
 }

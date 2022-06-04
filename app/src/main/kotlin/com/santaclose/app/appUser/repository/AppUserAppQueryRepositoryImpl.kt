@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class AppUserAppQueryRepositoryImpl(
-  private val springDataQueryFactory: SpringDataQueryFactory,
+    private val springDataQueryFactory: SpringDataQueryFactory,
 ) : AppUserAppQueryRepository {
-  override fun findBySocialId(socialId: String): Either<Throwable, AppUser?> = catch {
-    springDataQueryFactory
-      .listQuery<AppUser> {
-        select(entity(AppUser::class))
-        from(AppUser::class)
-        where(col(AppUser::socialId).equal(socialId))
-        limit(1)
-      }
-      .firstOrNull()
-  }
+    override fun findBySocialId(socialId: String): Either<Throwable, AppUser?> = catch {
+        springDataQueryFactory
+            .listQuery<AppUser> {
+                select(entity(AppUser::class))
+                from(AppUser::class)
+                where(col(AppUser::socialId).equal(socialId))
+                limit(1)
+            }
+            .firstOrNull()
+    }
 }

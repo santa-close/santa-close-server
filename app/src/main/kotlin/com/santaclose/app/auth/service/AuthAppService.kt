@@ -13,25 +13,25 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthAppService(
-  private val appUserAppQueryRepository: AppUserAppQueryRepository,
-  private val appUserAppRepository: AppUserAppRepository,
-  private val authManager: AuthManager,
+    private val appUserAppQueryRepository: AppUserAppQueryRepository,
+    private val appUserAppRepository: AppUserAppRepository,
+    private val authManager: AuthManager,
 ) {
-  private val logger = logger()
+    private val logger = logger()
 
-  suspend fun signIn(code: String) =
-    either<Throwable, AppSession> {
-      val profile = authManager.getProfile(code).bind()
-      val appUser =
-        appUserAppQueryRepository.findBySocialId(profile.id).bind() ?: createAppUser(profile).bind()
+    suspend fun signIn(code: String) =
+        either<Throwable, AppSession> {
+            val profile = authManager.getProfile(code).bind()
+            val appUser =
+                appUserAppQueryRepository.findBySocialId(profile.id).bind() ?: createAppUser(profile).bind()
 
-      AppSession(appUser.id, appUser.role)
+            AppSession(appUser.id, appUser.role)
+        }
+            .tapLeft { logger.error(it.message, it) }
+
+    private fun createAppUser(profile: Profile): Either<Throwable, AppUser> = catch {
+        val appUser = AppUser.signUp(profile.name, profile.email, profile.id)
+
+        appUserAppRepository.save(appUser)
     }
-      .tapLeft { logger.error(it.message, it) }
-
-  private fun createAppUser(profile: Profile): Either<Throwable, AppUser> = catch {
-    val appUser = AppUser.signUp(profile.name, profile.email, profile.id)
-
-    appUserAppRepository.save(appUser)
-  }
 }

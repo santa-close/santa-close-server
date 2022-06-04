@@ -13,6 +13,11 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(uniqueConstraints = [UniqueConstraint(columnNames = ["mountain_id", "restaurant_id"])])
 class MountainRestaurant(
-  @ManyToOne(fetch = LAZY) @field:NotNull var mountain: Mountain,
-  @ManyToOne(fetch = LAZY) @field:NotNull var restaurant: Restaurant,
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var mountain: Mountain,
+
+    @ManyToOne(fetch = LAZY)
+    @field:NotNull
+    var restaurant: Restaurant,
 ) : BaseEntity()

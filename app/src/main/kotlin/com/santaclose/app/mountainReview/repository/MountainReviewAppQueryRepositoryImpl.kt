@@ -12,46 +12,46 @@ import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
-import javax.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
+import javax.persistence.criteria.JoinType
 
 @Repository
 class MountainReviewAppQueryRepositoryImpl(
-  private val springDataQueryFactory: SpringDataQueryFactory,
+    private val springDataQueryFactory: SpringDataQueryFactory,
 ) : MountainReviewAppQueryRepository {
 
-  override fun findAllByMountainId(mountainId: Long, limit: Int): List<MountainReview> =
-    springDataQueryFactory.listQuery {
-      val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
-      select(mountainReview)
-      from(mountainReview)
-      fetch(MountainReview::mountain, JoinType.INNER)
-      where(col(Mountain::id).equal(mountainId))
-      orderBy(col(Mountain::id).desc())
-      limit(limit)
-    }
-
-  override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
-    try {
-      springDataQueryFactory
-        .selectQuery<MountainRatingAverageDto> {
-          val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
-          selectMulti(
-            avg(MountainRating::scenery),
-            avg(MountainRating::tree),
-            avg(MountainRating::trail),
-            avg(MountainRating::parking),
-            avg(MountainRating::toilet),
-            avg(MountainRating::traffic),
-            count(col(MountainReview::id)),
-          )
-          associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
-          from(mountainReview)
-          join(MountainReview::mountain, JoinType.INNER)
-          where(col(Mountain::id).equal(mountainId))
+    override fun findAllByMountainId(mountainId: Long, limit: Int): List<MountainReview> =
+        springDataQueryFactory.listQuery {
+            val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
+            select(mountainReview)
+            from(mountainReview)
+            fetch(MountainReview::mountain, JoinType.INNER)
+            where(col(Mountain::id).equal(mountainId))
+            orderBy(col(Mountain::id).desc())
+            limit(limit)
         }
-        .singleResult
-    } catch (e: IllegalArgumentException) {
-      MountainRatingAverageDto.empty
-    }
+
+    override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
+        try {
+            springDataQueryFactory
+                .selectQuery<MountainRatingAverageDto> {
+                    val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
+                    selectMulti(
+                        avg(MountainRating::scenery),
+                        avg(MountainRating::tree),
+                        avg(MountainRating::trail),
+                        avg(MountainRating::parking),
+                        avg(MountainRating::toilet),
+                        avg(MountainRating::traffic),
+                        count(col(MountainReview::id)),
+                    )
+                    associate(MountainReview::class, MountainRating::class, on(MountainReview::rating))
+                    from(mountainReview)
+                    join(MountainReview::mountain, JoinType.INNER)
+                    where(col(Mountain::id).equal(mountainId))
+                }
+                .singleResult
+        } catch (e: IllegalArgumentException) {
+            MountainRatingAverageDto.empty
+        }
 }
