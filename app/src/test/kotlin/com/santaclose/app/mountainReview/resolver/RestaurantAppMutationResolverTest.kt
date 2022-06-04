@@ -21,9 +21,7 @@ import javax.persistence.NoResultException
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantAppMutationResolverTest
-@Autowired
-constructor(
+internal class RestaurantAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val mountainReviewAppMutationService: MountainReviewAppMutationService,
 ) : AppContextMocker() {
@@ -33,25 +31,24 @@ constructor(
         @Test
         fun `mountainId 가 유효하지 않으면 NOT FOUND 를 반환한다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """mutation {
-            |  createMountainReview(input: { 
-            |    mountainId: "1" 
-            |    title: "title"
-            |    parking: 5
-            |    scenery: 5
-            |    toilet: 5
-            |    traffic: 5
-            |    trail: 5
-            |    tree: 5
-            |    content: "Good~"
-            |    images: []
-            |    difficulty: HARD
-            |  })
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """mutation {
+                |  createMountainReview(input: { 
+                |    mountainId: "1" 
+                |    title: "title"
+                |    parking: 5
+                |    scenery: 5
+                |    toilet: 5
+                |    traffic: 5
+                |    trail: 5
+                |    tree: 5
+                |    content: "Good~"
+                |    images: []
+                |    difficulty: HARD
+                |  })
+                |}
+                """.trimMargin()
+            )
             every { mountainReviewAppMutationService.register(any(), any()) } throws
                 NoResultException("no result")
             withMockUser(AppUserRole.USER)
@@ -66,25 +63,24 @@ constructor(
         @Test
         fun `정상적으로 생성한다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """mutation {
-            |  createMountainReview(input: { 
-            |    mountainId: "1" 
-            |    title: "title"
-            |    parking: 5
-            |    scenery: 5
-            |    toilet: 5
-            |    traffic: 5
-            |    trail: 5
-            |    tree: 5
-            |    content: "Good~"
-            |    images: ["a"]
-            |    difficulty: NORMAL
-            |  })
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """mutation {
+                |  createMountainReview(input: { 
+                |    mountainId: "1" 
+                |    title: "title"
+                |    parking: 5
+                |    scenery: 5
+                |    toilet: 5
+                |    traffic: 5
+                |    trail: 5
+                |    tree: 5
+                |    content: "Good~"
+                |    images: ["a"]
+                |    difficulty: NORMAL
+                |  })
+                |}
+                """.trimMargin()
+            )
             val session = withMockUser(AppUserRole.USER)
             justRun { mountainReviewAppMutationService.register(any(), session.id) }
 

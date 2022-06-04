@@ -21,38 +21,35 @@ import javax.persistence.NoResultException
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantReviewAppMutationResolverTest
-@Autowired
-constructor(
+internal class RestaurantReviewAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val restaurantReviewAppMutationService: RestaurantReviewAppMutationService
 ) : AppContextMocker() {
     @Nested
-    inner class createRestaurantReview {
+    inner class CreateRestaurantReview {
         @Test
         fun `에리가 발생하면 에러를 반환한다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """mutation {
-            |  createRestaurantReview(input: { 
-            |    restaurantId: "1"
-            |    title: "title"
-            |    content: "content",
-            |    rating: {
-            |        taste: 5,
-            |        parkingSpace: 5,
-            |        kind: 5,
-            |        clean: 5,
-            |        mood: 5,
-            |    }
-            |    priceComment: IS_EXPENSIVE
-            |    priceAverage: 10000
-            |    images: [],
-            |  })
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """mutation {
+                |  createRestaurantReview(input: { 
+                |    restaurantId: "1"
+                |    title: "title"
+                |    content: "content",
+                |    rating: {
+                |        taste: 5,
+                |        parkingSpace: 5,
+                |        kind: 5,
+                |        clean: 5,
+                |        mood: 5,
+                |    }
+                |    priceComment: IS_EXPENSIVE
+                |    priceAverage: 10000
+                |    images: [],
+                |  })
+                |}
+                """.trimMargin()
+            )
             every { restaurantReviewAppMutationService.register(any(), any()) } throws
                 NoResultException("no result")
             withMockUser(AppUserRole.USER)
@@ -67,27 +64,26 @@ constructor(
         @Test
         fun `정상적으로 생성된다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """mutation {
-            |  createRestaurantReview(input: { 
-            |    restaurantId: "1"
-            |    title: "title"
-            |    content: "content",
-            |    rating: {
-            |        taste: 5,
-            |        parkingSpace: 5,
-            |        kind: 5,
-            |        clean: 5,
-            |        mood: 5,
-            |    }
-            |    priceComment: IS_EXPENSIVE
-            |    priceAverage: 10000
-            |    images: [],
-            |  })
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """mutation {
+                |  createRestaurantReview(input: { 
+                |    restaurantId: "1"
+                |    title: "title"
+                |    content: "content",
+                |    rating: {
+                |        taste: 5,
+                |        parkingSpace: 5,
+                |        kind: 5,
+                |        clean: 5,
+                |        mood: 5,
+                |    }
+                |    priceComment: IS_EXPENSIVE
+                |    priceAverage: 10000
+                |    images: [],
+                |  })
+                |}
+                """.trimMargin()
+            )
             justRun { restaurantReviewAppMutationService.register(any(), any()) }
             withMockUser(AppUserRole.USER)
 

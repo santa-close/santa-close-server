@@ -14,9 +14,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.persistence.EntityManager
 
 @DataJpaTest
-internal class RestaurantReviewAppQueryRepositoryImplTest
-@Autowired
-constructor(private val em: EntityManager) {
+internal class RestaurantReviewAppQueryRepositoryImplTest @Autowired constructor(
+    private val em: EntityManager,
+) {
     private val restaurantReviewAppQueryRepository =
         RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
 

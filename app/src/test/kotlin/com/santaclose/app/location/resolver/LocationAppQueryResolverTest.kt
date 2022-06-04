@@ -21,9 +21,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class LocationAppQueryResolverTest
-@Autowired
-constructor(
+internal class LocationAppQueryResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val locationAppQueryService: LocationAppQueryService
 ) : AppContextMocker() {
@@ -32,20 +30,19 @@ constructor(
         @Test
         fun `요청한 지역안의 위치 정보를 가져온다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """query {
-            |  locations(input: {diagonalFrom: {latitude: 37.5, longitude: 127.5}, diagonalTo: {latitude: 37.6, longitude: 127.6}}) {
-            |    id
-            |    type
-            |    coordinate {
-            |      latitude
-            |      longitude
-            |    }
-            |  }
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """query {
+                |  locations(input: {diagonalFrom: {latitude: 37.5, longitude: 127.5}, diagonalTo: {latitude: 37.6, longitude: 127.6}}) {
+                |    id
+                |    type
+                |    coordinate {
+                |      latitude
+                |      longitude
+                |    }
+                |  }
+                |}
+                """.trimMargin()
+            )
             every { locationAppQueryService.find(any()) } returns
                 listOf(
                     MountainAppLocation(

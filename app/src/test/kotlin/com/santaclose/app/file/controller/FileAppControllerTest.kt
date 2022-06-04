@@ -23,13 +23,13 @@ import org.springframework.web.reactive.function.BodyInserters
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class FileAppControllerTest
-@Autowired
-constructor(
+internal class FileAppControllerTest @Autowired constructor(
     private val webTestClient: WebTestClient,
 ) {
-    @MockkBean private lateinit var fileAppService: FileAppService
-    @MockkBean private lateinit var serverRequestParser: ServerRequestParser
+    @MockkBean
+    private lateinit var fileAppService: FileAppService
+    @MockkBean
+    private lateinit var serverRequestParser: ServerRequestParser
 
     @Nested
     inner class UploadImage {

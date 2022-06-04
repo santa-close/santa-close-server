@@ -16,9 +16,7 @@ import java.io.File
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class CategoryAppQueryResolverTest
-@Autowired
-constructor(
+internal class CategoryAppQueryResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
 ) : AppContextMocker() {
     @Nested
@@ -26,18 +24,17 @@ constructor(
         @Test
         fun `요청한 category 정보를 file 에 저장한다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """query {
-            |  categories {
-            |    mountainDifficulty {
-            |      code
-            |      name
-            |    }
-            |  }
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """query {
+                |  categories {
+                |    mountainDifficulty {
+                |      code
+                |      name
+                |    }
+                |  }
+                |}
+                """.trimMargin()
+            )
             withMockUser(AppUserRole.USER)
 
             // when

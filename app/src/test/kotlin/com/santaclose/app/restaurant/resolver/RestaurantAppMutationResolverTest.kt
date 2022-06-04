@@ -17,9 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantAppMutationResolverTest
-@Autowired
-constructor(
+internal class RestaurantAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val restaurantAppMutationService: RestaurantAppMutationService
 ) : AppContextMocker() {

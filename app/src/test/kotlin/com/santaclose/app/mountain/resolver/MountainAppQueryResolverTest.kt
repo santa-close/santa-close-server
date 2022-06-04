@@ -23,9 +23,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class MountainAppQueryResolverTest
-@Autowired
-constructor(
+internal class MountainAppQueryResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val mountainAppQueryService: MountainAppQueryService,
 ) : AppContextMocker() {
@@ -35,26 +33,25 @@ constructor(
         @Test
         fun `산 요약정보를 가져온다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """query {
-            |  mountainSummary(id: "123") {
-            |    id
-            |    address
-            |    imageUrl
-            |    rating
-            |    reviewCount
-            |    locations {
-            |      id
-            |      coordinate {
-            |        latitude
-            |        longitude
-            |      }
-            |    }
-            |  }
-            |}
-            """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """query {
+                |  mountainSummary(id: "123") {
+                |    id
+                |    address
+                |    imageUrl
+                |    rating
+                |    reviewCount
+                |    locations {
+                |      id
+                |      coordinate {
+                |        latitude
+                |        longitude
+                |      }
+                |    }
+                |  }
+                |}
+                """.trimMargin()
+            )
             withMockUser(AppUserRole.USER)
             val dto =
                 MountainSummaryDto(

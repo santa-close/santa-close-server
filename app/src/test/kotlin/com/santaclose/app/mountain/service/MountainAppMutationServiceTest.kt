@@ -13,9 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.persistence.EntityManager
 
 @DataJpaTest
-internal class MountainAppMutationServiceTest
-@Autowired
-constructor(
+internal class MountainAppMutationServiceTest @Autowired constructor(
     private val mountainAppRepository: MountainAppRepository,
     private val em: EntityManager
 ) {

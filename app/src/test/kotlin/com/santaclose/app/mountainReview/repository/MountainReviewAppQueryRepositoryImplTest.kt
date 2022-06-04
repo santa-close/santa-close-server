@@ -16,9 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.persistence.EntityManager
 
 @DataJpaTest
-internal class MountainReviewAppQueryRepositoryImplTest
-@Autowired
-constructor(
+internal class MountainReviewAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val mountainReviewAppQueryRepository =

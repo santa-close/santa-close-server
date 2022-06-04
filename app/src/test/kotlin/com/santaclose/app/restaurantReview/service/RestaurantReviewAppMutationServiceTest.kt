@@ -19,9 +19,7 @@ import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 
 @DataJpaTest
-internal class RestaurantReviewAppMutationServiceTest
-@Autowired
-constructor(
+internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
     private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
     restaurantRepository: RestaurantAppRepository,
     private val em: EntityManager

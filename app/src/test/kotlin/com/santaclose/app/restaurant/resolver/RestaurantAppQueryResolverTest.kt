@@ -20,9 +20,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class RestaurantAppQueryResolverTest
-@Autowired
-constructor(
+internal class RestaurantAppQueryResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val restaurantAppQueryService: RestaurantAppQueryService
 ) : AppContextMocker() {
@@ -31,35 +29,34 @@ constructor(
         @Test
         fun `유저가 식당을 조회한다`() {
             // given
-            val query =
-                GraphqlBody(
-                    """query{
-              | restaurantDetail(id: "1") {
-              |     address
-              |     foodType
-              |     name
-              |     mountains {
-              |       id
-              |       name
-              |     }
-              |     restaurantRatingAverage {
-              |         average
-              |         clean
-              |         kind
-              |         mood
-              |         parkingSpace
-              |         taste
-              |         totalCount
-              |     }
-              |     restaurantReviews {
-              |         content
-              |         id
-              |         title
-              |     }
-              | }
-              |}
-          """.trimMargin()
-                )
+            val query = GraphqlBody(
+                """query {
+                |  restaurantDetail(id: "1") {
+                |    address
+                |    foodType
+                |    name
+                |    mountains {
+                |      id
+                |      name
+                |    }
+                |    restaurantRatingAverage {
+                |      average
+                |      clean
+                |      kind
+                |      mood
+                |      parkingSpace
+                |      taste
+                |      totalCount
+                |    }
+                |    restaurantReviews {
+                |      content
+                |      id
+                |      title
+                |    }
+                |  }
+                |}
+                """.trimMargin()
+            )
             every { restaurantAppQueryService.findDetail(any()) } returns
                 RestaurantAppDetail(
                     name = "name",

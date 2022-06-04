@@ -23,9 +23,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class AuthAppMutationResolverTest
-@Autowired
-constructor(
+internal class AuthAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val authAppService: AuthAppService,
 ) : AppContextMocker() {

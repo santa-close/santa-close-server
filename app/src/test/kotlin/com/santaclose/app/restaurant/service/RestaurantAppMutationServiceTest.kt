@@ -18,9 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.persistence.EntityManager
 
 @DataJpaTest
-internal class RestaurantAppMutationServiceTest
-@Autowired
-constructor(
+internal class RestaurantAppMutationServiceTest @Autowired constructor(
     private val restaurantRepository: RestaurantAppRepository,
     mountainAppRepository: MountainAppRepository,
     private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,

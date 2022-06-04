@@ -19,9 +19,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceException
 
 @DataJpaTest
-internal class MountainReviewAppRepositoryTest
-@Autowired
-constructor(
+internal class MountainReviewAppRepositoryTest @Autowired constructor(
     private val mountainReviewAppRepository: MountainReviewAppRepository,
     private val em: EntityManager,
 ) {

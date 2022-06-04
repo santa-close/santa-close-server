@@ -15,9 +15,7 @@ import javax.persistence.EntityManager
 import javax.validation.ConstraintViolationException
 
 @DataJpaTest
-internal class SampleAppQueryRepositoryImplTest
-@Autowired
-constructor(
+internal class SampleAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val sampleAppQueryRepository = SampleAppQueryRepositoryImpl(em.createQueryFactory())

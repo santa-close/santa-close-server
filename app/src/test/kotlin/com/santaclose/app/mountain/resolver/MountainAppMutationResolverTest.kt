@@ -17,9 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class MountainAppMutationResolverTest
-@Autowired
-constructor(
+internal class MountainAppMutationResolverTest @Autowired constructor(
     private val webTestClient: WebTestClient,
     @MockkBean private val mountainAppMutationService: MountainAppMutationService
 ) : AppContextMocker() {

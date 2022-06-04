@@ -25,9 +25,7 @@ import javax.persistence.EntityManager
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("mysql")
-internal class LocationAppQueryServiceTest
-@Autowired
-constructor(
+internal class LocationAppQueryServiceTest @Autowired constructor(
     locationAppRepository: LocationAppRepository,
     mountainAppRepository: MountainAppRepository,
     restaurantAppRepository: RestaurantAppRepository,

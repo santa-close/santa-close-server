@@ -16,9 +16,7 @@ import javax.persistence.EntityManager
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("mysql")
-class LocationAppRepositoryTest
-@Autowired
-constructor(
+class LocationAppRepositoryTest @Autowired constructor(
     private val locationAppRepository: LocationAppRepository,
     private val em: EntityManager,
 ) {

@@ -1,6 +1,11 @@
 package com.santaclose.app.restaurant.repository
 
-import com.santaclose.app.util.*
+import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createLocation
+import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createMountainRestaurant
+import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -11,9 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import javax.persistence.EntityManager
 
 @DataJpaTest
-internal class RestaurantAppQueryRepositoryImplTest
-@Autowired
-constructor(
+internal class RestaurantAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val restaurantAppQueryRepository =

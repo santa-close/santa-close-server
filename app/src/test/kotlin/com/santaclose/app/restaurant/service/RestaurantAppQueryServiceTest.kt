@@ -4,7 +4,12 @@ import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQue
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepositoryImpl
 import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingAverage
-import com.santaclose.app.util.*
+import com.santaclose.app.util.createAppUser
+import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createMountainRestaurant
+import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createRestaurant
+import com.santaclose.app.util.createRestaurantReview
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe

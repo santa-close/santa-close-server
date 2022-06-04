@@ -15,9 +15,7 @@ import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 
 @DataJpaTest
-internal class MountainAppQueryRepositoryImplTest
-@Autowired
-constructor(
+internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val mountainAppQueryRepository = MountainAppQueryRepositoryImpl(em.createQueryFactory())
