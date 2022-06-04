@@ -43,7 +43,7 @@ constructor(
                         is UnauthorizedException -> ResponseEntity(
                             "접근 권한이 없습니다.",
                             HttpStatus.UNAUTHORIZED
-                        ) // ktlint-disable max-line-length
+                        )
                         else -> ResponseEntity("서버 에러", HttpStatus.INTERNAL_SERVER_ERROR)
                     }
                 },
