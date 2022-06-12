@@ -26,7 +26,7 @@ class ServerRequestParserImpl(private val jwtConfig: JWTConfig) : ServerRequestP
             .map { it.substring(7) }
             .flatMap(::parseJwt)
 
-    override fun parseJwt(token: String): Option<AppSession> =
+    private fun parseJwt(token: String): Option<AppSession> =
         catch {
             parserBuilder.setSigningKey(jwtConfig.key).build().parseClaimsJws(token).body.let {
                 AppSession((it["id"] as String).toLong(), AppUserRole.valueOf(it["role"] as String))

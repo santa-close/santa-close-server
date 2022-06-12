@@ -6,5 +6,4 @@ import org.springframework.http.server.reactive.ServerHttpRequest
 
 interface ServerRequestParser {
     fun parse(request: ServerHttpRequest): Option<AppSession>
-    fun parseJwt(token: String): Option<AppSession>
 }
