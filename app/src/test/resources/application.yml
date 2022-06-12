@@ -1,7 +1,3 @@
-graphql:
-  packages:
-    - "com.santaclose.app"
-
 spring:
   jpa:
     database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect

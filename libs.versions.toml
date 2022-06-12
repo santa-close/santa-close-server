@@ -1,5 +1,5 @@
 [versions]
-spring = "2.6.6"
+spring = "2.7.0"
 kotlin = "1.6.21"
 ktlint = "10.3.0"
 arrow = "1.1.2"
@@ -15,12 +15,16 @@ mockk = "1.12.4"
 spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 spring-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+spring-graphql = { module = "org.springframework.boot:spring-boot-starter-graphql" }
+spring-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-security = { module = "org.springframework.boot:spring-boot-starter-security" }
 
 kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor" }
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 
@@ -43,11 +47,14 @@ database-h2 = { module = "com.h2database:h2" }
 connector-mysql = { module = "mysql:mysql-connector-java" }
 
 ## test
+spring-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-graphql-test = { module = "org.springframework.graphql:spring-graphql-test" }
+spring-security-test = { module = "org.springframework.security:spring-security-test" }
+
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions-arrow = { module = "io.kotest.extensions:kotest-assertions-arrow", version = "1.2.5" }
 kotest-extensions-spring = { module = "io.kotest.extensions:kotest-extensions-spring", version = "1.1.1"}
 
-spring-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 reactor-test = { module = "io.projectreactor:reactor-test" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
@@ -68,7 +75,8 @@ kotlin-libs = [
     "kotlinx-coroutines-jdk8",
     "kotlin-stdlib-jdk8",
     "kotlin-reflect",
-    "reactor-kotlin-extensions"
+    "reactor-kotlin-extensions",
+    "jackson-module-kotlin",
 ]
 aws-libs = ["aws-sdk-kotlin", "aws-java-sdk-s3"]
 

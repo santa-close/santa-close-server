@@ -9,6 +9,9 @@ plugins {
 
 dependencies {
     implementation(project(":lib"))
+    implementation(libs.spring.webflux)
+    implementation(libs.spring.graphql)
+    implementation(libs.spring.security)
     implementation(libs.spring.data.jpa)
     implementation(libs.hibernate.spatial)
     implementation(libs.kotlin.jdsl)
@@ -19,4 +22,7 @@ dependencies {
     runtimeOnly(libs.jjwt.jackson)
 
     annotationProcessor(libs.spring.processor)
+
+    testImplementation(libs.spring.graphql.test)
+    testImplementation(libs.spring.security.test)
 }
