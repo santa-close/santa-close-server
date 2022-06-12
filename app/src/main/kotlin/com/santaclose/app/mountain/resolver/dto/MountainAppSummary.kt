@@ -1,11 +1,9 @@
 package com.santaclose.app.mountain.resolver.dto
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.service.dto.MountainSummaryDto
-import com.santaclose.lib.web.toID
 
 data class MountainAppSummary(
-    val id: ID,
+    val id: String,
     val imageUrl: String,
     val address: String,
     val rating: Double,
@@ -15,7 +13,7 @@ data class MountainAppSummary(
     companion object {
         fun by(dto: MountainSummaryDto): MountainAppSummary =
             MountainAppSummary(
-                id = dto.mountain.id.toID(),
+                id = dto.mountain.id.toString(),
                 imageUrl = dto.mountain.images.first(),
                 address = dto.mountain.location.address,
                 rating = dto.mountainRating.average,

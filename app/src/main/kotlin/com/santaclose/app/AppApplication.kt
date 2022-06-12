@@ -1,8 +1,5 @@
 package com.santaclose.app
 
-import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
-import com.santaclose.app.auth.directive.AuthSchemaDirectiveWiring
-import com.santaclose.app.hook.CustomSchemaGeneratorHooks
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -19,12 +16,12 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 @EntityScan(basePackages = ["com.santaclose.lib.entity"])
 @SpringBootApplication
 class AppApplication {
-    @Bean
-    fun wiringFactory() =
-        KotlinDirectiveWiringFactory(manualWiring = mapOf("auth" to AuthSchemaDirectiveWiring()))
-
-    @Bean
-    fun hooks(wiringFactory: KotlinDirectiveWiringFactory) = CustomSchemaGeneratorHooks(wiringFactory)
+//    @Bean
+//    fun wiringFactory() =
+//        KotlinDirectiveWiringFactory(manualWiring = mapOf("auth" to AuthSchemaDirectiveWiring()))
+//
+//    @Bean
+//    fun hooks(wiringFactory: KotlinDirectiveWiringFactory) = CustomSchemaGeneratorHooks(wiringFactory)
 
     @Bean
     fun corsFilter(): CorsWebFilter {

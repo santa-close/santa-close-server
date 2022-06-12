@@ -1,8 +1,6 @@
 package com.santaclose.app.mountain.resolver
 
 import arrow.core.Either.Companion.catch
-import com.expediagroup.graphql.generator.scalars.ID
-import com.santaclose.app.auth.context.userId
 import com.santaclose.app.mountain.resolver.dto.CreateMountainAppInput
 import com.santaclose.app.mountain.resolver.dto.MountainAppSummary
 import com.santaclose.app.mountain.resolver.dto.MountainDetailAppInput
@@ -11,7 +9,6 @@ import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.error.getOrThrow
 import com.santaclose.lib.web.error.toGraphQLException
-import com.santaclose.lib.web.toLong
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -69,7 +66,7 @@ class MountainAppController(
     }
 
     @QueryMapping
-    fun mountainSummary(id: ID): MountainAppSummary =
+    fun mountainSummary(id: String): MountainAppSummary =
         catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
@@ -77,10 +74,11 @@ class MountainAppController(
     @MutationMapping
     fun registerMountain(
         @Valid input: CreateMountainAppInput,
+        // TODO: 인증 대응
         dfe: DataFetchingEnvironment
     ): Boolean {
         try {
-            mountainAppMutationService.register(input, dfe.userId())
+            mountainAppMutationService.register(input, 123)
             return true
         } catch (e: Throwable) {
             logger.error(e.message, e)

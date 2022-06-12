@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurant.resolver.dto
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -9,7 +8,7 @@ import javax.validation.Validation
 
 internal class CreateRestaurantAppInputTest {
     private val validator = Validation.buildDefaultValidatorFactory().validator
-    private val mountainId = ID("1")
+    private val mountainId = "1"
     private val name = "식당 이름"
     private val description = "식당 설명"
     private val images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")

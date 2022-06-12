@@ -1,8 +1,6 @@
 package com.santaclose.app.location.resolver.dto
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.location.resolver.enum.LocationType
-import com.santaclose.lib.web.toID
 import org.locationtech.jts.geom.Point
 
 class MountainAppLocation(
@@ -11,7 +9,7 @@ class MountainAppLocation(
 ) : AppLocation {
     override val type = LocationType.MOUNTAIN
 
-    override fun id(): ID = id.toID()
+    override fun id(): String = id.toString()
 
     override fun coordinate(): AppCoordinate = AppCoordinate(longitude = point.x, latitude = point.y)
 }

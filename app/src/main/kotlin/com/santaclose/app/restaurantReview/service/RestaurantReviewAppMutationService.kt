@@ -6,7 +6,6 @@ import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAp
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
-import com.santaclose.lib.web.toLong
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException

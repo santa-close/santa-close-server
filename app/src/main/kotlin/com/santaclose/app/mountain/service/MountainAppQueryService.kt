@@ -1,12 +1,10 @@
 package com.santaclose.app.mountain.service
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppQueryRepository
 import com.santaclose.app.mountain.resolver.dto.MountainAppDetail
 import com.santaclose.app.mountain.service.dto.MountainSummaryDto
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
-import com.santaclose.lib.web.toLong
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
@@ -17,7 +15,7 @@ class MountainAppQueryService(
     private val mountainReviewAppQueryRepository: MountainReviewAppQueryRepository,
     private val restaurantAppQueryRepository: RestaurantAppQueryRepository,
 ) {
-    fun findDetail(id: ID): MountainAppDetail {
+    fun findDetail(id: String): MountainAppDetail {
         val mountain = mountainAppQueryRepository.findOneWithLocation(id.toLong())
         val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 5)
         val mountainRatingAverageDto =

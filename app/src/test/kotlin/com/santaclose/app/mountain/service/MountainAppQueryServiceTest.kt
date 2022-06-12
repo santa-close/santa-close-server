@@ -1,6 +1,5 @@
 package com.santaclose.app.mountain.service
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
@@ -10,7 +9,6 @@ import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
-import com.santaclose.lib.web.toID
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -42,7 +40,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             em.createMountainReview(user, mountain)
 
             // when
-            val result = mountainAppQueryService.findDetail(mountain.id.toID())
+            val result = mountainAppQueryService.findDetail(mountain.id)
 
             // then
             result.apply {
@@ -54,7 +52,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
         @Test
         fun `mountainId가 유효하지 않으면 NoResultException 이 발생한다`() {
             // given
-            val id = ID("-1")
+            val id = "-1"
 
             // when
             val exception = shouldThrow<NoResultException> { mountainAppQueryService.findDetail(id) }

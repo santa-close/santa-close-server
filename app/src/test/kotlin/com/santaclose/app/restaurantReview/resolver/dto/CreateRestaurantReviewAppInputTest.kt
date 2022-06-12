@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurantReview.resolver.dto
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.matchers.collections.shouldHaveSize
 import org.junit.jupiter.api.Test
@@ -15,7 +14,7 @@ internal class CreateRestaurantReviewAppInputTest {
         // given
         val dto =
             CreateRestaurantReviewAppInput(
-                restaurantId = ID("1"),
+                restaurantId = "1",
                 title = "title",
                 content = "content",
                 rating = RestaurantRatingInput(1, 2, 3, 4, 6),
@@ -37,7 +36,7 @@ internal class CreateRestaurantReviewAppInputTest {
         // given
         val dto =
             CreateRestaurantReviewAppInput(
-                restaurantId = ID("1"),
+                restaurantId = "1",
                 title = "title",
                 content = "content",
                 rating = RestaurantRatingInput(1, 2, 3, 4, 5),
@@ -59,7 +58,7 @@ internal class CreateRestaurantReviewAppInputTest {
         // given
         val dto =
             CreateRestaurantReviewAppInput(
-                restaurantId = ID("A"),
+                restaurantId = "A",
                 title = "title",
                 content = "content",
                 rating = RestaurantRatingInput(1, 2, 3, 4, 5),
@@ -81,7 +80,7 @@ internal class CreateRestaurantReviewAppInputTest {
         // given
         val dto =
             CreateRestaurantReviewAppInput(
-                restaurantId = ID("1"),
+                restaurantId = "1",
                 title = "",
                 content = "content",
                 rating = RestaurantRatingInput(1, 2, 3, 4, 5),

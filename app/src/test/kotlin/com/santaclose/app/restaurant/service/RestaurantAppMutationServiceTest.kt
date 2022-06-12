@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurant.service
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantFoodTypeAppRepository
@@ -45,7 +44,7 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
             val mountain = em.createMountain(appUser)
             val input =
                 CreateRestaurantAppInput(
-                    mountainId = ID(mountain.id.toString()),
+                    mountainId = mountain.id.toString(),
                     name = "식당 이름",
                     description = "식당 설명",
                     images = images,

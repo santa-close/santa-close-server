@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     implementation(libs.spring.data.jpa)
+    implementation(libs.spring.webflux)
     implementation(libs.hibernate.spatial)
 
     runtimeOnly(libs.database.h2)

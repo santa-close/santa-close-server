@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurantReview.resolver
 
-import com.santaclose.app.auth.context.userId
 import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
 import com.santaclose.app.restaurantReview.service.RestaurantReviewAppMutationService
 import com.santaclose.lib.logger.logger
@@ -42,10 +41,11 @@ class RestaurantReviewAppController(
     @MutationMapping
     fun createRestaurantReview(
         @Argument input: CreateRestaurantReviewAppInput,
+        // TODO: 인증 대응
         dfe: DataFetchingEnvironment
     ): Boolean {
         try {
-            restaurantReviewAppMutationService.register(input, dfe.userId())
+            restaurantReviewAppMutationService.register(input, 123)
             return true
         } catch (e: Throwable) {
             logger.error(e.message, e)

@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurantReview.service
 
-import com.expediagroup.graphql.generator.scalars.ID
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
 import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
@@ -35,7 +34,7 @@ internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
             val appUser = em.createAppUser()
             val input =
                 CreateRestaurantReviewAppInput(
-                    restaurantId = ID("-1"),
+                    restaurantId = "-1",
                     "title",
                     "content",
                     RestaurantRatingInput(1, 2, 3, 4, 5),
@@ -61,7 +60,7 @@ internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
             val restaurant = em.createRestaurant(appUser)
             val input =
                 CreateRestaurantReviewAppInput(
-                    ID(restaurant.id.toString()),
+                    restaurant.id.toString(),
                     "title",
                     "content",
                     RestaurantRatingInput(1, 2, 3, 4, 5),
@@ -77,7 +76,7 @@ internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
             val restaurantReview = restaurantReviewAppRepository.findAll()
             restaurantReview shouldHaveSize 1
             restaurantReview[0].apply {
-                restaurant.id.toString() shouldBe input.restaurantId.value
+                restaurant.id.toString() shouldBe input.restaurantId
                 appUser.id shouldBe appUser.id
                 title shouldBe input.title
                 content shouldBe input.content

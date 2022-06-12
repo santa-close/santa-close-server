@@ -8,7 +8,6 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.RestaurantFoodType
-import com.santaclose.lib.web.toLong
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException

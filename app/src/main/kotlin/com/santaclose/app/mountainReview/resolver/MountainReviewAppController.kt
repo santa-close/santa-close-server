@@ -1,6 +1,5 @@
 package com.santaclose.app.mountainReview.resolver
 
-import com.santaclose.app.auth.context.userId
 import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.lib.logger.logger
@@ -42,10 +41,11 @@ class MountainReviewAppController(
     @MutationMapping
     fun createMountainReview(
         @Argument input: CreateMountainReviewAppInput,
+        // TODO: 인증 처리
         dfe: DataFetchingEnvironment
     ): Boolean {
         try {
-            mountainAppMutationService.register(input, dfe.userId())
+            mountainAppMutationService.register(input, 123)
             return true
         } catch (e: Throwable) {
             logger.error(e.message, e)
