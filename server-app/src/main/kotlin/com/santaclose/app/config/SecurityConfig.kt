@@ -45,9 +45,9 @@ class SecurityConfig(
                 ifEmpty = { Mono.empty() },
                 ifSome = {
                     UsernamePasswordAuthenticationToken(
-                        it.id,
-                        null,
-                        listOf(SimpleGrantedAuthority("ROLE_${it.role}"))
+                        /* principal = */ it.id,
+                        /* credentials = */ it.role,
+                        /* authorities = */ listOf(SimpleGrantedAuthority("ROLE_${it.role}"))
                     ).toMono()
                 }
             )

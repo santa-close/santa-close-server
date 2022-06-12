@@ -42,7 +42,7 @@ class MountainReviewAppController(
     fun createMountainReview(
         @Argument input: CreateMountainReviewAppInput,
         // TODO: 인증 처리
-        dfe: DataFetchingEnvironment
+        dfe: DataFetchingEnvironment,
     ): Boolean {
         try {
             mountainAppMutationService.register(input, 123)
