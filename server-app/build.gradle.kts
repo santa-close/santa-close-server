@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":lib"))
+    implementation(project(":server-lib"))
     implementation(libs.spring.webflux)
     implementation(libs.spring.graphql)
     implementation(libs.spring.security)

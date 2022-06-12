@@ -11,7 +11,10 @@ export const sample = () => ({
 export const categories = () =>
   JSON.parse(
     `${readFileSync(
-      join(__dirname, '../../../app/src/main/resources/graphql/categories.json')
+      join(
+        __dirname,
+        '../../../server-app/src/main/resources/graphql/categories.json'
+      )
     )}`
   ).data.categories;
 

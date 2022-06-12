@@ -8,5 +8,5 @@ dependencyResolutionManagement {
     }
 }
 
-include(":lib")
-include(":app")
+include(":server-lib")
+include(":server-app")

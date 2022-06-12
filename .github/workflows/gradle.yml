@@ -38,7 +38,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          files: ./app/build/reports/jacoco/test/jacocoTestReport.xml,./lib/build/reports/jacoco/test/jacocoTestReport.xml
+          files: ./server-app/build/reports/jacoco/test/jacocoTestReport.xml,./server-lib/build/reports/jacoco/test/jacocoTestReport.xml
           verbose: true
 
       - name: Test Report
