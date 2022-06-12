@@ -9,7 +9,6 @@ plugins {
 
 dependencies {
     implementation(libs.spring.data.jpa)
-    implementation(libs.graphql.kotlin)
     implementation(libs.hibernate.spatial)
 
     runtimeOnly(libs.database.h2)

@@ -4,7 +4,6 @@ kotlin = "1.6.21"
 ktlint = "10.3.0"
 arrow = "1.1.2"
 okhttp = "4.9.3"
-graphql = "5.4.1"
 jjwt = "0.11.5"
 
 ## test
@@ -36,8 +35,6 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt"}
 jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt"}
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
-
-graphql-kotlin = { group = "com.expediagroup", name = "graphql-kotlin-spring-server", version.ref = "graphql" }
 
 hibernate-spatial = { module = "org.hibernate:hibernate-spatial" }
 
@@ -91,8 +88,6 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
-
-kotlin-graphql = { id = "com.expediagroup.graphql", version.ref = "graphql" }
 
 ## etc
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
