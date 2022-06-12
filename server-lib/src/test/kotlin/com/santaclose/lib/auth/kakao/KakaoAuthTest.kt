@@ -8,6 +8,8 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.string.shouldContain
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.springframework.http.HttpHeaders.CONTENT_TYPE
+import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.reactive.function.client.WebClient
 
 internal class KakaoAuthTest : FreeSpec({
@@ -45,7 +47,9 @@ internal class KakaoAuthTest : FreeSpec({
         "토큰 요청의 응답이 올바르지 않으면 에러가 발생한다" {
             // given
             server.enqueue(
-                MockResponse().addHeader("Content-Type", "application/json").setBody("{\"foo\":\"bar\"}")
+                MockResponse()
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                    .setBody("{\"foo\":\"bar\"}")
             )
 
             // when
@@ -60,7 +64,7 @@ internal class KakaoAuthTest : FreeSpec({
             val token = "1234abcd"
             server.enqueue(
                 MockResponse()
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .setBody("{\"access_token\":\"$token\"}")
             )
 
@@ -87,7 +91,9 @@ internal class KakaoAuthTest : FreeSpec({
         "사용자 요청의 응답이 올바르지 않으면 에러가 발생한다" {
             // given
             server.enqueue(
-                MockResponse().addHeader("Content-Type", "application/json").setBody("{\"id\":123}")
+                MockResponse()
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                    .setBody("{\"id\":123}")
             )
 
             // when
@@ -102,7 +108,7 @@ internal class KakaoAuthTest : FreeSpec({
             val user = KakaoUserResponse(123, KakaoAccountResponse(KakaoProfileResponse("name"), "email"))
             server.enqueue(
                 MockResponse()
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .setBody(ObjectMapper().writeValueAsString(user))
             )
 
@@ -119,12 +125,12 @@ internal class KakaoAuthTest : FreeSpec({
             // given
             server.enqueue(
                 MockResponse()
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .setBody("{\"access_token\":\"token\"}")
             )
             server.enqueue(
                 MockResponse()
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .setBody(
                         ObjectMapper()
                             .writeValueAsString(
