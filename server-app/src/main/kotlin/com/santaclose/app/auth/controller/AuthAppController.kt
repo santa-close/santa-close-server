@@ -1,8 +1,8 @@
-package com.santaclose.app.auth.resolver
+package com.santaclose.app.auth.controller
 
 import arrow.core.flatMap
-import com.santaclose.app.auth.resolver.dto.AppAuthInfo
-import com.santaclose.app.auth.resolver.dto.SignInAppInput
+import com.santaclose.app.auth.controller.dto.AppAuthInfo
+import com.santaclose.app.auth.controller.dto.SignInAppInput
 import com.santaclose.app.auth.service.AuthAppService
 import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.web.error.getOrThrow

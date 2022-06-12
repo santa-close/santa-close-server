@@ -1,4 +1,4 @@
-package com.santaclose.app.auth.resolver
+package com.santaclose.app.auth.controller
 
 import arrow.core.left
 import arrow.core.right

@@ -1,4 +1,4 @@
-package com.santaclose.app.auth.resolver.dto
+package com.santaclose.app.auth.controller.dto
 
 enum class SignInType {
     KAKAO,
