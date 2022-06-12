@@ -5,6 +5,7 @@ import com.santaclose.lib.entity.appUser.type.AppUserRole
 import io.kotest.assertions.arrow.core.shouldBeNone
 import io.kotest.assertions.arrow.core.shouldBeSome
 import io.kotest.core.spec.style.StringSpec
+import org.springframework.http.HttpHeaders
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest
 
 internal class ServerRequestParserImplTest : StringSpec({
@@ -27,7 +28,7 @@ internal class ServerRequestParserImplTest : StringSpec({
         // given
         val request = MockServerHttpRequest
             .get("/")
-            .header("Authorization", "Bearer invalid")
+            .header(HttpHeaders.AUTHORIZATION, "Bearer invalid")
             .build()
 
         // when
@@ -43,7 +44,7 @@ internal class ServerRequestParserImplTest : StringSpec({
         val request =
             MockServerHttpRequest
                 .get("/")
-                .header("Authorization", "Bearer ${JwtTestUtil.genToken(user, true)}")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer ${JwtTestUtil.genToken(user, true)}")
                 .build()
 
         // when
@@ -59,7 +60,7 @@ internal class ServerRequestParserImplTest : StringSpec({
         val request =
             MockServerHttpRequest
                 .get("/")
-                .header("Authorization", "Bearer ${JwtTestUtil.genToken(user)}")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer ${JwtTestUtil.genToken(user)}")
                 .build()
 
         // when
