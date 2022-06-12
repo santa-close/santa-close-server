@@ -7,15 +7,17 @@ plugins {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.2")
-    implementation("org.hibernate:hibernate-spatial")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("mysql:mysql-connector-java")
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.17.1"))
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:localstack")
+    implementation(libs.spring.data.jpa)
+    implementation(libs.graphql.kotlin)
+    implementation(libs.hibernate.spatial)
+
+    runtimeOnly(libs.database.h2)
+    runtimeOnly(libs.connector.mysql)
+
+    testImplementation(libs.okhttp.mock.webserver)
+    testImplementation(platform(libs.testcontainer.bom))
+    testImplementation(libs.testcontainer.junit)
+    testImplementation(libs.testcontainer.localstack)
 }
 
 allOpen {
