@@ -2,7 +2,7 @@ package com.santaclose.app.util
 
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.navercorp.fixturemonkey.kotlin.giveMeBuilder
-import com.santaclose.app.auth.context.AppSession
+import com.santaclose.app.auth.security.AppSession
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 
 internal abstract class AppContextMocker {

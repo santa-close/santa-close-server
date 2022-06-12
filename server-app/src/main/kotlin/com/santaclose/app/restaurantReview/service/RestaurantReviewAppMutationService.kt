@@ -1,8 +1,8 @@
 package com.santaclose.app.restaurantReview.service
 
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
+import com.santaclose.app.restaurantReview.controller.dto.CreateRestaurantReviewAppInput
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
-import com.santaclose.app.restaurantReview.resolver.dto.CreateRestaurantReviewAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview

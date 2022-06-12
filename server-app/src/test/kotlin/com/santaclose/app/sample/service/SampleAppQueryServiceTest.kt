@@ -3,8 +3,8 @@ package com.santaclose.app.sample.service
 import arrow.core.right
 import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.navercorp.fixturemonkey.kotlin.giveMeOne
+import com.santaclose.app.sample.controller.dto.SampleAppDetail
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
-import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -15,9 +15,11 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 internal class SampleAppQueryServiceTest {
-    @InjectMockKs private lateinit var sampleAppQueryService: SampleAppQueryService
+    @InjectMockKs
+    private lateinit var sampleAppQueryService: SampleAppQueryService
 
-    @MockK private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
+    @MockK
+    private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
 
     private val sut = KFixtureMonkey.create()
 

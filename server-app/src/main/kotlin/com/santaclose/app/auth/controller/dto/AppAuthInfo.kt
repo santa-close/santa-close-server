@@ -2,7 +2,7 @@ package com.santaclose.app.auth.controller.dto
 
 import arrow.core.Either
 import arrow.core.Either.Companion.catch
-import com.santaclose.app.auth.context.AppSession
+import com.santaclose.app.auth.security.AppSession
 import io.jsonwebtoken.Jwts
 import java.security.Key
 import java.time.LocalDateTime

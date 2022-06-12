@@ -79,9 +79,10 @@ logging:
 
 > git hook 이 제대로 설정된 상태라면 푸시하기 전에 테스트가 자동으로 실행된다.
 
-[CategoryAppList.kt](server-app/src/main/kotlin/com/santaclose/app/category/resolver/dto/CategoryAppList.kt) 파일이 수정된 경우
+[CategoryAppList.kt](server-app/src/main/kotlin/com/santaclose/app/category/controller/dto/CategoryAppList.kt) 파일이 수정된
+경우
 category 응답 데이터를 업데이트 해야한다.
-[CategoryAppQueryResolverTest](server-app/src/test/kotlin/com/santaclose/app/category/resolver/CategoryAppQueryResolverTest.kt)
+[CategoryAppQueryResolverTest](server-app/src/test/kotlin/com/santaclose/app/category/controller/CategoryAppQueryResolverTest.kt)
 테스트를 실행하면 된다.
 
 ### 개발 환경 이슈

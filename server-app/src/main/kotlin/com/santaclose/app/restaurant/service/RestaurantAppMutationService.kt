@@ -1,9 +1,9 @@
 package com.santaclose.app.restaurant.service
 
 import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.restaurant.controller.dto.CreateRestaurantAppInput
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurant.repository.RestaurantFoodTypeAppRepository
-import com.santaclose.app.restaurant.resolver.dto.CreateRestaurantAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.restaurant.Restaurant

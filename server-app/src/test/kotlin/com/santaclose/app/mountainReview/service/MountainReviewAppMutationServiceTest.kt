@@ -1,8 +1,8 @@
 package com.santaclose.app.mountainReview.service
 
 import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppInput
 import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
-import com.santaclose.app.mountainReview.resolver.dto.CreateMountainReviewAppInput
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY

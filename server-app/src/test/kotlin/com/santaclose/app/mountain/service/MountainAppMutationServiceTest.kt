@@ -1,7 +1,7 @@
 package com.santaclose.app.mountain.service
 
+import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
 import com.santaclose.app.mountain.repository.MountainAppRepository
-import com.santaclose.app.mountain.resolver.dto.CreateMountainAppInput
 import com.santaclose.app.util.createAppUser
 import com.santaclose.lib.entity.mountain.type.MountainManagement
 import io.kotest.matchers.collections.shouldHaveSize

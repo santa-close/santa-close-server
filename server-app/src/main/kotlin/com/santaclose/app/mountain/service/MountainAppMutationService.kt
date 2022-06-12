@@ -1,6 +1,6 @@
 package com.santaclose.app.mountain.service
 
-import com.santaclose.app.mountain.resolver.dto.CreateMountainAppInput
+import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain

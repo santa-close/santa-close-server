@@ -3,7 +3,7 @@ package com.santaclose.app.auth.controller
 import arrow.core.left
 import arrow.core.right
 import com.ninjasquad.springmockk.MockkBean
-import com.santaclose.app.auth.context.AppSession
+import com.santaclose.app.auth.security.AppSession
 import com.santaclose.app.auth.service.AuthAppService
 import com.santaclose.app.util.AppContextMocker
 import com.santaclose.app.util.GraphqlBody

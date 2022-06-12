@@ -5,8 +5,8 @@ import arrow.core.left
 import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
-import com.santaclose.app.auth.context.AppSession
-import com.santaclose.app.auth.context.parser.ServerRequestParser
+import com.santaclose.app.auth.security.AppSession
+import com.santaclose.app.auth.security.ServerRequestParser
 import com.santaclose.app.file.service.FileAppService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import io.kotest.core.spec.style.FreeSpec

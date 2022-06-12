@@ -2,8 +2,8 @@ package com.santaclose.app.restaurant.service
 
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
+import com.santaclose.app.restaurantReview.controller.dto.RestaurantRatingAverage
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepositoryImpl
-import com.santaclose.app.restaurantReview.resolver.dto.RestaurantRatingAverage
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant

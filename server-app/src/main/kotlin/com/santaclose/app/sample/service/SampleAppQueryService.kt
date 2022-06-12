@@ -1,8 +1,8 @@
 package com.santaclose.app.sample.service
 
 import arrow.core.Either
+import com.santaclose.app.sample.controller.dto.SampleAppDetail
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
-import com.santaclose.app.sample.resolver.dto.SampleAppDetail
 import org.springframework.stereotype.Service
 
 @Service

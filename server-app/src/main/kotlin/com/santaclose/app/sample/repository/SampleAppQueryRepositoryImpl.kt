@@ -5,7 +5,7 @@ import arrow.core.Either.Companion.catch
 import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.singleQuery
-import com.santaclose.app.sample.resolver.dto.SampleAppDetail
+import com.santaclose.app.sample.controller.dto.SampleAppDetail
 import com.santaclose.lib.entity.sample.Sample
 import org.springframework.stereotype.Repository
 

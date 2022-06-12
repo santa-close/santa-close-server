@@ -1,7 +1,7 @@
 package com.santaclose.app.mountain.service
 
+import com.santaclose.app.mountain.controller.dto.MountainAppDetail
 import com.santaclose.app.mountain.repository.MountainAppQueryRepository
-import com.santaclose.app.mountain.resolver.dto.MountainAppDetail
 import com.santaclose.app.mountain.service.dto.MountainSummaryDto
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepository
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository

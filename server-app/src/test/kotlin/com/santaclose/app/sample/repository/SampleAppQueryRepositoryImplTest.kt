@@ -1,6 +1,6 @@
 package com.santaclose.app.sample.repository
 
-import com.santaclose.app.sample.resolver.dto.SampleAppDetail
+import com.santaclose.app.sample.controller.dto.SampleAppDetail
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus

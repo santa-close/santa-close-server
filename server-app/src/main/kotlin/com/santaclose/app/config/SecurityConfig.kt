@@ -1,6 +1,6 @@
 package com.santaclose.app.config
 
-import com.santaclose.app.auth.context.parser.ServerRequestParser
+import com.santaclose.app.auth.security.ServerRequestParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.ReactiveAuthenticationManager

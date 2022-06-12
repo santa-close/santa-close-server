@@ -6,7 +6,7 @@ import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
 import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import com.santaclose.app.appUser.repository.AppUserAppQueryRepository
 import com.santaclose.app.appUser.repository.AppUserAppRepository
-import com.santaclose.app.auth.context.AppSession
+import com.santaclose.app.auth.security.AppSession
 import com.santaclose.lib.auth.Profile
 import com.santaclose.lib.entity.appUser.AppUser
 import io.kotest.assertions.arrow.core.shouldBeLeft

@@ -5,7 +5,7 @@ import arrow.core.Either.Companion.catch
 import arrow.core.continuations.either
 import com.santaclose.app.appUser.repository.AppUserAppQueryRepository
 import com.santaclose.app.appUser.repository.AppUserAppRepository
-import com.santaclose.app.auth.context.AppSession
+import com.santaclose.app.auth.security.AppSession
 import com.santaclose.lib.auth.Profile
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.logger.logger
@@ -19,8 +19,8 @@ class AuthAppService(
 ) {
     private val logger = logger()
 
-    suspend fun signIn(code: String) =
-        either<Throwable, AppSession> {
+    fun signIn(code: String) =
+        either.eager<Throwable, AppSession> {
             val profile = authManager.getProfile(code).bind()
             val appUser =
                 appUserAppQueryRepository.findBySocialId(profile.id).bind() ?: createAppUser(profile).bind()

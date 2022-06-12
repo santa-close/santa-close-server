@@ -1,8 +1,8 @@
 package com.santaclose.app.restaurant.service
 
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepository
+import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
-import com.santaclose.app.restaurant.resolver.dto.RestaurantAppDetail
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepository
 import org.springframework.stereotype.Service
 
