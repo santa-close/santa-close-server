@@ -40,7 +40,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             em.createMountainReview(user, mountain)
 
             // when
-            val result = mountainAppQueryService.findDetail(mountain.id)
+            val result = mountainAppQueryService.findDetail(mountain.id.toString())
 
             // then
             result.apply {

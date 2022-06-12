@@ -3,26 +3,27 @@ package com.santaclose.app.auth.context.parser
 import arrow.core.Either.Companion.catch
 import arrow.core.Option
 import arrow.core.firstOrNone
-import arrow.core.lastOrNone
 import com.santaclose.app.auth.context.AppSession
 import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.logger.logger
 import io.jsonwebtoken.Jwts
+import org.springframework.http.HttpHeaders
+import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.server.ServerRequest
 
 @Service
 class ServerRequestParserImpl(private val jwtConfig: JWTConfig) : ServerRequestParser {
     private val parserBuilder = Jwts.parserBuilder()
     private val logger = logger()
 
-    override fun parse(request: ServerRequest): Option<AppSession> =
+    override fun parse(request: ServerHttpRequest): Option<AppSession> =
         request
-            .headers()
-            .header("Authorization")
+            .headers
+            .getOrDefault(HttpHeaders.AUTHORIZATION, emptyList())
             .firstOrNone()
-            .flatMap { it.split(" ").lastOrNone() }
+            .filter { it.startsWith("Bearer ") }
+            .map { it.substring(7) }
             .flatMap(::parseJwt)
 
     override fun parseJwt(token: String): Option<AppSession> =

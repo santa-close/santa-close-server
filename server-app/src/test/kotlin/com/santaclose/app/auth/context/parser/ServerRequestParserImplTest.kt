@@ -5,16 +5,17 @@ import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import io.kotest.assertions.arrow.core.shouldBeNone
 import io.kotest.assertions.arrow.core.shouldBeSome
-import org.junit.jupiter.api.Test
-import org.springframework.mock.web.reactive.function.server.MockServerRequest
+import io.kotest.core.spec.style.StringSpec
+import org.springframework.mock.http.server.reactive.MockServerHttpRequest
 
-internal class ServerRequestParserImplTest {
-    private val parser = ServerRequestParserImpl(JWTConfig(JwtTestUtil.secret, 30))
+internal class ServerRequestParserImplTest : StringSpec({
+    val parser = ServerRequestParserImpl(JWTConfig(JwtTestUtil.secret, 30))
 
-    @Test
-    fun `토큰 정보가 없으면 none 을 반환한다`() {
+    "토큰 정보가 없으면 none 을 반환한다" {
         // given
-        val request = MockServerRequest.builder().build()
+        val request = MockServerHttpRequest
+            .get("/")
+            .build()
 
         // when
         val result = parser.parse(request)
@@ -23,10 +24,12 @@ internal class ServerRequestParserImplTest {
         result.shouldBeNone()
     }
 
-    @Test
-    fun `유효한 토큰이 아니면 none 을 반환한다`() {
+    "유효한 토큰이 아니면 none 을 반환한다" {
         // given
-        val request = MockServerRequest.builder().header("Authorization", "Bearer invalid").build()
+        val request = MockServerHttpRequest
+            .get("/")
+            .header("Authorization", "Bearer invalid")
+            .build()
 
         // when
         val result = parser.parse(request)
@@ -35,12 +38,12 @@ internal class ServerRequestParserImplTest {
         result.shouldBeNone()
     }
 
-    @Test
-    fun `유효기간이 지난 토큰이면 none 을 반환한다`() {
+    "유효기간이 지난 토큰이면 none 을 반환한다" {
         // given
         val user = AppSession(12345, AppUserRole.USER)
         val request =
-            MockServerRequest.builder()
+            MockServerHttpRequest
+                .get("/")
                 .header("Authorization", "Bearer ${JwtTestUtil.genToken(user, true)}")
                 .build()
 
@@ -51,12 +54,12 @@ internal class ServerRequestParserImplTest {
         result.shouldBeNone()
     }
 
-    @Test
-    fun `유효한 토큰을 읽어 세션을 반환한다`() {
+    "유효한 토큰을 읽어 세션을 반환한다" {
         // given
         val user = AppSession(12345, AppUserRole.USER)
         val request =
-            MockServerRequest.builder()
+            MockServerHttpRequest
+                .get("/")
                 .header("Authorization", "Bearer ${JwtTestUtil.genToken(user)}")
                 .build()
 
@@ -66,4 +69,4 @@ internal class ServerRequestParserImplTest {
         // then
         result shouldBeSome user
     }
-}
+})
