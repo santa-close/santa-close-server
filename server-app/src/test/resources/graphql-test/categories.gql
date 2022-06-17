@@ -1,0 +1,8 @@
+query categories {
+  categories {
+    mountainDifficulty {
+      code
+      name
+    }
+  }
+}

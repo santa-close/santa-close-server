@@ -14,16 +14,15 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.locationtech.jts.geom.Coordinate
 import org.locationtech.jts.geom.GeometryFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class LocationAppQueryResolverTest @Autowired constructor(
+internal class LocationAppControllerTest(
     private val webTestClient: WebTestClient,
-    @MockkBean private val locationAppQueryService: LocationAppQueryService
+    @MockkBean private val locationAppQueryService: LocationAppQueryService,
 ) : AppContextMocker() {
     @Nested
     inner class Locations {
