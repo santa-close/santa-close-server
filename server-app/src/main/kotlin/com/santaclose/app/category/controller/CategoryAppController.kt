@@ -8,5 +8,5 @@ import org.springframework.stereotype.Controller
 class CategoryAppController {
 
     @QueryMapping
-    fun categories() = CategoryAppList()
+    fun categories(): CategoryAppList = CategoryAppList()
 }
