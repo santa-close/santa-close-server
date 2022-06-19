@@ -10,8 +10,6 @@ import com.santaclose.lib.web.error.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toMono
 
 @Controller
 class AuthAppController(
@@ -21,11 +19,10 @@ class AuthAppController(
     private val logger = logger()
 
     @MutationMapping
-    fun signIn(@Argument input: SignInAppInput): Mono<AppAuthInfo> =
+    fun signIn(@Argument input: SignInAppInput): AppAuthInfo =
         authAppService
             .signIn(input.code)
             .flatMap { AppAuthInfo.by(it, jwtConfig.key, jwtConfig.expiredDays) }
-            .map { it.toMono() }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
 }

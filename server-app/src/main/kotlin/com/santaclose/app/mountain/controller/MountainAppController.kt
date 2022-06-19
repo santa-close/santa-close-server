@@ -15,8 +15,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toMono
 import javax.validation.Valid
 
 @Controller
@@ -30,18 +28,18 @@ class MountainAppController(
     @PreAuthorize("hasRole('USER')")
     fun mountainDetail(
         @Argument @Valid input: MountainDetailAppInput,
-    ): Mono<Boolean> =
+    ): Boolean =
         catch {
             mountainAppQueryService.findDetail(input.id)
-            true.toMono()
+            true
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun mountainSummary(@Argument id: String): Mono<MountainAppSummary> =
-        catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by).toMono() }
+    fun mountainSummary(@Argument id: String): MountainAppSummary =
+        catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by) }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
 
@@ -50,10 +48,10 @@ class MountainAppController(
     fun registerMountain(
         @Argument @Valid input: CreateMountainAppInput,
         authentication: Authentication,
-    ): Mono<Boolean> =
+    ): Boolean =
         catch {
             mountainAppMutationService.register(input, authentication.id)
-            true.toMono()
+            true
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()

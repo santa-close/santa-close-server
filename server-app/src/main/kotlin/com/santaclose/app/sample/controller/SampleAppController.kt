@@ -10,8 +10,6 @@ import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toMono
 import javax.validation.Valid
 
 @Controller
@@ -21,15 +19,14 @@ class SampleAppController(
 ) {
 
     @QueryMapping
-    fun sample(@Argument @Valid input: SampleAppItemInput): Mono<SampleAppDetail> =
+    fun sample(@Argument @Valid input: SampleAppItemInput): SampleAppDetail =
         sampleAppQueryService
             .findByPrice(input.price)
-            .map { it.toMono() }
             .getOrThrow()
 
     @MutationMapping
-    fun createSample(@Argument @Valid input: CreateSampleAppInput): Mono<Boolean> =
+    fun createSample(@Argument @Valid input: CreateSampleAppInput): Boolean =
         sampleAppMutationService
             .create(input.toEntity())
-            .run { true.toMono() }
+            .run { true }
 }
