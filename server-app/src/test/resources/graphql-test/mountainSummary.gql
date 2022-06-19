@@ -1,0 +1,16 @@
+query mountainSummary($id: ID!) {
+  mountainSummary(id: $id) {
+    id
+    address
+    imageUrl
+    rating
+    reviewCount
+    locations {
+      id
+      coordinate {
+        latitude
+        longitude
+      }
+    }
+  }
+}

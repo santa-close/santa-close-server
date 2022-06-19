@@ -6,6 +6,7 @@ import arrow.core.continuations.either
 import com.santaclose.lib.auth.Profile
 import com.santaclose.lib.logger.logger
 import io.netty.channel.ChannelOption
+import org.springframework.http.HttpHeaders
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.web.reactive.function.BodyInserters.fromFormData
 import org.springframework.web.reactive.function.client.WebClient
@@ -52,6 +53,6 @@ class KakaoAuth(
     }
 
     suspend fun getUser(token: String): Either<Throwable, KakaoUserResponse> = catch {
-        client.get().uri(userUri).header("Authorization", "Bearer $token").retrieve().awaitBody()
+        client.get().uri(userUri).header(HttpHeaders.AUTHORIZATION, "Bearer $token").retrieve().awaitBody()
     }
 }

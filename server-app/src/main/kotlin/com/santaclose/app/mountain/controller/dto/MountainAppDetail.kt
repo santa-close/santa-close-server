@@ -7,5 +7,5 @@ data class MountainAppDetail(
     val name: String,
     val address: String,
     val mountainReviews: List<MountainReview>,
-    val mountainRatingAverageDto: MountainRatingAverageDto
+    val mountainRatingAverageDto: MountainRatingAverageDto,
 )
