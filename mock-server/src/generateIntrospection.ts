@@ -6,7 +6,7 @@ async function generateIntrospection() {
   const schema = readFileSync(
     join(
       __dirname,
-      '../../server-app/src/main/resources/graphql/schema.graphql'
+      '../../server-app/src/main/resources/graphql/schema.graphqls'
     )
   );
   const introspectionQuery = introspectionFromSchema(

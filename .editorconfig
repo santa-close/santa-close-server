@@ -8,6 +8,9 @@ indent_style = space
 insert_final_newline = true
 tab_width = 4
 
+[{*.js,*.ts}]
+indent_size = 2
+
 [{*.gql,*.graphql,*.graphqls}]
 indent_size = 2
 
