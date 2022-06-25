@@ -1,0 +1,25 @@
+query restaurantDetail($id: ID!) {
+  restaurantDetail(id: $id) {
+    address
+    foodType
+    name
+    mountains {
+      id
+      name
+    }
+    restaurantRatingAverage {
+      average
+      clean
+      kind
+      mood
+      parkingSpace
+      taste
+      totalCount
+    }
+    restaurantReviews {
+      content
+      id
+      title
+    }
+  }
+}

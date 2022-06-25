@@ -14,6 +14,8 @@ import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import javax.validation.Valid
 
 @Controller
@@ -25,8 +27,8 @@ class RestaurantAppController(
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun restaurantDetail(@Argument id: String): RestaurantAppDetail =
-        catch { restaurantAppQueryService.findDetail(id.toLong()) }
+    fun restaurantDetail(@Argument id: String): Mono<RestaurantAppDetail> =
+        catch { restaurantAppQueryService.findDetail(id.toLong()).toMono() }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
 
@@ -35,10 +37,10 @@ class RestaurantAppController(
     fun createRestaurant(
         @Argument @Valid input: CreateRestaurantAppInput,
         authentication: Authentication,
-    ): Boolean =
+    ): Mono<Boolean> =
         catch {
             restaurantAppMutationService.createRestaurant(input, authentication.id)
-            true
+            true.toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
