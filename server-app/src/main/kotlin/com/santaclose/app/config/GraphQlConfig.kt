@@ -69,7 +69,9 @@ private object DateTimeCoercing : Coercing<LocalDateTime, String> {
 private object DataFetcherExceptionHandler : DataFetcherExceptionHandler {
     private val logger = logger()
 
-    override fun handleException(handlerParameters: DataFetcherExceptionHandlerParameters): CompletableFuture<DataFetcherExceptionHandlerResult> {
+    override fun handleException(
+        handlerParameters: DataFetcherExceptionHandlerParameters,
+    ): CompletableFuture<DataFetcherExceptionHandlerResult> {
         val exception = handlerParameters.exception
         val sourceLocation = handlerParameters.sourceLocation
         val path = handlerParameters.path
