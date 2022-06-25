@@ -48,7 +48,7 @@ docker-compose up
 
 테스트 코드 실행 시 발생한 sql 을 보고싶은 경우
 
-- app/src/test/resources/application.yml
+- server-app/src/test/resources/application.yml
 
 ```yaml
 spring:
@@ -75,20 +75,13 @@ logging:
 
 ### 주의 사항
 
-#### schema.graphql 업데이트
-
-> git hook 이 제대로 설정된 상태라면 푸시하기 전에 테스트가 자동으로 실행된다.
-
-graphql api 변경 시 [schema.graphql](app/src/main/resources/graphql/schema.graphql) 파일도 업데이트 해야한다.
-[AppApplicationTests](app/src/test/kotlin/com/santaclose/app/AppApplicationTests.kt) 테스트를 실행하면 된다.
-
 #### category 정보 업데이트
 
-> git hook 이 제대로 설정된 상태라면 푸시하기 전에 테스트가 자동으로 실행된다.
+> git hook 이 제대로 설정된 상태라면 푸시하기 전에 아래 category 테스트가 자동으로 실행된다.
 
-[CategoryAppList.kt](app/src/main/kotlin/com/santaclose/app/category/resolver/dto/CategoryAppList.kt) 파일이 수정된 경우
-category 응답 데이터를 업데이트 해야한다.
-[CategoryAppQueryResolverTest](app/src/test/kotlin/com/santaclose/app/category/resolver/CategoryAppQueryResolverTest.kt)
+[CategoryAppList.kt](server-app/src/main/kotlin/com/santaclose/app/category/controller/dto/CategoryAppList.kt)
+파일이 수정된 경우 category 응답 데이터를 업데이트 해야한다.
+[CategoryAppControllerTest](server-app/src/test/kotlin/com/santaclose/app/category/controller/CategoryAppControllerTest.kt)
 테스트를 실행하면 된다.
 
 ### 개발 환경 이슈

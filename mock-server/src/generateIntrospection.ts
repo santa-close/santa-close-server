@@ -4,7 +4,10 @@ import { buildSchema, introspectionFromSchema } from 'graphql';
 
 async function generateIntrospection() {
   const schema = readFileSync(
-    join(__dirname, '../../app/src/main/resources/graphql/schema.graphql')
+    join(
+      __dirname,
+      '../../server-app/src/main/resources/graphql/schema.graphqls'
+    )
   );
   const introspectionQuery = introspectionFromSchema(
     buildSchema(schema.toString())

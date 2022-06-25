@@ -1,4 +1,12 @@
 rootProject.name = "santa-close-server"
 
-include(":lib")
-include(":app")
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("libs.versions.toml"))
+        }
+    }
+}
+
+include(":server-lib")
+include(":server-app")

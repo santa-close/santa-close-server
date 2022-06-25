@@ -1,0 +1,3 @@
+mutation createSample($input: CreateSampleAppInput!) {
+  createSample(input: $input)
+}

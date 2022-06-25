@@ -13,7 +13,10 @@ async function startApolloServer() {
 
   const typeDefs = gql`
     ${readFileSync(
-      join(__dirname, '../../app/src/main/resources/graphql/schema.graphql')
+      join(
+        __dirname,
+        '../../server-app/src/main/resources/graphql/schema.graphqls'
+      )
     )}
   `;
   const server = new ApolloServer({

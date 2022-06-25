@@ -1,0 +1,6 @@
+mutation signIn($input: SignInAppInput!) {
+  signIn(input: $input) {
+    accessToken
+    expiredAt
+  }
+}

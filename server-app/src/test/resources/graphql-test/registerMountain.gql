@@ -1,0 +1,3 @@
+mutation registerMountain($input: CreateMountainAppInput!) {
+  registerMountain(input: $input)
+}

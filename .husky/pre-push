@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-./gradlew :app:test --tests AppApplicationTests --tests CategoryAppQueryResolverTest
+./gradlew :server-app:test --tests CategoryAppControllerTest
 git diff --exit-code

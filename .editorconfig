@@ -1,0 +1,18 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+tab_width = 4
+
+[{*.js,*.ts,*.yaml,*.yml,*.md}]
+indent_size = 2
+
+[{*.gql,*.graphql,*.graphqls}]
+indent_size = 2
+
+[{*.kt,*.kts}]
+ij_kotlin_allow_trailing_comma = true

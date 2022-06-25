@@ -1,0 +1,3 @@
+mutation createMountainReview($input: CreateMountainReviewAppInput!) {
+  createMountainReview(input: $input)
+}
