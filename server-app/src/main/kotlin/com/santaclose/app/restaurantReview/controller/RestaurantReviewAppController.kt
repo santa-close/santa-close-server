@@ -8,8 +8,11 @@ import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.error.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import javax.validation.Valid
 
 @Controller
@@ -19,13 +22,14 @@ class RestaurantReviewAppController(
     private val logger = logger()
 
     @MutationMapping
+    @PreAuthorize("hasRole('USER')")
     fun createRestaurantReview(
         @Argument @Valid input: CreateRestaurantReviewAppInput,
         authentication: Authentication,
-    ): Boolean =
+    ): Mono<Boolean> =
         catch {
             restaurantReviewAppMutationService.register(input, authentication.id)
-            true
+            true.toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
