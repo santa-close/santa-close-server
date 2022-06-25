@@ -27,7 +27,7 @@ internal class RestaurantReviewAppControllerTest(
     private val serverRequestParser: ServerRequestParser,
 ) : FreeSpec({
 
-    "CreateRestaurantReview" - {
+    "createRestaurantReview" - {
         "등록에 실패하면 에러를 반환한다" {
             // given
             val input = CreateRestaurantReviewAppInput(
@@ -60,7 +60,7 @@ internal class RestaurantReviewAppControllerTest(
             // then
             response
                 .errors()
-                .expect { it.errorType.toString() == "INTERNAL_ERROR" }
+                .expect { it.message == "no result" }
         }
 
         "정상적으로 생성된다" {

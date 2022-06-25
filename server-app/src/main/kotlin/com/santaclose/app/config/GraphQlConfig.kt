@@ -1,22 +1,38 @@
 package com.santaclose.app.config
 
+import com.santaclose.lib.logger.logger
+import graphql.GraphqlErrorException
+import graphql.execution.DataFetcherExceptionHandler
+import graphql.execution.DataFetcherExceptionHandlerParameters
+import graphql.execution.DataFetcherExceptionHandlerResult
 import graphql.schema.Coercing
 import graphql.schema.CoercingParseLiteralException
 import graphql.schema.CoercingParseValueException
 import graphql.schema.CoercingSerializeException
 import graphql.schema.GraphQLScalarType
+import org.springframework.boot.autoconfigure.graphql.GraphQlSourceBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.graphql.execution.RuntimeWiringConfigurer
+import org.springframework.graphql.execution.ErrorType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.CompletableFuture
+import javax.persistence.NoResultException
+import javax.validation.ValidationException
 
 @Configuration
 class GraphQlConfig {
 
     @Bean
-    fun runtimeWiringConfigurer(): RuntimeWiringConfigurer =
-        RuntimeWiringConfigurer { builder -> builder.scalar(datetimeScalar()) }
+    fun sourceBuilderCustomizer(): GraphQlSourceBuilderCustomizer =
+        GraphQlSourceBuilderCustomizer { builder ->
+            builder.configureRuntimeWiring { wiringBuilder ->
+                wiringBuilder.scalar(datetimeScalar())
+            }
+            builder.configureGraphQl { graphQlBuilder ->
+                graphQlBuilder.defaultDataFetcherExceptionHandler(DataFetcherExceptionHandler)
+            }
+        }
 
     private fun datetimeScalar(): GraphQLScalarType =
         GraphQLScalarType
@@ -48,4 +64,37 @@ private object DateTimeCoercing : Coercing<LocalDateTime, String> {
                 "Data fetcher result $dataFetcherResult cannot be serialized to a String"
             )
         }
+}
+
+private object DataFetcherExceptionHandler : DataFetcherExceptionHandler {
+    private val logger = logger()
+
+    override fun handleException(handlerParameters: DataFetcherExceptionHandlerParameters): CompletableFuture<DataFetcherExceptionHandlerResult> {
+        val exception = handlerParameters.exception
+        val sourceLocation = handlerParameters.sourceLocation
+        val path = handlerParameters.path
+        val error = GraphqlErrorException
+            .newErrorException()
+            .cause(exception)
+            .message(exception.message)
+            .sourceLocation(sourceLocation)
+            .path(path.toList())
+            .errorClassification(
+                when (exception) {
+                    is NoResultException -> ErrorType.NOT_FOUND
+                    is ValidationException -> ErrorType.BAD_REQUEST
+                    else -> ErrorType.INTERNAL_ERROR
+                }
+            )
+            .build()
+
+        logger.error(exception.message, exception)
+
+        return CompletableFuture.completedFuture(
+            DataFetcherExceptionHandlerResult
+                .newResult()
+                .error(error)
+                .build()
+        )
+    }
 }

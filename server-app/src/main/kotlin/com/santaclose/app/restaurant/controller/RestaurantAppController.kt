@@ -7,7 +7,7 @@ import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
 import com.santaclose.app.restaurant.service.RestaurantAppMutationService
 import com.santaclose.app.restaurant.service.RestaurantAppQueryService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.error.getOrThrow
+import com.santaclose.lib.web.exception.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping

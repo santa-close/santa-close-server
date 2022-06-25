@@ -42,7 +42,7 @@ internal class SampleAppControllerTest(
             // then
             response
                 .errors()
-                .expect { it.errorType.toString() == "INTERNAL_ERROR" }
+                .expect { it.message == "no result" }
         }
 
         "데이터가 있는 경우 sample 을 가져온다" {

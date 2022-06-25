@@ -22,7 +22,7 @@ internal class AuthAppControllerTest(
     @MockkBean private val authAppService: AuthAppService,
 ) : FreeSpec({
 
-    "SignIn" - {
+    "signIn" - {
         "로그인 실패 시 에러 응답을 반환한다" {
             // given
             val input = SignInAppInput(code = "code", type = SignInType.KAKAO)
@@ -37,7 +37,7 @@ internal class AuthAppControllerTest(
             // then
             response
                 .errors()
-                .expect { it.errorType.toString() == "INTERNAL_ERROR" }
+                .expect { it.message == "error" }
         }
 
         "로그인 성공 시 토큰 정보를 반환한다" {

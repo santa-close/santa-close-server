@@ -6,7 +6,7 @@ import com.santaclose.app.auth.controller.dto.SignInAppInput
 import com.santaclose.app.auth.service.AuthAppService
 import com.santaclose.app.config.JWTConfig
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.error.getOrThrow
+import com.santaclose.lib.web.exception.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller

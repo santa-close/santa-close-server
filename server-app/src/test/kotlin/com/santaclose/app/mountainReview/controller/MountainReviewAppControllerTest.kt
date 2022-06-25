@@ -57,7 +57,7 @@ internal class MountainReviewAppControllerTest(
             // then
             response
                 .errors()
-                .expect { it.errorType.toString() == "INTERNAL_ERROR" }
+                .expect { it.message == "no result" }
         }
 
         "정상적으로 생성한다" {

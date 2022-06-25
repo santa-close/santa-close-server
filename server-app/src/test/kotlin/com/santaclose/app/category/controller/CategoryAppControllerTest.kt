@@ -14,7 +14,7 @@ internal class CategoryAppControllerTest(
     private val graphQlTester: HttpGraphQlTester,
 ) : FreeSpec({
 
-    "Categories" - {
+    "categories" - {
         "요청한 category 정보를 file 에 저장한다" {
             // when
             val response = graphQlTester

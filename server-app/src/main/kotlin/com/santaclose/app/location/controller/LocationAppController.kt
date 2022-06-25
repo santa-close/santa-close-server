@@ -5,7 +5,7 @@ import com.santaclose.app.location.controller.dto.AppLocation
 import com.santaclose.app.location.controller.dto.LocationAppInput
 import com.santaclose.app.location.service.LocationAppQueryService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.error.getOrThrow
+import com.santaclose.lib.web.exception.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.security.access.prepost.PreAuthorize

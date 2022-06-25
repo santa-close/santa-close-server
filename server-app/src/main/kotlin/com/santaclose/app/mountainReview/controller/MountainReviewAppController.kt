@@ -5,7 +5,7 @@ import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppInput
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.error.getOrThrow
+import com.santaclose.lib.web.exception.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.security.access.prepost.PreAuthorize

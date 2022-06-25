@@ -36,7 +36,7 @@ internal class MountainAppControllerTest(
     private val serverRequestParser: ServerRequestParser,
 ) : FreeSpec({
 
-    "Register" - {
+    "registerMountain" - {
         "유저가 산을 등록한다" {
             // given
             val input = CreateMountainAppInput(

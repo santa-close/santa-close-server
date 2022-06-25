@@ -31,7 +31,7 @@ internal class FileAppControllerTest(
     private val serverRequestParser: ServerRequestParser,
 ) : FreeSpec({
 
-    "UploadImage" - {
+    "uploadImage" - {
         "유저 권한이 없을시 401 에러를 발생한다" {
             // given
             val bodyBuilder = MultipartBodyBuilder()

@@ -81,7 +81,7 @@ logging:
 
 [CategoryAppList.kt](server-app/src/main/kotlin/com/santaclose/app/category/controller/dto/CategoryAppList.kt)
 파일이 수정된 경우 category 응답 데이터를 업데이트 해야한다.
-[CategoryAppQueryResolverTest](server-app/src/test/kotlin/com/santaclose/app/category/controller/CategoryAppControllerTest.kt)
+[CategoryAppControllerTest](server-app/src/test/kotlin/com/santaclose/app/category/controller/CategoryAppControllerTest.kt)
 테스트를 실행하면 된다.
 
 ### 개발 환경 이슈
