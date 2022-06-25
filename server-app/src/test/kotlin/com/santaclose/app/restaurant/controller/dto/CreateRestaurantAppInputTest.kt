@@ -1,25 +1,24 @@
 package com.santaclose.app.restaurant.controller.dto
 
 import com.santaclose.lib.entity.restaurant.type.FoodType
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 import javax.validation.Validation
 
-internal class CreateRestaurantAppInputTest {
-    private val validator = Validation.buildDefaultValidatorFactory().validator
-    private val mountainId = "1"
-    private val name = "식당 이름"
-    private val description = "식당 설명"
-    private val images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-    private val foodTypes = mutableListOf(FoodType.AMERICAN, FoodType.FOOD_COURT)
-    private val longitude = 120.01
-    private val latitude = 60.01
-    private val address = "서울시 성동구 왕십리로 83-21"
-    private val postcode = "04769"
+internal class CreateRestaurantAppInputTest : StringSpec({
+    val validator = Validation.buildDefaultValidatorFactory().validator
+    val mountainId = "1"
+    val name = "식당 이름"
+    val description = "식당 설명"
+    val images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+    val foodTypes = mutableListOf(FoodType.AMERICAN, FoodType.FOOD_COURT)
+    val longitude = 120.01
+    val latitude = 60.01
+    val address = "서울시 성동구 왕십리로 83-21"
+    val postcode = "04769"
 
-    @Test
-    fun `모든 조건에 알맞는 값을 입력받는다 - 성공`() {
+    "모든 조건에 알맞는 값을 입력받는다 - 성공" {
         // given
         val dto =
             CreateRestaurantAppInput(
@@ -42,8 +41,7 @@ internal class CreateRestaurantAppInputTest {
         violations shouldHaveSize 0
     }
 
-    @Test
-    fun `사진이 없어도 식당을 등록할 수 있다 - 성공`() {
+    "사진이 없어도 식당을 등록할 수 있다 - 성공" {
         // given
         val dto =
             CreateRestaurantAppInput(
@@ -65,8 +63,7 @@ internal class CreateRestaurantAppInputTest {
         violations shouldHaveSize 0
     }
 
-    @Test
-    fun `음식점 사진의 개수가 10개를 초과한 경우 오류가 발생한다 - 실패`() {
+    "음식점 사진의 개수가 10개를 초과한 경우 오류가 발생한다 - 실패" {
         val overSizeImages =
             mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
 
@@ -92,8 +89,7 @@ internal class CreateRestaurantAppInputTest {
         violations.first().propertyPath.toString() shouldBe "images"
     }
 
-    @Test
-    fun `주소명이 공백이거나 없는 경우 오류가 발생한다 - 실패`() {
+    "주소명이 공백이거나 없는 경우 오류가 발생한다 - 실패" {
         // given
         val dto =
             CreateRestaurantAppInput(
@@ -116,8 +112,7 @@ internal class CreateRestaurantAppInputTest {
         violations.map { it.propertyPath.toString() shouldBe "address" }
     }
 
-    @Test
-    fun `우편번호가 공백이거나 없는 경우 오류가 발생한다 - 실패`() {
+    "우편번호가 공백이거나 없는 경우 오류가 발생한다 - 실패" {
         // given
         val dto =
             CreateRestaurantAppInput(
@@ -140,8 +135,7 @@ internal class CreateRestaurantAppInputTest {
         violations.first().propertyPath.toString() shouldBe "postcode"
     }
 
-    @Test
-    fun `음식점 음식 유형이 존재하지 않는 경우 오류가 발생한다 - 실패`() {
+    "음식점 음식 유형이 존재하지 않는 경우 오류가 발생한다 - 실패" {
         // given
         val dto =
             CreateRestaurantAppInput(
@@ -163,4 +157,4 @@ internal class CreateRestaurantAppInputTest {
         violations shouldHaveSize 1
         violations.first().propertyPath.toString() shouldBe "foodTypes"
     }
-}
+})

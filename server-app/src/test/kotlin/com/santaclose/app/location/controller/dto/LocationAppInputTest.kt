@@ -1,14 +1,14 @@
 package com.santaclose.app.location.controller.dto
 
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 import org.locationtech.jts.geom.Coordinate
 import org.locationtech.jts.geom.GeometryFactory
 import org.locationtech.jts.geom.Polygon
 
-internal class LocationAppInputTest {
-    private val rectangle: Polygon =
+internal class LocationAppInputTest : StringSpec({
+    val rectangle: Polygon =
         GeometryFactory()
             .createPolygon(
                 arrayOf(
@@ -20,8 +20,7 @@ internal class LocationAppInputTest {
                 )
             )
 
-    @Test
-    fun `두 좌표의 longitude 가 같으면 에러가 발생한다`() {
+    "두 좌표의 longitude 가 같으면 에러가 발생한다" {
         // given
         val input =
             LocationAppInput(
@@ -36,8 +35,7 @@ internal class LocationAppInputTest {
         result.message shouldBe "longitude 는 서로 달라야 합니다"
     }
 
-    @Test
-    fun `두 좌표의 latitude 가 같으면 에러가 발생한다`() {
+    "두 좌표의 latitude 가 같으면 에러가 발생한다" {
         // given
         val input =
             LocationAppInput(
@@ -52,8 +50,7 @@ internal class LocationAppInputTest {
         result.message shouldBe "latitude 는 서로 달라야 합니다"
     }
 
-    @Test
-    fun `좌하단과 우상단 좌표를 제공한 경우`() {
+    "좌하단과 우상단 좌표를 제공한 경우" {
         // given
         val input =
             LocationAppInput(
@@ -68,8 +65,7 @@ internal class LocationAppInputTest {
         result.equals(rectangle) shouldBe true
     }
 
-    @Test
-    fun `좌상단과 우하단 좌표를 제공한 경우`() {
+    "좌상단과 우하단 좌표를 제공한 경우" {
         // given
         val input =
             LocationAppInput(
@@ -84,8 +80,7 @@ internal class LocationAppInputTest {
         result.equals(rectangle) shouldBe true
     }
 
-    @Test
-    fun `우상단과 좌하단 좌표를 제공한 경우`() {
+    "우상단과 좌하단 좌표를 제공한 경우" {
         // given
         val input =
             LocationAppInput(
@@ -100,8 +95,7 @@ internal class LocationAppInputTest {
         result.equals(rectangle) shouldBe true
     }
 
-    @Test
-    fun `우하단과 좌상단 좌표를 제공한 경우`() {
+    "우하단과 좌상단 좌표를 제공한 경우" {
         // given
         val input =
             LocationAppInput(
@@ -115,4 +109,4 @@ internal class LocationAppInputTest {
         // then
         result.equals(rectangle) shouldBe true
     }
-}
+})
