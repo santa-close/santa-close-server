@@ -4,6 +4,7 @@ import arrow.core.Either.Companion.catch
 import com.santaclose.app.location.controller.dto.AppLocation
 import com.santaclose.app.location.controller.dto.LocationAppInput
 import com.santaclose.app.location.service.LocationAppQueryService
+import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.error.getOrThrow
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -17,9 +18,12 @@ import javax.validation.Valid
 class LocationAppController(
     private val locationAppQueryService: LocationAppQueryService,
 ) {
+    private val logger = logger()
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun location(@Argument @Valid input: LocationAppInput): Flux<AppLocation> =
-        catch { locationAppQueryService.find(input).toFlux() }.getOrThrow()
+    fun locations(@Argument @Valid input: LocationAppInput): Flux<AppLocation> =
+        catch { locationAppQueryService.find(input).toFlux() }
+            .tapLeft { logger.error(it.message, it) }
+            .getOrThrow()
 }

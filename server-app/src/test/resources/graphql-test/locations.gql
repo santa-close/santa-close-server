@@ -1,0 +1,10 @@
+query locations($input: LocationAppInput!) {
+  locations(input: $input) {
+    id
+    type
+    coordinate {
+      latitude
+      longitude
+    }
+  }
+}

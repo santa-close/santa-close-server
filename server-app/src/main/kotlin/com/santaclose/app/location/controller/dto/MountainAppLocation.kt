@@ -3,13 +3,18 @@ package com.santaclose.app.location.controller.dto
 import com.santaclose.app.location.controller.enum.LocationType
 import org.locationtech.jts.geom.Point
 
-class MountainAppLocation(
-    private val id: Long,
-    private val point: Point,
+data class MountainAppLocation(
+    override val type: LocationType,
+    override val id: String,
+    override val coordinate: AppCoordinate,
 ) : AppLocation {
-    override val type = LocationType.MOUNTAIN
 
-    override fun id(): String = id.toString()
+    companion object {
 
-    override fun coordinate(): AppCoordinate = AppCoordinate(longitude = point.x, latitude = point.y)
+        fun of(id: Long, point: Point) = MountainAppLocation(
+            type = LocationType.MOUNTAIN,
+            id = id.toString(),
+            coordinate = AppCoordinate(longitude = point.x, latitude = point.y),
+        )
+    }
 }

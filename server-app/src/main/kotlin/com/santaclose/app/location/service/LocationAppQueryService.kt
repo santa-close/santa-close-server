@@ -33,8 +33,8 @@ class LocationAppQueryService(
                 locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
             }
 
-            mountains.await().map { MountainAppLocation(it.id, findPoint(it.locationId)) } +
-                restaurants.await().map { RestaurantAppLocation(it.id, findPoint(it.locationId)) }
+            mountains.await().map { MountainAppLocation.of(it.id, findPoint(it.locationId)) } +
+                restaurants.await().map { RestaurantAppLocation.of(it.id, findPoint(it.locationId)) }
         }
     }
 }
