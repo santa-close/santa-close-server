@@ -9,8 +9,8 @@ import com.santaclose.lib.entity.mountainReview.MountainReview
 data class MountainAppDetail(
     val name: String,
     val address: String,
-    val mountainRatingAverageDto: MountainRatingAverage,
-    val mountainReviews: List<LatestMountainReview>,
+    val rating: MountainRatingAverage,
+    val reviews: List<LatestMountainReview>,
     val restaurants: List<LatestRestaurant>,
 ) {
     companion object {

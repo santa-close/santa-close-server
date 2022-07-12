@@ -3,6 +3,7 @@ package com.santaclose.app.mountain.controller
 import arrow.core.Either.Companion.catch
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
+import com.santaclose.app.mountain.controller.dto.MountainAppDetail
 import com.santaclose.app.mountain.controller.dto.MountainAppSummary
 import com.santaclose.app.mountain.controller.dto.MountainDetailAppInput
 import com.santaclose.app.mountain.service.MountainAppMutationService
@@ -31,10 +32,9 @@ class MountainAppController(
     fun mountainDetail(
         @Argument @Valid
         input: MountainDetailAppInput,
-    ): Mono<Boolean> =
+    ): Mono<MountainAppDetail> =
         catch {
-            mountainAppQueryService.findDetail(input.id)
-            true.toMono()
+            mountainAppQueryService.findDetail(input.id).toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
