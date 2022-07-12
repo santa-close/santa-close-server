@@ -25,64 +25,66 @@ internal class SampleAppControllerTest(
     private val sampleAppQueryService: SampleAppQueryService,
     @MockkBean
     private val sampleAppMutationService: SampleAppMutationService,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "sample" - {
-        "데이터가 없는 경우 에러가 발생한다" {
-            // given
-            val input = SampleAppItemInput(price = 123)
-            every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
+        "sample" - {
+            "데이터가 없는 경우 에러가 발생한다" {
+                // given
+                val input = SampleAppItemInput(price = 123)
+                every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
 
-            // when
-            val response = graphQlTester
-                .documentName("sample")
-                .variable("input", input)
-                .execute()
+                // when
+                val response = graphQlTester
+                    .documentName("sample")
+                    .variable("input", input)
+                    .execute()
 
-            // then
-            response
-                .errors()
-                .expect { it.message == "no result" }
+                // then
+                response
+                    .errors()
+                    .expect { it.message == "no result" }
+            }
+
+            "데이터가 있는 경우 sample 을 가져온다" {
+                // given
+                val input = SampleAppItemInput(price = 123)
+                val detail = SampleAppDetail("name", 1000, SampleStatus.OPEN)
+                every { sampleAppQueryService.findByPrice(123) } returns detail.right()
+
+                // when
+                val response = graphQlTester
+                    .documentName("sample")
+                    .variable("input", input)
+                    .execute()
+
+                // then
+                response
+                    .path("sample")
+                    .entity(SampleAppDetail::class.java)
+                    .isEqualTo(detail)
+            }
         }
 
-        "데이터가 있는 경우 sample 을 가져온다" {
-            // given
-            val input = SampleAppItemInput(price = 123)
-            val detail = SampleAppDetail("name", 1000, SampleStatus.OPEN)
-            every { sampleAppQueryService.findByPrice(123) } returns detail.right()
+        "createSample" - {
+            "샘플 생성에 성공한다" {
+                // given
+                val input = CreateSampleAppInput(name = "name", price = 123, status = SampleStatus.CLOSE)
 
-            // when
-            val response = graphQlTester
-                .documentName("sample")
-                .variable("input", input)
-                .execute()
+                justRun { sampleAppMutationService.create(any()) }
 
-            // then
-            response
-                .path("sample")
-                .entity(SampleAppDetail::class.java)
-                .isEqualTo(detail)
+                // when
+                val response = graphQlTester
+                    .documentName("createSample")
+                    .variable("input", input)
+                    .execute()
+
+                // then
+                response
+                    .path("createSample")
+                    .entity(Boolean::class.java)
+                    .isEqualTo(true)
+            }
         }
-    }
-
-    "createSample" - {
-        "샘플 생성에 성공한다" {
-            // given
-            val input = CreateSampleAppInput(name = "name", price = 123, status = SampleStatus.CLOSE)
-
-            justRun { sampleAppMutationService.create(any()) }
-
-            // when
-            val response = graphQlTester
-                .documentName("createSample")
-                .variable("input", input)
-                .execute()
-
-            // then
-            response
-                .path("createSample")
-                .entity(Boolean::class.java)
-                .isEqualTo(true)
-        }
-    }
-})
+    },
+)

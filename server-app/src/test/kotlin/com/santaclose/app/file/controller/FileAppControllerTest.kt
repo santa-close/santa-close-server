@@ -29,69 +29,71 @@ internal class FileAppControllerTest(
     private val fileAppService: FileAppService,
     @MockkBean
     private val serverRequestParser: ServerRequestParser,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "uploadImage" - {
-        "유저 권한이 없을시 401 에러를 발생한다" {
-            // given
-            val bodyBuilder = MultipartBodyBuilder()
-            val resource = FileSystemResource("src/test/resources/application.yml")
-            bodyBuilder.part("file", resource)
-            every { serverRequestParser.parse(any()) } returns None
+        "uploadImage" - {
+            "유저 권한이 없을시 401 에러를 발생한다" {
+                // given
+                val bodyBuilder = MultipartBodyBuilder()
+                val resource = FileSystemResource("src/test/resources/application.yml")
+                bodyBuilder.part("file", resource)
+                every { serverRequestParser.parse(any()) } returns None
 
-            // when
-            val response =
-                webTestClient
-                    .post()
-                    .uri("/api/image")
-                    .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
-                    .exchange()
+                // when
+                val response =
+                    webTestClient
+                        .post()
+                        .uri("/api/image")
+                        .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
+                        .exchange()
 
-            // then
-            response.expectStatus().isUnauthorized
+                // then
+                response.expectStatus().isUnauthorized
+            }
+
+            "파일 업로드 에러시 500 에러를 발생한다" {
+                // given
+                val bodyBuilder = MultipartBodyBuilder()
+                val resource = FileSystemResource("src/test/resources/application.yml")
+                bodyBuilder.part("file", resource)
+                every { serverRequestParser.parse(any()) } returns AppSession(1, AppUserRole.USER).some()
+                coEvery { fileAppService.uploadImage(any()) } returns Exception("error").left()
+
+                // when
+                val response =
+                    webTestClient
+                        .post()
+                        .uri("/api/image")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
+                        .exchange()
+
+                // then
+                response.expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+
+            "이미지 파일에 대한 url을 반환한다" {
+                // given
+                val bodyBuilder = MultipartBodyBuilder()
+                val resource = FileSystemResource("src/test/resources/application.yml")
+                bodyBuilder.part("file", resource)
+                every { serverRequestParser.parse(any()) } returns AppSession(1, AppUserRole.USER).some()
+                val imageUrl = "http://localhost/image.png"
+                coEvery { fileAppService.uploadImage(any()) } returns imageUrl.right()
+
+                // when
+                val response =
+                    webTestClient
+                        .post()
+                        .uri("/api/image")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
+                        .exchange()
+
+                // then
+                response.expectBody().jsonPath("$.url").isEqualTo(imageUrl)
+            }
         }
-
-        "파일 업로드 에러시 500 에러를 발생한다" {
-            // given
-            val bodyBuilder = MultipartBodyBuilder()
-            val resource = FileSystemResource("src/test/resources/application.yml")
-            bodyBuilder.part("file", resource)
-            every { serverRequestParser.parse(any()) } returns AppSession(1, AppUserRole.USER).some()
-            coEvery { fileAppService.uploadImage(any()) } returns Exception("error").left()
-
-            // when
-            val response =
-                webTestClient
-                    .post()
-                    .uri("/api/image")
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer token")
-                    .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
-                    .exchange()
-
-            // then
-            response.expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
-        }
-
-        "이미지 파일에 대한 url을 반환한다" {
-            // given
-            val bodyBuilder = MultipartBodyBuilder()
-            val resource = FileSystemResource("src/test/resources/application.yml")
-            bodyBuilder.part("file", resource)
-            every { serverRequestParser.parse(any()) } returns AppSession(1, AppUserRole.USER).some()
-            val imageUrl = "http://localhost/image.png"
-            coEvery { fileAppService.uploadImage(any()) } returns imageUrl.right()
-
-            // when
-            val response =
-                webTestClient
-                    .post()
-                    .uri("/api/image")
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer token")
-                    .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
-                    .exchange()
-
-            // then
-            response.expectBody().jsonPath("$.url").isEqualTo(imageUrl)
-        }
-    }
-})
+    },
+)

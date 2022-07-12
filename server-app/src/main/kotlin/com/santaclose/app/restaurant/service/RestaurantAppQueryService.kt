@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class RestaurantAppQueryService(
     private val restaurantAppQueryRepository: RestaurantAppQueryRepository,
     private val restaurantReviewAppQueryRepository: RestaurantReviewAppQueryRepository,
-    private val mountainRestaurantAppQueryRepository: MountainRestaurantAppQueryRepository
+    private val mountainRestaurantAppQueryRepository: MountainRestaurantAppQueryRepository,
 ) {
     private val restaurantReviewLimit = 5
     private val mountainLimit = 5

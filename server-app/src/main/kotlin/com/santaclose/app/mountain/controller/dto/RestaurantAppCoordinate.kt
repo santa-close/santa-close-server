@@ -12,7 +12,7 @@ data class RestaurantAppCoordinate(
         fun by(dto: RestaurantLocationDto): RestaurantAppCoordinate =
             RestaurantAppCoordinate(
                 dto.id.toString(),
-                dto.point.coordinate.run { AppCoordinate(longitude = x, latitude = y) }
+                dto.point.coordinate.run { AppCoordinate(longitude = x, latitude = y) },
             )
     }
 }

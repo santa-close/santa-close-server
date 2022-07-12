@@ -36,7 +36,6 @@ data class UploadImageRequest(
         get() = "image/$date/$code-$fileName"
 
     fun validateFile(): Either<IllegalArgumentException, Unit> {
-
         if (!imageMimeTypes.contains(contentType.lowercase())) {
             return IllegalArgumentException("${imageExtensions.joinToString(",")} 파일만 업로드 가능합니다.").left()
         }

@@ -14,7 +14,7 @@ import javax.persistence.NoResultException
 class RestaurantReviewAppMutationService(
     private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
     private val restaurantRepository: RestaurantAppRepository,
-    private val em: EntityManager
+    private val em: EntityManager,
 ) {
     fun register(input: CreateRestaurantReviewAppInput, userId: Long) {
         val isRestaurantExist = restaurantRepository.existsById(input.restaurantId.toLong())
@@ -30,7 +30,7 @@ class RestaurantReviewAppMutationService(
             restaurant = em.getReference(Restaurant::class.java, input.restaurantId.toLong()),
             appUser = em.getReference(AppUser::class.java, userId),
             priceAverage = input.priceAverage,
-            priceComment = input.priceComment
+            priceComment = input.priceComment,
         )
             .apply { restaurantReviewAppRepository.save(this) }
     }

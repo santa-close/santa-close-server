@@ -15,18 +15,18 @@ class MountainAppQueryService(
     private val mountainReviewAppQueryRepository: MountainReviewAppQueryRepository,
     private val restaurantAppQueryRepository: RestaurantAppQueryRepository,
 ) {
-    fun findDetail(id: String): MountainAppDetail {
+    fun findDetail(id: String): MountainAppDetail = runBlocking {
         val mountain = mountainAppQueryRepository.findOneWithLocation(id.toLong())
-        val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 5)
+        val mountainReviews = async { mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 5) }
         val mountainRatingAverageDto =
-            mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
+            async { mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id) }
         // 음식점 추가 예정
 
-        return MountainAppDetail(
+        MountainAppDetail(
             mountain.name,
             mountain.location.address,
-            mountainReviews,
-            mountainRatingAverageDto
+            mountainReviews.await(),
+            mountainRatingAverageDto.await(),
         )
     }
 

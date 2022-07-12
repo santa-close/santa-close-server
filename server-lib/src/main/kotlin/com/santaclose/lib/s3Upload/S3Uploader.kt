@@ -16,7 +16,7 @@ class S3Uploader private constructor(private val s3Client: S3Client) {
                     region = awsRegion
                     endpointResolver = endpoint?.let { StaticEndpointResolver(AwsEndpoint(url = it)) }
                     credentialsProvider = StaticCredentialsProvider(Credentials(accessKey, secretKey))
-                }
+                },
             )
 
         fun createByClient(s3Client: S3Client) = S3Uploader(s3Client)

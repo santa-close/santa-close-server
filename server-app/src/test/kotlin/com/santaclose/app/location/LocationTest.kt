@@ -29,15 +29,15 @@ class LocationTest @Autowired constructor(private val em: EntityManager) {
                     Coordinate(0.0, 2.0),
                     Coordinate(2.0, 2.0),
                     Coordinate(2.0, 0.0),
-                    Coordinate(0.0, 0.0)
-                )
+                    Coordinate(0.0, 0.0),
+                ),
             )
 
         // when
         val result =
             em.createQuery(
                 "SELECT l FROM Location l WHERE within(l.point, :area) = true",
-                Location::class.java
+                Location::class.java,
             )
                 .setParameter("area", rectangle)
                 .resultList

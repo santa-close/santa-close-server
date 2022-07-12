@@ -24,7 +24,8 @@ class MountainReviewAppController(
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
     fun createMountainReview(
-        @Valid @Argument input: CreateMountainReviewAppInput,
+        @Valid @Argument
+        input: CreateMountainReviewAppInput,
         authentication: Authentication,
     ): Mono<Boolean> =
         catch {

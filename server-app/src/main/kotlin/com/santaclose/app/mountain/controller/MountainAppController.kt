@@ -29,7 +29,8 @@ class MountainAppController(
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
     fun mountainDetail(
-        @Argument @Valid input: MountainDetailAppInput,
+        @Argument @Valid
+        input: MountainDetailAppInput,
     ): Mono<Boolean> =
         catch {
             mountainAppQueryService.findDetail(input.id)
@@ -48,7 +49,8 @@ class MountainAppController(
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
     fun registerMountain(
-        @Argument @Valid input: CreateMountainAppInput,
+        @Argument @Valid
+        input: CreateMountainAppInput,
         authentication: Authentication,
     ): Mono<Boolean> =
         catch {

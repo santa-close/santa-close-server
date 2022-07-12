@@ -21,7 +21,7 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
     private val restaurantRepository: RestaurantAppRepository,
     mountainAppRepository: MountainAppRepository,
     private val restaurantFoodTypeAppRepository: RestaurantFoodTypeAppRepository,
-    private val em: EntityManager
+    private val em: EntityManager,
 ) {
 
     private val restaurantAppMutationService =
@@ -29,7 +29,7 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
             restaurantRepository,
             mountainAppRepository,
             restaurantFoodTypeAppRepository,
-            em
+            em,
         )
 
     @Nested
@@ -52,7 +52,7 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
                     longitude = 120.00,
                     latitude = 60.00,
                     address = "주소명",
-                    postcode = "우편번호"
+                    postcode = "우편번호",
                 )
 
             // when

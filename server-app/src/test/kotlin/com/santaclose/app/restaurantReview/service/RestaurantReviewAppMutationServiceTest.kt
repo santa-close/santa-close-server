@@ -21,7 +21,7 @@ import javax.persistence.NoResultException
 internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
     private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
     restaurantRepository: RestaurantAppRepository,
-    private val em: EntityManager
+    private val em: EntityManager,
 ) {
     private val restaurantReviewAppMutationService =
         RestaurantReviewAppMutationService(restaurantReviewAppRepository, restaurantRepository, em)

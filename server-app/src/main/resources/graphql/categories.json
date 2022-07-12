@@ -1,16 +1,20 @@
 {
-  "data" : {
-    "categories" : {
-      "mountainDifficulty" : [ {
-        "code" : "HARD",
-        "name" : "어려워요"
-      }, {
-        "code" : "NORMAL",
-        "name" : "보통이에요"
-      }, {
-        "code" : "EASY",
-        "name" : "쉬워요"
-      } ]
+    "data": {
+        "categories": {
+            "mountainDifficulty": [
+                {
+                    "code": "HARD",
+                    "name": "어려워요"
+                },
+                {
+                    "code": "NORMAL",
+                    "name": "보통이에요"
+                },
+                {
+                    "code": "EASY",
+                    "name": "쉬워요"
+                }
+            ]
+        }
     }
-  }
 }

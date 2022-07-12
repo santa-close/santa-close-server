@@ -41,8 +41,8 @@ internal class MountainReviewAppQueryRepositoryImplTest @Autowired constructor(
                         mutableListOf(),
                         MountainDifficulty.HARD,
                         mountain,
-                        appUser
-                    )
+                        appUser,
+                    ),
                 )
             }
 

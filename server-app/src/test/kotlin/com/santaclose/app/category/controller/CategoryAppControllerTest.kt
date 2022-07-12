@@ -12,27 +12,29 @@ import java.io.File
 @AutoConfigureHttpGraphQlTester
 internal class CategoryAppControllerTest(
     private val graphQlTester: HttpGraphQlTester,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "categories" - {
-        "요청한 category 정보를 file 에 저장한다" {
-            // when
-            val response = graphQlTester
-                .documentName("categories")
-                .execute()
+        "categories" - {
+            "요청한 category 정보를 file 에 저장한다" {
+                // when
+                val response = graphQlTester
+                    .documentName("categories")
+                    .execute()
 
-            // then
-            response
-                .path("categories")
-                .entity(CategoryAppList::class.java)
-                .satisfies {
-                    val result = mapOf("data" to mapOf("categories" to it))
-                    val body = ObjectMapper()
-                        .writerWithDefaultPrettyPrinter()
-                        .writeValueAsString(result)
+                // then
+                response
+                    .path("categories")
+                    .entity(CategoryAppList::class.java)
+                    .satisfies {
+                        val result = mapOf("data" to mapOf("categories" to it))
+                        val body = ObjectMapper()
+                            .writerWithDefaultPrettyPrinter()
+                            .writeValueAsString(result)
 
-                    File("src/main/resources/graphql/categories.json").writeText(body)
-                }
+                        File("src/main/resources/graphql/categories.json").writeText(body)
+                    }
+            }
         }
-    }
-})
+    },
+)

@@ -27,7 +27,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
         MountainAppQueryService(
             MountainAppQueryRepositoryImpl(em.createQueryFactory()),
             MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
-            RestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+            RestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
         )
 
     @Nested

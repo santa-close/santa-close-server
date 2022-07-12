@@ -13,7 +13,7 @@ import javax.persistence.criteria.JoinType
 
 @Repository
 class MountainRestaurantAppQueryRepositoryImpl(
-    private val springDataQueryFactory: SpringDataQueryFactory
+    private val springDataQueryFactory: SpringDataQueryFactory,
 ) : MountainRestaurantAppQueryRepository {
     override fun findMountainByRestaurant(id: Long, limit: Int): List<LatestMountainDto> =
         springDataQueryFactory.listQuery {

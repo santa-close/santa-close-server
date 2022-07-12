@@ -15,7 +15,7 @@ import javax.persistence.EntityManager
 @DataJpaTest
 internal class MountainAppMutationServiceTest @Autowired constructor(
     private val mountainAppRepository: MountainAppRepository,
-    private val em: EntityManager
+    private val em: EntityManager,
 ) {
     private val mountainAppMutationService = MountainAppMutationService(em)
 
@@ -34,7 +34,7 @@ internal class MountainAppMutationServiceTest @Autowired constructor(
                     longitude = 100.0,
                     latitude = 100.0,
                     address = "address",
-                    postcode = "postcode"
+                    postcode = "postcode",
                 )
 
             // when
