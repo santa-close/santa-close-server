@@ -61,7 +61,7 @@ private object DateTimeCoercing : Coercing<LocalDateTime, String> {
             (dataFetcherResult as? LocalDateTime)?.format(formatter) ?: dataFetcherResult.toString()
         }.getOrElse {
             throw CoercingSerializeException(
-                "Data fetcher result $dataFetcherResult cannot be serialized to a String"
+                "Data fetcher result $dataFetcherResult cannot be serialized to a String",
             )
         }
 }
@@ -86,7 +86,7 @@ private object DataFetcherExceptionHandler : DataFetcherExceptionHandler {
                     is NoResultException -> ErrorType.NOT_FOUND
                     is ValidationException -> ErrorType.BAD_REQUEST
                     else -> ErrorType.INTERNAL_ERROR
-                }
+                },
             )
             .build()
 
@@ -96,7 +96,7 @@ private object DataFetcherExceptionHandler : DataFetcherExceptionHandler {
             DataFetcherExceptionHandlerResult
                 .newResult()
                 .error(error)
-                .build()
+                .build(),
         )
     }
 }

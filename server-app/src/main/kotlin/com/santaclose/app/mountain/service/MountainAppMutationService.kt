@@ -13,7 +13,6 @@ class MountainAppMutationService(
 ) {
 
     fun register(input: CreateMountainAppInput, userId: Long) {
-
         val mountain =
             Mountain(
                 name = input.name,

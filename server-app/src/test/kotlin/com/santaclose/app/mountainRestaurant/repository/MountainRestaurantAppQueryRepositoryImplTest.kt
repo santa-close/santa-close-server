@@ -34,8 +34,29 @@ internal class MountainRestaurantAppQueryRepositoryImplTest @Autowired construct
             val limit = 5
 
             // when
-            val result =
-                mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, limit)
+            val result = mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, limit)
+
+            // then
+            result shouldHaveSize limit
+            result.map { it.id } shouldBe result.map { it.id }.sortedDescending()
+        }
+    }
+
+    @Nested
+    inner class FindRestaurantByMountain {
+        @Test
+        fun `산에 연관된 식당 리스트를 최신순으로 조회한다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = em.createMountain(appUser)
+            repeat(10) {
+                val restaurant = em.createRestaurant(appUser)
+                em.createMountainRestaurant(mountain, restaurant)
+            }
+            val limit = 5
+
+            // when
+            val result = mountainRestaurantAppQueryRepository.findRestaurantByMountain(mountain.id, limit)
 
             // then
             result shouldHaveSize limit

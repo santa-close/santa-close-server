@@ -15,13 +15,13 @@ class FileManager(
             s3Config.endPoint,
             s3Config.region,
             s3Config.credentialsAccessKey,
-            s3Config.credentialsSecretKey
+            s3Config.credentialsSecretKey,
         )
 
     suspend fun upload(
         path: String,
         data: ByteStream,
-        contentType: String
+        contentType: String,
     ): Either<Throwable, String> =
         s3Uploader.upload(s3Config.bucket, path, data, contentType).map { "${s3Config.domain}/$path" }
 }

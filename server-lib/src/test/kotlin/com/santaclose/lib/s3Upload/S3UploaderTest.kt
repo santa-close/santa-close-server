@@ -40,8 +40,8 @@ internal class S3UploaderTest {
                     endpointResolver =
                         StaticEndpointResolver(
                             AwsEndpoint(
-                                url = localStack.getEndpointOverride(LocalStackContainer.Service.S3).toString()
-                            )
+                                url = localStack.getEndpointOverride(LocalStackContainer.Service.S3).toString(),
+                            ),
                         )
                     credentialsProvider =
                         StaticCredentialsProvider(Credentials(localStack.accessKey, localStack.secretKey))
@@ -69,7 +69,7 @@ internal class S3UploaderTest {
                         GetObjectRequest {
                             bucket = "test"
                             key = "path"
-                        }
+                        },
                     ) {}
                 }
             }

@@ -19,13 +19,19 @@ class SampleAppController(
 ) {
 
     @QueryMapping
-    fun sample(@Argument @Valid input: SampleAppItemInput): SampleAppDetail =
+    fun sample(
+        @Argument @Valid
+        input: SampleAppItemInput,
+    ): SampleAppDetail =
         sampleAppQueryService
             .findByPrice(input.price)
             .getOrThrow()
 
     @MutationMapping
-    fun createSample(@Argument @Valid input: CreateSampleAppInput): Boolean =
+    fun createSample(
+        @Argument @Valid
+        input: CreateSampleAppInput,
+    ): Boolean =
         sampleAppMutationService
             .create(input.toEntity())
             .run { true }

@@ -20,7 +20,7 @@ data class RestaurantRatingAverage(
                 dto.clean,
                 dto.mood,
                 dto.totalCount.toInt(),
-                dto.average
+                dto.average,
             )
     }
 }

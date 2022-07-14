@@ -21,29 +21,29 @@ import javax.persistence.EntityManager
 fun EntityManager.createQueryFactory() =
     SpringDataQueryFactoryImpl(
         criteriaQueryCreator = CriteriaQueryCreatorImpl(this),
-        subqueryCreator = SubqueryCreatorImpl()
+        subqueryCreator = SubqueryCreatorImpl(),
     )
 
 fun EntityManager.createAppUser(
-    user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER)
+    user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER),
 ): AppUser = user.also { persist(it) }
 
 fun EntityManager.createRestaurant(
     appUser: AppUser,
     location: Location = createLocation(),
     restaurant: Restaurant =
-        Restaurant("name", "description", mutableListOf(), mutableListOf(), appUser, location)
+        Restaurant("name", "description", mutableListOf(), mutableListOf(), appUser, location),
 ) = restaurant.also { this.persist(it) }
 
 fun EntityManager.createMountain(
     appUser: AppUser,
     location: Location = createLocation(),
     mountain: Mountain =
-        Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location)
+        Mountain("mountainName", mutableListOf(), MountainManagement.MUNICIPAL, 1000, appUser, location),
 ) = mountain.also { persist(it) }
 
 fun EntityManager.createLocation(
-    location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524")
+    location: Location = Location.create(10.0, 20.0, "서울 중구 세종대로 110 서울특별시청", "04524"),
 ) = location.also { persist(it) }
 
 fun EntityManager.createMountainReview(
@@ -57,8 +57,8 @@ fun EntityManager.createMountainReview(
             mutableListOf(),
             MountainDifficulty.HARD,
             mountain,
-            appUser
-        )
+            appUser,
+        ),
 ) = mountainReview.also { persist(it) }
 
 fun EntityManager.createRestaurantReview(appUser: AppUser, restaurant: Restaurant) =
@@ -70,7 +70,7 @@ fun EntityManager.createRestaurantReview(appUser: AppUser, restaurant: Restauran
         RestaurantRating(1, 2, 3, 4, 5),
         mutableListOf(),
         restaurant,
-        appUser
+        appUser,
     )
         .also { persist(it) }
 

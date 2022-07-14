@@ -46,7 +46,7 @@ class KakaoAuth(
                 fromFormData("grant_type", "authorization_code")
                     .with("client_id", clientId)
                     .with("redirect_uri", redirectUri)
-                    .with("code", code)
+                    .with("code", code),
             )
             .retrieve()
             .awaitBody()

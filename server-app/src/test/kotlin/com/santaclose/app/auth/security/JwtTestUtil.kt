@@ -17,7 +17,7 @@ internal class JwtTestUtil {
                     session?.let { setClaims(mapOf("id" to "${session.id}", "role" to session.role)) }
                 }
                 .setExpiration(
-                    Date().apply { time += (if (isExpired) -1 else 1).hours.inWholeMilliseconds }
+                    Date().apply { time += (if (isExpired) -1 else 1).hours.inWholeMilliseconds },
                 )
                 .setIssuedAt(Date())
                 .signWith(key)

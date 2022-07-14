@@ -16,6 +16,6 @@ data class RestaurantRatingInput(
             parkingSpace.toByte(),
             kind.toByte(),
             clean.toByte(),
-            mood.toByte()
+            mood.toByte(),
         )
 }

@@ -24,73 +24,75 @@ internal class MountainReviewAppControllerTest(
     private val mountainReviewAppMutationService: MountainReviewAppMutationService,
     @MockkBean
     private val serverRequestParser: ServerRequestParser,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "createMountainReview" - {
-        "mountainId 가 유효하지 않으면 에러를 반환한다" {
-            // given
-            val input = CreateMountainReviewAppInput(
-                mountainId = "1",
-                title = "title",
-                parking = 5,
-                scenery = 5,
-                toilet = 5,
-                traffic = 5,
-                trail = 5,
-                tree = 5,
-                content = "Good~",
-                images = emptyList(),
-                difficulty = MountainDifficulty.HARD,
-            )
-            val session = AppSession(123, AppUserRole.USER)
+        "createMountainReview" - {
+            "mountainId 가 유효하지 않으면 에러를 반환한다" {
+                // given
+                val input = CreateMountainReviewAppInput(
+                    mountainId = "1",
+                    title = "title",
+                    parking = 5,
+                    scenery = 5,
+                    toilet = 5,
+                    traffic = 5,
+                    trail = 5,
+                    tree = 5,
+                    content = "Good~",
+                    images = emptyList(),
+                    difficulty = MountainDifficulty.HARD,
+                )
+                val session = AppSession(123, AppUserRole.USER)
 
-            every { serverRequestParser.parse(any()) } returns session.some()
-            every { mountainReviewAppMutationService.register(any(), any()) } throws
-                NoResultException("no result")
+                every { serverRequestParser.parse(any()) } returns session.some()
+                every { mountainReviewAppMutationService.register(any(), any()) } throws
+                    NoResultException("no result")
 
-            // when
-            val response = graphQlTester
-                .documentName("createMountainReview")
-                .variable("input", input)
-                .execute()
+                // when
+                val response = graphQlTester
+                    .documentName("createMountainReview")
+                    .variable("input", input)
+                    .execute()
 
-            // then
-            response
-                .errors()
-                .expect { it.message == "no result" }
+                // then
+                response
+                    .errors()
+                    .expect { it.message == "no result" }
+            }
+
+            "정상적으로 생성한다" {
+                // given
+                val input = CreateMountainReviewAppInput(
+                    mountainId = "1",
+                    title = "title",
+                    parking = 5,
+                    scenery = 5,
+                    toilet = 5,
+                    traffic = 5,
+                    trail = 5,
+                    tree = 5,
+                    content = "Good~",
+                    images = emptyList(),
+                    difficulty = MountainDifficulty.HARD,
+                )
+                val session = AppSession(123, AppUserRole.USER)
+
+                every { serverRequestParser.parse(any()) } returns session.some()
+                justRun { mountainReviewAppMutationService.register(any(), session.id) }
+
+                // when
+                val response = graphQlTester
+                    .documentName("createMountainReview")
+                    .variable("input", input)
+                    .execute()
+
+                // then
+                response
+                    .path("createMountainReview")
+                    .entity(Boolean::class.java)
+                    .isEqualTo(true)
+            }
         }
-
-        "정상적으로 생성한다" {
-            // given
-            val input = CreateMountainReviewAppInput(
-                mountainId = "1",
-                title = "title",
-                parking = 5,
-                scenery = 5,
-                toilet = 5,
-                traffic = 5,
-                trail = 5,
-                tree = 5,
-                content = "Good~",
-                images = emptyList(),
-                difficulty = MountainDifficulty.HARD,
-            )
-            val session = AppSession(123, AppUserRole.USER)
-
-            every { serverRequestParser.parse(any()) } returns session.some()
-            justRun { mountainReviewAppMutationService.register(any(), session.id) }
-
-            // when
-            val response = graphQlTester
-                .documentName("createMountainReview")
-                .variable("input", input)
-                .execute()
-
-            // then
-            response
-                .path("createMountainReview")
-                .entity(Boolean::class.java)
-                .isEqualTo(true)
-        }
-    }
-})
+    },
+)

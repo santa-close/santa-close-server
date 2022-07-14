@@ -31,6 +31,6 @@ constructor(
             .tapLeft { logger.error(it.message, it) }
             .fold(
                 ifLeft = { ResponseEntity("서버 에러", HttpStatus.INTERNAL_SERVER_ERROR) },
-                ifRight = { ResponseEntity(it, HttpStatus.OK) }
+                ifRight = { ResponseEntity(it, HttpStatus.OK) },
             )
 }

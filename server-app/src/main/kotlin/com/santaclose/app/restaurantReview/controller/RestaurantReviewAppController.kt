@@ -24,7 +24,8 @@ class RestaurantReviewAppController(
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
     fun createRestaurantReview(
-        @Argument @Valid input: CreateRestaurantReviewAppInput,
+        @Argument @Valid
+        input: CreateRestaurantReviewAppInput,
         authentication: Authentication,
     ): Mono<Boolean> =
         catch {

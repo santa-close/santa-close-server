@@ -1,6 +1,7 @@
 package com.santaclose.app.mountain.service
 
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
+import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
 import com.santaclose.app.util.createAppUser
@@ -27,7 +28,8 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
         MountainAppQueryService(
             MountainAppQueryRepositoryImpl(em.createQueryFactory()),
             MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
-            RestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+            RestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
+            MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
         )
 
     @Nested

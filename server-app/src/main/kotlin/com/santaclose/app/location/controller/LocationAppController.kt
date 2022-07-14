@@ -22,7 +22,10 @@ class LocationAppController(
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun locations(@Argument @Valid input: LocationAppInput): Flux<AppLocation> =
+    fun locations(
+        @Argument @Valid
+        input: LocationAppInput,
+    ): Flux<AppLocation> =
         catch { locationAppQueryService.find(input).toFlux() }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()

@@ -3,8 +3,8 @@ package com.santaclose.app.mountain.controller
 import arrow.core.Either.Companion.catch
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
+import com.santaclose.app.mountain.controller.dto.MountainAppDetail
 import com.santaclose.app.mountain.controller.dto.MountainAppSummary
-import com.santaclose.app.mountain.controller.dto.MountainDetailAppInput
 import com.santaclose.app.mountain.service.MountainAppMutationService
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.logger.logger
@@ -28,12 +28,9 @@ class MountainAppController(
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun mountainDetail(
-        @Argument @Valid input: MountainDetailAppInput,
-    ): Mono<Boolean> =
+    fun mountainDetail(@Argument id: String): Mono<MountainAppDetail> =
         catch {
-            mountainAppQueryService.findDetail(input.id)
-            true.toMono()
+            mountainAppQueryService.findDetail(id).toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
@@ -48,7 +45,8 @@ class MountainAppController(
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
     fun registerMountain(
-        @Argument @Valid input: CreateMountainAppInput,
+        @Argument @Valid
+        input: CreateMountainAppInput,
         authentication: Authentication,
     ): Mono<Boolean> =
         catch {

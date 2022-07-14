@@ -25,36 +25,38 @@ internal class LocationAppControllerTest(
     private val locationAppQueryService: LocationAppQueryService,
     @MockkBean
     private val serverRequestParser: ServerRequestParser,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "locations" - {
-        "요청한 지역안의 위치 정보를 가져온다" {
-            // given
-            val input = LocationAppInput(
-                diagonalFrom = AppCoordinate(latitude = 37.5, longitude = 126.5),
-                diagonalTo = AppCoordinate(latitude = 37.6, longitude = 126.6),
-            )
-            val location = MountainAppLocation.of(
-                id = 123,
-                point = GeometryFactory().createPoint(Coordinate(127.5, 35.5))
-            )
-            val session = AppSession(123, AppUserRole.USER)
+        "locations" - {
+            "요청한 지역안의 위치 정보를 가져온다" {
+                // given
+                val input = LocationAppInput(
+                    diagonalFrom = AppCoordinate(latitude = 37.5, longitude = 126.5),
+                    diagonalTo = AppCoordinate(latitude = 37.6, longitude = 126.6),
+                )
+                val location = MountainAppLocation.of(
+                    id = 123,
+                    point = GeometryFactory().createPoint(Coordinate(127.5, 35.5)),
+                )
+                val session = AppSession(123, AppUserRole.USER)
 
-            every { serverRequestParser.parse(any()) } returns session.some()
-            every { locationAppQueryService.find(any()) } returns listOf(location)
+                every { serverRequestParser.parse(any()) } returns session.some()
+                every { locationAppQueryService.find(any()) } returns listOf(location)
 
-            // when
-            val response = graphQlTester
-                .documentName("locations")
-                .variable("input", input)
-                .execute()
+                // when
+                val response = graphQlTester
+                    .documentName("locations")
+                    .variable("input", input)
+                    .execute()
 
-            // then
-            response
-                .path("locations")
-                .entityList(MountainAppLocation::class.java)
-                .hasSize(1)
-                .contains(location)
+                // then
+                response
+                    .path("locations")
+                    .entityList(MountainAppLocation::class.java)
+                    .hasSize(1)
+                    .contains(location)
+            }
         }
-    }
-})
+    },
+)

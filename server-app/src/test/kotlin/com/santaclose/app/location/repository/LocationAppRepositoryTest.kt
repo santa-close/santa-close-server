@@ -34,7 +34,7 @@ class LocationAppRepositoryTest @Autowired constructor(
                     Coordinate(2.0, 2.0),
                     Coordinate(2.0, 0.0),
                     Coordinate(0.0, 0.0),
-                )
+                ),
             )
 
         // when

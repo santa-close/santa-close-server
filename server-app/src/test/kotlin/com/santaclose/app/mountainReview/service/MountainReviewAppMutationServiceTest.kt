@@ -43,7 +43,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                     1,
                     "content",
                     emptyList(),
-                    EASY
+                    EASY,
                 )
 
             // when
@@ -73,7 +73,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                     3,
                     "content",
                     listOf("a", "b", "c"),
-                    EASY
+                    EASY,
                 )
 
             // when

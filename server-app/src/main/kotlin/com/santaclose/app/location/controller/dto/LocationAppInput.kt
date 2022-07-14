@@ -28,7 +28,7 @@ data class LocationAppInput(
                 Coordinate(diagonalTo.longitude, diagonalTo.latitude),
                 Coordinate(diagonalTo.longitude, diagonalFrom.latitude),
                 Coordinate(diagonalFrom.longitude, diagonalFrom.latitude),
-            )
+            ),
         )
     }
 }

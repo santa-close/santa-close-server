@@ -20,42 +20,44 @@ import org.springframework.graphql.test.tester.HttpGraphQlTester
 internal class AuthAppControllerTest(
     private val graphQlTester: HttpGraphQlTester,
     @MockkBean private val authAppService: AuthAppService,
-) : FreeSpec({
+) : FreeSpec(
+    {
 
-    "signIn" - {
-        "로그인 실패 시 에러 응답을 반환한다" {
-            // given
-            val input = SignInAppInput(code = "code", type = SignInType.KAKAO)
-            coEvery { authAppService.signIn(input.code) } returns Exception("error").left()
+        "signIn" - {
+            "로그인 실패 시 에러 응답을 반환한다" {
+                // given
+                val input = SignInAppInput(code = "code", type = SignInType.KAKAO)
+                coEvery { authAppService.signIn(input.code) } returns Exception("error").left()
 
-            // when
-            val response = graphQlTester
-                .documentName("signIn")
-                .variable("input", input)
-                .execute()
+                // when
+                val response = graphQlTester
+                    .documentName("signIn")
+                    .variable("input", input)
+                    .execute()
 
-            // then
-            response
-                .errors()
-                .expect { it.message == "error" }
+                // then
+                response
+                    .errors()
+                    .expect { it.message == "error" }
+            }
+
+            "로그인 성공 시 토큰 정보를 반환한다" {
+                // given
+                val input = SignInAppInput(code = "code", type = SignInType.KAKAO)
+                coEvery { authAppService.signIn(input.code) } returns AppSession(123, AppUserRole.USER).right()
+
+                // when
+                val response = graphQlTester
+                    .documentName("signIn")
+                    .variable("input", input)
+                    .execute()
+
+                // then
+                response
+                    .path("signIn.accessToken")
+                    .entity(String::class.java)
+                    .satisfies { it shouldHaveMinLength 50 }
+            }
         }
-
-        "로그인 성공 시 토큰 정보를 반환한다" {
-            // given
-            val input = SignInAppInput(code = "code", type = SignInType.KAKAO)
-            coEvery { authAppService.signIn(input.code) } returns AppSession(123, AppUserRole.USER).right()
-
-            // when
-            val response = graphQlTester
-                .documentName("signIn")
-                .variable("input", input)
-                .execute()
-
-            // then
-            response
-                .path("signIn.accessToken")
-                .entity(String::class.java)
-                .satisfies { it shouldHaveMinLength 50 }
-        }
-    }
-})
+    },
+)
