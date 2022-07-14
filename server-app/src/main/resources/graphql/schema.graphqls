@@ -75,7 +75,7 @@ type Query {
   "지도 위치 데이터"
   locations(input: LocationAppInput!): [AppLocation!]!
   "산 상세 조회"
-  mountainDetail(input: MountainDetailAppInput!): MountainAppDetail!
+  mountainDetail(id: ID!): MountainAppDetail!
   "산 요약 정보"
   mountainSummary(id: ID!): MountainAppSummary!
   "맛집 상세 조회"
@@ -93,7 +93,7 @@ type MountainAppDetail {
   name: String!
   address: String!
   rating: MountainRatingAverage!
-  review: [LatestMountainReview!]!
+  reviews: [LatestMountainReview!]!
   restaurants: [LatestRestaurant!]!
 }
 
@@ -268,10 +268,6 @@ input CreateSampleAppInput {
 input LocationAppInput {
   diagonalFrom: AppCoordinateInput!
   diagonalTo: AppCoordinateInput!
-}
-
-input MountainDetailAppInput {
-  id: ID!
 }
 
 input RestaurantRatingInput {

@@ -1,0 +1,25 @@
+query mountainDetail($id: ID!) {
+  mountainDetail(id: $id) {
+    address
+    name
+    restaurants {
+      id
+      name
+    }
+    rating {
+      scenery
+      tree
+      trail
+      parking
+      toilet
+      traffic
+      totalCount
+      average
+    }
+    reviews {
+      content
+      id
+      title
+    }
+  }
+}

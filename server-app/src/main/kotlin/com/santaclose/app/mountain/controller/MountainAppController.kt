@@ -5,7 +5,6 @@ import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
 import com.santaclose.app.mountain.controller.dto.MountainAppDetail
 import com.santaclose.app.mountain.controller.dto.MountainAppSummary
-import com.santaclose.app.mountain.controller.dto.MountainDetailAppInput
 import com.santaclose.app.mountain.service.MountainAppMutationService
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.logger.logger
@@ -29,12 +28,9 @@ class MountainAppController(
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
-    fun mountainDetail(
-        @Argument @Valid
-        input: MountainDetailAppInput,
-    ): Mono<MountainAppDetail> =
+    fun mountainDetail(@Argument id: String): Mono<MountainAppDetail> =
         catch {
-            mountainAppQueryService.findDetail(input.id).toMono()
+            mountainAppQueryService.findDetail(id).toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()

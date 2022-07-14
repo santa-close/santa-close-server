@@ -5,7 +5,9 @@ import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
 import com.santaclose.app.auth.security.ServerRequestParser
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
+import com.santaclose.app.mountain.controller.dto.MountainAppDetail
 import com.santaclose.app.mountain.controller.dto.MountainAppSummary
+import com.santaclose.app.mountain.controller.dto.MountainRatingAverage
 import com.santaclose.app.mountain.service.MountainAppMutationService
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.app.mountain.service.dto.MountainSummaryDto
@@ -36,6 +38,46 @@ internal class MountainAppControllerTest(
     private val serverRequestParser: ServerRequestParser,
 ) : FreeSpec(
     {
+        "mountainDetail" - {
+            "산 상세를 가져온다" {
+                // given
+                val mountainId = "1000"
+                val dto = MountainAppDetail(
+                    address = "test address",
+                    name = "mountain",
+                    rating = MountainRatingAverage(
+                        scenery = 1.0,
+                        tree = 1.0,
+                        trail = 2.0,
+                        parking = 3.0,
+                        toilet = 3.0,
+                        traffic = 4.0,
+                        totalCount = 1,
+                        average = 3.0,
+                    ),
+                    reviews = emptyList(),
+                    restaurants = emptyList(),
+                )
+                val session = AppSession(123, AppUserRole.USER)
+
+                every { serverRequestParser.parse(any()) } returns session.some()
+                every { mountainAppQueryService.findDetail(mountainId) } returns dto
+
+                // when
+                val response = graphQlTester
+                    .documentName("mountainDetail")
+                    .variable("id", mountainId)
+                    .execute()
+
+                // then
+                response
+                    .path("mountainDetail")
+                    .entity(MountainAppDetail::class.java)
+                    .satisfies {
+                        it shouldBe dto
+                    }
+            }
+        }
 
         "registerMountain" - {
             "유저가 산을 등록한다" {
