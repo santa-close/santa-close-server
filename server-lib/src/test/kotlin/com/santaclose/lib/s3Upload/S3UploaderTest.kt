@@ -4,6 +4,7 @@ import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
 import aws.sdk.kotlin.runtime.endpoint.AwsEndpoint
 import aws.sdk.kotlin.runtime.endpoint.StaticEndpointResolver
 import aws.sdk.kotlin.services.s3.S3Client
+import aws.sdk.kotlin.services.s3.createBucket
 import aws.sdk.kotlin.services.s3.model.GetObjectRequest
 import aws.smithy.kotlin.runtime.auth.awscredentials.Credentials
 import aws.smithy.kotlin.runtime.content.ByteStream
@@ -25,7 +26,7 @@ internal class S3UploaderTest {
     companion object {
         @Container
         private val localStack =
-            LocalStackContainer(DockerImageName.parse("localstack/localstack:0.14.0")).apply {
+            LocalStackContainer(DockerImageName.parse("localstack/localstack")).apply {
                 withServices(LocalStackContainer.Service.S3)
             }
         lateinit var s3Uploader: S3Uploader
