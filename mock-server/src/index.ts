@@ -6,9 +6,10 @@ import express from 'express';
 import http from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import faker from '@faker-js/faker';
+import cors from 'cors';
 
 async function startApolloServer() {
-  const app = express();
+  const app = express().use(cors());
   const httpServer = http.createServer(app);
 
   const typeDefs = gql`
