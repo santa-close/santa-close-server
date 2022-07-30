@@ -1,4 +1,4 @@
-package com.santaclose.lib.logger
+package com.santaclose.lib.logger // ktlint-disable filename
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

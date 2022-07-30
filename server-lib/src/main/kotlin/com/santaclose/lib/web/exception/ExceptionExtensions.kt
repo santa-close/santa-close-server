@@ -1,4 +1,4 @@
-package com.santaclose.lib.web.exception
+package com.santaclose.lib.web.exception // ktlint-disable filename
 
 import arrow.core.Either
 import arrow.core.getOrHandle
