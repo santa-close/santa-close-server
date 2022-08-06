@@ -9,12 +9,15 @@ import com.santaclose.lib.entity.mountainReview.MountainReview
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
+import javax.transaction.Transactional
 
 @Service
 class MountainReviewAppMutationService(
     private val mountainAppRepository: MountainAppRepository,
     private val em: EntityManager,
 ) {
+
+    @Transactional
     fun register(input: CreateMountainReviewAppInput, userId: Long) {
         val id = input.mountainId.toLong()
         val isExist = mountainAppRepository.existsById(id)

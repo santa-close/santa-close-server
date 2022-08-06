@@ -11,6 +11,7 @@ import com.santaclose.lib.entity.restaurant.RestaurantFoodType
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
+import javax.transaction.Transactional
 
 @Service
 class RestaurantAppMutationService(
@@ -20,6 +21,7 @@ class RestaurantAppMutationService(
     private val em: EntityManager,
 ) {
 
+    @Transactional
     fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
         val id = input.mountainId.toLong()
         val isExistMountain = mountainAppRepository.existsById(id)
