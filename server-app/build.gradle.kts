@@ -25,3 +25,12 @@ dependencies {
     testImplementation(libs.spring.graphql.test)
     testImplementation(libs.spring.security.test)
 }
+
+tasks.bootJar {
+    enabled = true
+    archiveVersion.set("")
+}
+
+tasks.jar {
+    enabled = false
+}
