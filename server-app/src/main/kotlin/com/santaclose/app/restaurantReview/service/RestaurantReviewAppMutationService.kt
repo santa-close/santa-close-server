@@ -9,6 +9,7 @@ import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
+import javax.transaction.Transactional
 
 @Service
 class RestaurantReviewAppMutationService(
@@ -16,6 +17,8 @@ class RestaurantReviewAppMutationService(
     private val restaurantRepository: RestaurantAppRepository,
     private val em: EntityManager,
 ) {
+
+    @Transactional
     fun register(input: CreateRestaurantReviewAppInput, userId: Long) {
         val isRestaurantExist = restaurantRepository.existsById(input.restaurantId.toLong())
         if (!isRestaurantExist) {

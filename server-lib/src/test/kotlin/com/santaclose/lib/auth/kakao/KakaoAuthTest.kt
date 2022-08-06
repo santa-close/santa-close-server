@@ -1,6 +1,6 @@
 package com.santaclose.lib.auth.kakao
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.santaclose.lib.auth.Profile
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -10,7 +10,6 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
-import org.springframework.web.reactive.function.client.WebClient
 
 internal class KakaoAuthTest : FreeSpec(
     {
@@ -21,7 +20,6 @@ internal class KakaoAuthTest : FreeSpec(
             server.start()
             kakaoAuth =
                 KakaoAuth(
-                    builder = WebClient.builder(),
                     clientId = "clientId",
                     redirectUri = "http://localhost:8080",
                     tokenUri = "http://localhost:${server.port}",
@@ -57,7 +55,7 @@ internal class KakaoAuthTest : FreeSpec(
                 val result = kakaoAuth.getAccessToken("code")
 
                 // then
-                result.shouldBeLeft().apply { cause?.message shouldContain "value failed for JSON property" }
+                result.shouldBeLeft().apply { message shouldContain "value failed for JSON property" }
             }
 
             "응답이 올바르면 토큰을 반환한다" {
@@ -101,7 +99,7 @@ internal class KakaoAuthTest : FreeSpec(
                 val result = kakaoAuth.getUser("token")
 
                 // then
-                result.shouldBeLeft().apply { cause?.message shouldContain "value failed for JSON property" }
+                result.shouldBeLeft().apply { message shouldContain "value failed for JSON property" }
             }
 
             "응답이 올바르면 사용자 정보를 반환한다" {
@@ -110,7 +108,7 @@ internal class KakaoAuthTest : FreeSpec(
                 server.enqueue(
                     MockResponse()
                         .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                        .setBody(ObjectMapper().writeValueAsString(user)),
+                        .setBody(jacksonObjectMapper().writeValueAsString(user)),
                 )
 
                 // when
@@ -133,7 +131,7 @@ internal class KakaoAuthTest : FreeSpec(
                     MockResponse()
                         .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                         .setBody(
-                            ObjectMapper()
+                            jacksonObjectMapper()
                                 .writeValueAsString(
                                     KakaoUserResponse(123, KakaoAccountResponse(KakaoProfileResponse("name"), "email")),
                                 ),

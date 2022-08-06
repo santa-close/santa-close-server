@@ -6,12 +6,14 @@ import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
+import javax.transaction.Transactional
 
 @Service
 class MountainAppMutationService(
     private val em: EntityManager,
 ) {
 
+    @Transactional
     fun register(input: CreateMountainAppInput, userId: Long) {
         val mountain =
             Mountain(

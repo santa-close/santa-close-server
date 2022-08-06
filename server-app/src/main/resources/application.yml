@@ -18,7 +18,7 @@ jwt:
   expiredDays: 30
 
 kakao:
-  clientId: ${KAKA_CLIENT_ID:"clientId"}
+  clientId: ${KAKAO_CLIENT_ID:"clientId"}
   redirectUri: "http://localhost:8080/oauth"
 
 s3:
