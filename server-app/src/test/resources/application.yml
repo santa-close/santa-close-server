@@ -19,13 +19,12 @@ jwt:
   expiredDays: 30
 
 kakao:
-  clientId: "ab0e3d8af995fbf72d461fcaf38ef7b2"
+  clientId: ${KAKAO_CLIENT_ID:"clientId"}
   redirectUri: "http://localhost:8080/oauth"
 
 s3:
-  endpoint: "http://localhost"
   region: "ap-northeast-2"
   credentialsAccessKey: "accesskey"
   credentialsSecretKey: "secretKey"
-  bucket: 'bucket'
-  domain: 'domain'
+  bucket: "bucket"
+  domain: "domain"
