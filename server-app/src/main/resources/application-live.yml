@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    hibernate:
+      ddl-auto: validate
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiredDays: ${JWT_EXPIRED_DAYS}
+
+kakao:
+  clientId: ${KAKAO_CLIENT_ID}
+  redirectUri: ${KAKAO_REDIRECT_URI}
+
+s3:
+  region: ${S3_REGION}
+  credentialsAccessKey: ${S3_CREDENTIALS_ACCESS_KEY}
+  credentialsSecretKey: ${S3_CREDENTIALS_SECRET_KEY}
+  bucket: ${S3_BUCKET}
+  domain: ${S3_DOMAIN}
