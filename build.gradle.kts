@@ -33,7 +33,8 @@ subprojects {
         implementation(libs.bundles.kotlin.libs)
         implementation(libs.arrow.core)
         implementation(libs.spring.validation)
-        implementation(libs.bundles.aws.libs)
+        implementation(platform(libs.aws.java.sdk.bom))
+        implementation(libs.aws.java.sdk.s3)
         implementation(libs.okhttp)
 
         testImplementation(libs.spring.starter.test) {

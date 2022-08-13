@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank
 @ConstructorBinding
 @ConfigurationProperties(prefix = "s3")
 data class S3Config(
-    val endPoint: String?,
+    @field:NotBlank val endPoint: String,
     @field:NotBlank val region: String,
     @field:NotBlank val credentialsAccessKey: String,
     @field:NotBlank val credentialsSecretKey: String,

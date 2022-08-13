@@ -1,6 +1,5 @@
 package com.santaclose.app.mountainReview.repository
 
-import aws.smithy.kotlin.runtime.util.length
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainReview
@@ -9,6 +8,7 @@ import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Nested
@@ -102,7 +102,7 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 10)
 
             // then
-            mountainReviews.length shouldBe count
+            mountainReviews shouldHaveSize count
             mountainReviews.map { it.appUser.id shouldBe createdAppUser.id }
         }
 
@@ -119,7 +119,7 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, limit)
 
             // then
-            mountainReviews.length shouldBe limit
+            mountainReviews shouldHaveSize limit
         }
     }
 }

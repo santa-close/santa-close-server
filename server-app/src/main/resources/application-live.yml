@@ -20,6 +20,7 @@ kakao:
   redirectUri: ${KAKAO_REDIRECT_URI}
 
 s3:
+  endpoint: ${S3_ENDPOINT}
   region: ${S3_REGION}
   credentialsAccessKey: ${S3_CREDENTIALS_ACCESS_KEY}
   credentialsSecretKey: ${S3_CREDENTIALS_SECRET_KEY}

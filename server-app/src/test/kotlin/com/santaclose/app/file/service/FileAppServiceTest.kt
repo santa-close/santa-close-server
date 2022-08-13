@@ -2,7 +2,6 @@ package com.santaclose.app.file.service
 
 import arrow.core.left
 import arrow.core.right
-import aws.smithy.kotlin.runtime.content.ByteStream
 import com.santaclose.lib.web.req.UploadImageRequest
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -11,6 +10,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import reactor.kotlin.core.publisher.toMono
+import java.io.InputStream
 
 internal class FileAppServiceTest : FreeSpec(
     {
@@ -22,7 +22,7 @@ internal class FileAppServiceTest : FreeSpec(
                 // given
                 val request = mockk<UploadImageRequest>(relaxed = true)
                 val exception = IllegalArgumentException()
-                every { request.fileData } returns ByteStream.fromString("").toMono()
+                every { request.fileData } returns InputStream.nullInputStream().toMono()
                 every { request.validateFile() } returns exception.left()
 
                 // when
@@ -35,7 +35,7 @@ internal class FileAppServiceTest : FreeSpec(
             "파일 업로드 실패 시 left를 반환한다" {
                 // given
                 val request = mockk<UploadImageRequest>(relaxed = true)
-                every { request.fileData } returns ByteStream.fromString("").toMono()
+                every { request.fileData } returns InputStream.nullInputStream().toMono()
                 every { request.validateFile() } returns Unit.right()
 
                 val exception = Exception("file upload error")
@@ -52,7 +52,7 @@ internal class FileAppServiceTest : FreeSpec(
             "정상적으로 파일이 업로드된다" {
                 // given
                 val request = mockk<UploadImageRequest>(relaxed = true)
-                every { request.fileData } returns ByteStream.fromString("").toMono()
+                every { request.fileData } returns InputStream.nullInputStream().toMono()
                 every { request.validateFile() } returns Unit.right()
 
                 val url = "http://localhost/image.png"

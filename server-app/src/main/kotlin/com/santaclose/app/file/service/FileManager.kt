@@ -1,10 +1,10 @@
 package com.santaclose.app.file.service
 
 import arrow.core.Either
-import aws.smithy.kotlin.runtime.content.ByteStream
 import com.santaclose.app.config.S3Config
 import com.santaclose.lib.s3Upload.S3Uploader
 import org.springframework.stereotype.Service
+import java.io.InputStream
 
 @Service
 class FileManager(
@@ -20,8 +20,10 @@ class FileManager(
 
     suspend fun upload(
         path: String,
-        data: ByteStream,
+        data: InputStream,
         contentType: String,
     ): Either<Throwable, String> =
-        s3Uploader.upload(s3Config.bucket, path, data, contentType).map { "${s3Config.domain}/$path" }
+        s3Uploader
+            .upload(s3Config.bucket, path, data, contentType)
+            .map { "${s3Config.domain}/$path" }
 }
