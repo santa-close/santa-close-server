@@ -3,10 +3,10 @@ package com.santaclose.lib.web.req
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import aws.smithy.kotlin.runtime.content.ByteStream
 import org.springframework.http.codec.multipart.FilePart
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import java.io.InputStream
 import java.time.LocalDate
 import java.util.UUID
 
@@ -23,11 +23,11 @@ data class UploadImageRequest(
     private val fileName: String
         get() = file.filename()
 
-    val fileData: Mono<ByteStream>
-        get() =
-            file.content().toMono().map { it?.asByteBuffer()?.array() ?: byteArrayOf() }.map {
-                ByteStream.fromBytes(it)
-            }
+    val fileData: Mono<InputStream>
+        get() = file
+            .content()
+            .toMono()
+            .map { it?.asInputStream() ?: throw IllegalStateException("File is null") }
 
     val contentType: String
         get() = file.headers().contentType.toString()

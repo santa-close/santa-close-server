@@ -1,17 +1,13 @@
 package com.santaclose.lib.s3Upload
 
-import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
-import aws.sdk.kotlin.runtime.endpoint.AwsEndpoint
-import aws.sdk.kotlin.runtime.endpoint.StaticEndpointResolver
-import aws.sdk.kotlin.services.s3.S3Client
-import aws.sdk.kotlin.services.s3.createBucket
-import aws.sdk.kotlin.services.s3.model.GetObjectRequest
-import aws.smithy.kotlin.runtime.auth.awscredentials.Credentials
-import aws.smithy.kotlin.runtime.content.ByteStream
-import io.kotest.assertions.throwables.shouldNotThrow
+import com.amazonaws.auth.AWSStaticCredentialsProvider
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.client.builder.AwsClientBuilder
+import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.mock.web.MockMultipartFile
@@ -21,7 +17,6 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 
 @Testcontainers
-@Disabled
 internal class S3UploaderTest {
     companion object {
         @Container
@@ -30,25 +25,25 @@ internal class S3UploaderTest {
                 withServices(LocalStackContainer.Service.S3)
             }
         lateinit var s3Uploader: S3Uploader
-        lateinit var s3Client: S3Client
+        lateinit var s3: AmazonS3
 
         @BeforeAll
         @JvmStatic
         fun beforeAll() {
-            s3Client =
-                S3Client {
-                    region = localStack.region
-                    endpointResolver =
-                        StaticEndpointResolver(
-                            AwsEndpoint(
-                                url = localStack.getEndpointOverride(LocalStackContainer.Service.S3).toString(),
-                            ),
-                        )
-                    credentialsProvider =
-                        StaticCredentialsProvider(Credentials(localStack.accessKey, localStack.secretKey))
-                }
-            runBlocking { s3Client.createBucket { bucket = "test" } }
-            s3Uploader = S3Uploader.createByClient(s3Client)
+            s3 = AmazonS3ClientBuilder
+                .standard()
+                .withEndpointConfiguration(
+                    AwsClientBuilder.EndpointConfiguration(
+                        localStack.getEndpointOverride(LocalStackContainer.Service.S3).toString(),
+                        localStack.region,
+                    ),
+                )
+                .withCredentials(
+                    AWSStaticCredentialsProvider(BasicAWSCredentials(localStack.accessKey, localStack.secretKey)),
+                )
+                .build()
+            s3.createBucket("test")
+            s3Uploader = S3Uploader.createByClient(s3)
         }
     }
 
@@ -62,17 +57,11 @@ internal class S3UploaderTest {
                 val file = MockMultipartFile("fileName", "file content".toByteArray())
 
                 // when
-                s3Uploader.upload("test", "path", ByteStream.fromBytes(file.bytes), file.contentType ?: "")
+                s3Uploader.upload("test", "path", file.inputStream, file.contentType ?: "")
 
                 // then
-                shouldNotThrow<Throwable> {
-                    s3Client.getObject(
-                        GetObjectRequest {
-                            bucket = "test"
-                            key = "path"
-                        },
-                    ) {}
-                }
+                val result = s3.getObject("test", "path")
+                result.key shouldBe "path"
             }
         }
     }
