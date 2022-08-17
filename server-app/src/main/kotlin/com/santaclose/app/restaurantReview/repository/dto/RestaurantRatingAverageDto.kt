@@ -9,4 +9,8 @@ data class RestaurantRatingAverageDto(
     val totalCount: Long,
 ) {
     val average = (taste + parkingSpace + kind + clean + mood) / 5
+
+    companion object {
+        val empty = RestaurantRatingAverageDto(0.0, 0.0, 0.0, 0.0, 0.0, 0)
+    }
 }
