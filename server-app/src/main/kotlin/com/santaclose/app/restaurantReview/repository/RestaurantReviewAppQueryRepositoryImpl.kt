@@ -13,6 +13,7 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import org.springframework.stereotype.Repository
+import java.lang.IllegalArgumentException
 import javax.persistence.criteria.JoinType
 
 @Repository
@@ -38,18 +39,22 @@ class RestaurantReviewAppQueryRepositoryImpl(
         }
 
     override fun findRestaurantRatingAverages(restaurantId: Long): RestaurantRatingAverageDto =
-        springDataQueryFactory.singleQuery {
-            selectMulti(
-                avg(RestaurantRating::taste),
-                avg(RestaurantRating::parkingSpace),
-                avg(RestaurantRating::kind),
-                avg(RestaurantRating::clean),
-                avg(RestaurantRating::mood),
-                count(RestaurantReview::id),
-            )
-            from(RestaurantReview::class)
-            join(RestaurantReview::restaurant, JoinType.INNER)
-            associate(RestaurantReview::class, RestaurantRating::class, on(RestaurantReview::rating))
-            where(col(Restaurant::id).equal(restaurantId))
+        try {
+            springDataQueryFactory.singleQuery {
+                selectMulti(
+                    avg(RestaurantRating::taste),
+                    avg(RestaurantRating::parkingSpace),
+                    avg(RestaurantRating::kind),
+                    avg(RestaurantRating::clean),
+                    avg(RestaurantRating::mood),
+                    count(RestaurantReview::id),
+                )
+                from(RestaurantReview::class)
+                join(RestaurantReview::restaurant, JoinType.INNER)
+                associate(RestaurantReview::class, RestaurantRating::class, on(RestaurantReview::rating))
+                where(col(Restaurant::id).equal(restaurantId))
+            }
+        } catch (e: IllegalArgumentException) {
+            RestaurantRatingAverageDto.empty
         }
 }

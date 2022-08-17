@@ -4,6 +4,7 @@ import arrow.core.Either.Companion.catch
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.restaurant.controller.dto.CreateRestaurantAppInput
 import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
+import com.santaclose.app.restaurant.controller.dto.RestaurantAppSummary
 import com.santaclose.app.restaurant.service.RestaurantAppMutationService
 import com.santaclose.app.restaurant.service.RestaurantAppQueryService
 import com.santaclose.lib.logger.logger
@@ -42,6 +43,18 @@ class RestaurantAppController(
         catch {
             restaurantAppMutationService.createRestaurant(input, authentication.id)
             true.toMono()
+        }
+            .tapLeft { logger.error(it.message, it) }
+            .getOrThrow()
+
+    @QueryMapping
+    @PreAuthorize("hasRole('USER')")
+    fun restaurantSummary(@Argument id: String): Mono<RestaurantAppSummary> =
+        catch {
+            restaurantAppQueryService
+                .findOneSummary(id.toLong())
+                .let(RestaurantAppSummary::by)
+                .toMono()
         }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()

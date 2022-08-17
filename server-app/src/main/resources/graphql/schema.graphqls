@@ -54,6 +54,15 @@ type MountainDifficultyCategory {
   name: String!
 }
 
+type RestaurantAppSummary {
+  address: String!
+  id: ID!
+  imageUrl: String!
+  locations: [MountainAppCoordinate!]!
+  rating: Float!
+  reviewCount: Int!
+}
+
 type Mutation {
   "산 리뷰 등록하기"
   createMountainReview(input: CreateMountainReviewAppInput!): Boolean!
@@ -78,6 +87,8 @@ type Query {
   mountainDetail(id: ID!): MountainAppDetail!
   "산 요약 정보"
   mountainSummary(id: ID!): MountainAppSummary!
+  "식당 요약 정보"
+  restaurantSummary(id: ID!): RestaurantAppSummary!
   "맛집 상세 조회"
   restaurantDetail(id: ID!): RestaurantAppDetail!
   "샘플 데이터"
@@ -85,6 +96,11 @@ type Query {
 }
 
 type RestaurantAppCoordinate {
+  coordinate: AppCoordinate!
+  id: ID!
+}
+
+type MountainAppCoordinate {
   coordinate: AppCoordinate!
   id: ID!
 }
