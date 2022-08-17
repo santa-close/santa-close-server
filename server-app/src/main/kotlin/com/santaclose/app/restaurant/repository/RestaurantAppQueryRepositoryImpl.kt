@@ -32,7 +32,7 @@ class RestaurantAppQueryRepositoryImpl(private val springDataQueryFactory: Sprin
             from(Mountain::class)
             join(Mountain::mountainRestaurant, JoinType.INNER)
             join(MountainRestaurant::restaurant, JoinType.INNER)
-            where(col(Mountain::id).equal(mountainId))
             join(Restaurant::location, JoinType.INNER)
+            where(col(Mountain::id).equal(mountainId))
         }
 }

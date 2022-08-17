@@ -3,9 +3,12 @@ package com.santaclose.app.mountain.repository
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createMountain
+import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createQueryFactory
+import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -52,6 +55,25 @@ internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
 
             // then
             exception.message shouldBe "No entity found for query"
+        }
+    }
+
+    @Nested
+    inner class FindLocationByRestaurant {
+        @Test
+        fun `주어진 식당과 연결된 산좌표를 가져온다`() {
+            // given
+            val appUser = em.createAppUser()
+            val mountain = em.createMountain(appUser)
+            val restaurant = em.createRestaurant(appUser)
+            em.createMountainRestaurant(mountain, restaurant)
+
+            // when
+            val result = mountainAppQueryRepository.findLocationByRestaurant(restaurant.id)
+
+            // then
+            result shouldHaveSize 1
+            result[0].point.coordinates[0] shouldBe mountain.location.point.coordinate
         }
     }
 }
