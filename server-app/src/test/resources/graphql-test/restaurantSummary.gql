@@ -1,0 +1,16 @@
+query restaurantSummary($id: ID!) {
+  restaurantSummary(id: $id) {
+    id
+    address
+    imageUrl
+    rating
+    reviewCount
+    locations {
+      id
+      coordinate {
+        latitude
+        longitude
+      }
+    }
+  }
+}
