@@ -38,7 +38,12 @@ class MountainAppController(
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
     fun mountainSummary(@Argument id: String): Mono<MountainAppSummary> =
-        catch { mountainAppQueryService.findOneSummary(id.toLong()).let(MountainAppSummary::by).toMono() }
+        catch {
+            mountainAppQueryService
+                .findOneSummary(id.toLong())
+                .let(MountainAppSummary::by)
+                .toMono()
+        }
             .tapLeft { logger.error(it.message, it) }
             .getOrThrow()
 
