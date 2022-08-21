@@ -2,15 +2,13 @@ package com.santaclose.app.restaurant.controller.dto
 
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import org.hibernate.validator.constraints.Range
-import org.springframework.format.annotation.NumberFormat
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
 data class CreateRestaurantAppInput(
-    @field:NumberFormat(style = NumberFormat.Style.NUMBER) val mountainId: String,
+    @field:NotEmpty val mountainIds: List<String>,
     val name: String,
-    val description: String,
     @field:Size(max = 10) val images: List<String>,
     @field:NotEmpty val foodTypes: List<FoodType>,
     @field:Range(min = -180, max = 180) val longitude: Double,

@@ -3,7 +3,6 @@ package com.santaclose.app.mountain.service
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
 import com.santaclose.app.mountain.repository.MountainAppRepository
 import com.santaclose.app.util.createAppUser
-import com.santaclose.lib.entity.mountain.type.MountainManagement
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Nested
@@ -29,7 +28,6 @@ internal class MountainAppMutationServiceTest @Autowired constructor(
                 CreateMountainAppInput(
                     name = "name",
                     images = mutableListOf("image"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 100,
                     longitude = 100.0,
                     latitude = 100.0,
@@ -46,7 +44,6 @@ internal class MountainAppMutationServiceTest @Autowired constructor(
             mountain[0].apply {
                 name shouldBe input.name
                 images shouldBe input.images
-                management shouldBe input.management
                 altitude shouldBe input.altitude
                 this.appUser.id shouldBe appUser.id
                 location.point.x shouldBe input.latitude

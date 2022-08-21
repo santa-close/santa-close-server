@@ -85,7 +85,6 @@ internal class MountainAppControllerTest(
                 val input = CreateMountainAppInput(
                     name = "name",
                     images = listOf("images"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 100,
                     longitude = 100.0,
                     latitude = 50.0,
