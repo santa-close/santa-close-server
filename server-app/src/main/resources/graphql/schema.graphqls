@@ -197,13 +197,6 @@ enum MountainDifficulty {
   NORMAL
 }
 
-enum MountainManagement {
-  MUNICIPAL
-  NATIONAL
-  NORMAL
-  PROVINCIAL
-}
-
 enum PriceComment {
   IS_CHEAP
   IS_EXPENSIVE
@@ -234,7 +227,6 @@ input CreateMountainAppInput {
   images: [String!]!
   latitude: Float!
   longitude: Float!
-  management: MountainManagement!
   name: String!
   postcode: String!
 }

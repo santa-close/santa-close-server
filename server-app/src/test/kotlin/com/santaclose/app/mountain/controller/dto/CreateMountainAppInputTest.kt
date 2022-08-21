@@ -1,6 +1,5 @@
 package com.santaclose.app.mountain.controller.dto
 
-import com.santaclose.lib.entity.mountain.type.MountainManagement
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
@@ -16,7 +15,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "name",
                     images = emptyList(),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 1,
                     longitude = 180.0,
                     latitude = 90.0,
@@ -38,7 +36,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "  ",
                     images = listOf("test.png"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 1,
                     longitude = 180.0,
                     latitude = 90.0,
@@ -60,7 +57,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "name",
                     images = listOf("test.png"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 0,
                     longitude = 180.0,
                     latitude = 90.0,
@@ -82,7 +78,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "name",
                     images = listOf("test.png"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 1,
                     longitude = -181.0,
                     latitude = -90.0,
@@ -104,7 +99,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "name",
                     images = listOf("test.png"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 1,
                     longitude = -180.0,
                     latitude = -91.0,
@@ -126,7 +120,6 @@ internal class CreateMountainAppInputTest : StringSpec(
                 CreateMountainAppInput(
                     name = "name",
                     images = listOf("test.png"),
-                    management = MountainManagement.MUNICIPAL,
                     altitude = 1,
                     longitude = 180.0,
                     latitude = 90.0,
