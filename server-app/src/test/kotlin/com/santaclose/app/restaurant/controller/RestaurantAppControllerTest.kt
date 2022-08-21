@@ -74,7 +74,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
             "정상적으로 사용자가 식당을 등록한다 - 성공" {
                 // given
                 val input = CreateRestaurantAppInput(
-                    mountainId = "1",
+                    mountainIds = listOf("1"),
                     name = "식당 이름",
                     images = listOf("image1", "image2", "image3"),
                     foodTypes = listOf(FoodType.ASIA),

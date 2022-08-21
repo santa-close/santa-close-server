@@ -251,7 +251,7 @@ input CreateRestaurantAppInput {
   images: [String!]!
   latitude: Float!
   longitude: Float!
-  mountainId: ID!
+  mountainIds: [ID!]!
   name: String!
   postcode: String!
 }

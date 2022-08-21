@@ -18,6 +18,13 @@ import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import javax.persistence.EntityManager
 
+inline fun <reified T> EntityManager.findAll(): List<T> {
+    val query = criteriaBuilder.createQuery(T::class.java)
+    query.select(query.from(T::class.java))
+
+    return createQuery(query).resultList
+}
+
 fun EntityManager.createQueryFactory() =
     SpringDataQueryFactoryImpl(
         criteriaQueryCreator = CriteriaQueryCreatorImpl(this),

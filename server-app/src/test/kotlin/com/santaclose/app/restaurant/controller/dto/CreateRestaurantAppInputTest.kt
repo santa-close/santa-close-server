@@ -11,7 +11,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
         val validator = Validation.buildDefaultValidatorFactory().validator
         val mountainId = "1"
         val name = "식당 이름"
-        val description = "식당 설명"
         val images = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val foodTypes = mutableListOf(FoodType.AMERICAN, FoodType.FOOD_COURT)
         val longitude = 120.01
@@ -23,7 +22,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = images,
                     foodTypes = foodTypes,
@@ -45,7 +44,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = emptyList(),
                     foodTypes = foodTypes,
@@ -69,7 +68,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = overSizeImages,
                     foodTypes = foodTypes,
@@ -91,7 +90,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = images,
                     foodTypes = foodTypes,
@@ -113,7 +112,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = images,
                     foodTypes = foodTypes,
@@ -135,7 +134,7 @@ internal class CreateRestaurantAppInputTest : StringSpec(
             // given
             val dto =
                 CreateRestaurantAppInput(
-                    mountainId = mountainId,
+                    mountainIds = listOf(mountainId),
                     name = name,
                     images = images,
                     foodTypes = emptyList(),
