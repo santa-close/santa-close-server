@@ -46,7 +46,6 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
                 CreateRestaurantAppInput(
                     mountainId = mountain.id.toString(),
                     name = "식당 이름",
-                    description = "식당 설명",
                     images = images,
                     foodTypes = foodTypes,
                     longitude = 120.00,
@@ -63,7 +62,6 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
             restaurant shouldHaveSize 1
             assertSoftly(restaurant.first()) {
                 name shouldBe input.name
-                description shouldBe input.description
                 images shouldBe input.images
                 location.point.x shouldBe input.longitude
                 location.point.y shouldBe input.latitude

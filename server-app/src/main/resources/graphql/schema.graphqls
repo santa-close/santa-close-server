@@ -247,7 +247,6 @@ input CreateMountainReviewAppInput {
 
 input CreateRestaurantAppInput {
   address: String!
-  description: String!
   foodTypes: [FoodType!]!
   images: [String!]!
   latitude: Float!

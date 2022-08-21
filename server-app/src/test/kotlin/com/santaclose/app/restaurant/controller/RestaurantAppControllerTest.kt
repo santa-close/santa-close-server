@@ -76,7 +76,6 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val input = CreateRestaurantAppInput(
                     mountainId = "1",
                     name = "식당 이름",
-                    description = "식당 설명",
                     images = listOf("image1", "image2", "image3"),
                     foodTypes = listOf(FoodType.ASIA),
                     longitude = 100.00,

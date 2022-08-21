@@ -10,7 +10,6 @@ import javax.validation.constraints.Size
 data class CreateRestaurantAppInput(
     @field:NumberFormat(style = NumberFormat.Style.NUMBER) val mountainId: String,
     val name: String,
-    val description: String,
     @field:Size(max = 10) val images: List<String>,
     @field:NotEmpty val foodTypes: List<FoodType>,
     @field:Range(min = -180, max = 180) val longitude: Double,

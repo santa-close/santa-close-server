@@ -25,7 +25,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = images,
                     foodTypes = foodTypes,
                     longitude = longitude,
@@ -48,7 +47,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = emptyList(),
                     foodTypes = foodTypes,
                     longitude = longitude,
@@ -73,7 +71,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = overSizeImages,
                     foodTypes = foodTypes,
                     longitude = longitude,
@@ -96,7 +93,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = images,
                     foodTypes = foodTypes,
                     longitude = longitude,
@@ -119,7 +115,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = images,
                     foodTypes = foodTypes,
                     longitude = longitude,
@@ -142,7 +137,6 @@ internal class CreateRestaurantAppInputTest : StringSpec(
                 CreateRestaurantAppInput(
                     mountainId = mountainId,
                     name = name,
-                    description = description,
                     images = images,
                     foodTypes = emptyList(),
                     longitude = longitude,

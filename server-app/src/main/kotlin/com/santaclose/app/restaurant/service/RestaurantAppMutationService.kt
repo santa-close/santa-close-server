@@ -32,7 +32,7 @@ class RestaurantAppMutationService(
         val restaurant =
             Restaurant(
                 name = input.name,
-                description = input.description,
+                description = "",
                 images = input.images,
                 appUser = em.getReference(AppUser::class.java, userId),
                 location = Location.create(input.longitude, input.latitude, input.address, input.postcode),
