@@ -1,6 +1,6 @@
 import { toDateTime } from './util';
 import { addDays } from 'date-fns';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 export const signIn = () => ({
   accessToken: [

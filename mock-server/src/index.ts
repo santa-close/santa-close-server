@@ -5,7 +5,7 @@ import { mocks } from './mocks';
 import express from 'express';
 import http from 'http';
 import { ApolloServer } from 'apollo-server-express';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import cors from 'cors';
 
 async function startApolloServer() {

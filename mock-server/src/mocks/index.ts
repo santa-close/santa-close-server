@@ -1,7 +1,7 @@
 import { categories, locations, sample } from './query';
 import { signIn } from './mutation';
 import { toDateTime } from './util';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 export const mocks = {
   ID: () => `${faker.datatype.number({ min: 1, max: 10000 })}`,
