@@ -1,5 +1,15 @@
-FROM ghcr.io/graalvm/jdk:ol8-java17-22.2.0
+FROM openjdk:17-jdk-alpine
 
-COPY server-app/build/libs/server-app.jar app.jar
+WORKDIR /usr/src/app
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY . .
+
+# Run as non-root
+RUN addgroup -g 1001 -S appuser && adduser -u 1001 -S appuser -G appuser
+# RUN mkdir /logs && chown -R 1001:1001 /logs
+RUN chown -R 1001:1001 /usr/src/app
+USER 1001
+
+RUN ./gradlew build --no-daemon -x test
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/urandom", "-jar", "app.jar"]
