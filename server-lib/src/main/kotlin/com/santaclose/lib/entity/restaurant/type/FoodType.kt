@@ -12,5 +12,5 @@ enum class FoodType(val type: String) {
     PUB("술집"),
     BAR("바"),
     SNACK_BAR("분식"),
-    OTHER("기타")
+    OTHER("기타"),
 }
