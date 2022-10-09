@@ -1,16 +1,19 @@
 package com.santaclose.lib.auth.kakao
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.santaclose.lib.auth.Profile
 
 data class KakaoUserResponse(
     val id: Long,
-    val kakao_account: KakaoAccountResponse,
+    @param:JsonProperty("kakao_account")
+    @get:JsonProperty("kakao_account")
+    val kakaoAccount: KakaoAccountResponse,
 ) {
     fun toProfile() =
         Profile(
             id = "$id",
-            name = kakao_account.profile.nickname,
-            email = kakao_account.email,
+            name = kakaoAccount.profile.nickname,
+            email = kakaoAccount.email,
         )
 }
 
