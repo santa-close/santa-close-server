@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring) apply false
     alias(libs.plugins.kotlin.jpa) apply false
+    alias(libs.plugins.sonarqube)
 
     jacoco
 }
@@ -72,5 +73,22 @@ subprojects {
             junitXml.required.set(true)
         }
         finalizedBy(tasks.jacocoTestReport)
+    }
+
+    sonarqube {
+        properties {
+            property("sonar.sources", "src/main/kotlin")
+            property("sonar.tests", "src/test/kotlin")
+            property("sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/*.xml")
+            property("sonar.host.url", "https://sonarcloud.io")
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "santa-close_santa-close-server")
+        property("sonar.organization", "santa-close-server")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
