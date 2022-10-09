@@ -80,6 +80,7 @@ subprojects {
             property("sonar.sources", "src/main/kotlin")
             property("sonar.tests", "src/test/kotlin")
             property("sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/*.xml")
+            property("sonar.host.url", "https://sonarcloud.io")
         }
     }
 }
