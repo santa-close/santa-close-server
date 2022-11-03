@@ -16,12 +16,12 @@
     "graphql": "^16.4.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "7.5.0",
+    "@faker-js/faker": "7.6.0",
     "@types/express": "4.17.14",
-    "@typescript-eslint/eslint-plugin": "5.39.0",
-    "@typescript-eslint/parser": "5.39.0",
+    "@typescript-eslint/eslint-plugin": "5.42.0",
+    "@typescript-eslint/parser": "5.42.0",
     "date-fns": "2.29.3",
-    "eslint": "8.25.0",
+    "eslint": "8.26.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.1",
