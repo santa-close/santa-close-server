@@ -57,7 +57,7 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-spring-mockk = { module = "com.ninja-squad:springmockk", version = "3.1.1" }
+spring-mockk = { module = "com.ninja-squad:springmockk", version = "4.0.0" }
 
 fixture-monkey-kotlin = { module = "com.navercorp.fixturemonkey:fixture-monkey-kotlin", version = "0.4.5" }
 
