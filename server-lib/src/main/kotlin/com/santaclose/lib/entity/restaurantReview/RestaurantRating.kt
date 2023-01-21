@@ -1,7 +1,7 @@
 package com.santaclose.lib.entity.restaurantReview
 
+import jakarta.persistence.Embeddable
 import org.hibernate.validator.constraints.Range
-import javax.persistence.Embeddable
 
 @Embeddable
 class RestaurantRating(

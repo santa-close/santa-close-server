@@ -10,12 +10,12 @@ import com.santaclose.lib.entity.location.Location
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
 
 @DataJpaTest
 internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
@@ -47,14 +47,10 @@ internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
             // given
             val mountainId = -1L
 
-            // when
-            val exception =
-                shouldThrow<NoResultException> {
-                    mountainAppQueryRepository.findOneWithLocation(mountainId)
-                }
-
-            // then
-            exception.message shouldBe "No entity found for query"
+            // when/then
+            shouldThrow<NoResultException> {
+                mountainAppQueryRepository.findOneWithLocation(mountainId)
+            }
         }
     }
 

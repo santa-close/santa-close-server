@@ -2,8 +2,8 @@ package com.santaclose.app.sample.service
 
 import com.santaclose.app.sample.repository.SampleAppRepository
 import com.santaclose.lib.entity.sample.Sample
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
 
 @Service
 class SampleAppMutationService(

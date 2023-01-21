@@ -6,10 +6,10 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
+import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
-import javax.transaction.Transactional
 
 @Service
 class MountainReviewAppMutationService(

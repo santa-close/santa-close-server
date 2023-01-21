@@ -6,7 +6,6 @@ spring:
     password: test
 
   jpa:
-    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
     hibernate:
       ddl-auto: update
     properties:

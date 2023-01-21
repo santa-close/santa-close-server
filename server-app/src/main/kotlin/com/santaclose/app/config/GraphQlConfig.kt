@@ -10,6 +10,8 @@ import graphql.schema.CoercingParseLiteralException
 import graphql.schema.CoercingParseValueException
 import graphql.schema.CoercingSerializeException
 import graphql.schema.GraphQLScalarType
+import jakarta.persistence.NoResultException
+import jakarta.validation.ValidationException
 import org.springframework.boot.autoconfigure.graphql.GraphQlSourceBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,8 +19,6 @@ import org.springframework.graphql.execution.ErrorType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.CompletableFuture
-import javax.persistence.NoResultException
-import javax.validation.ValidationException
 
 @Configuration
 class GraphQlConfig {

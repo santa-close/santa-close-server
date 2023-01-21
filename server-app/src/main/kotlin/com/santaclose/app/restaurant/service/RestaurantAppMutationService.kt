@@ -8,10 +8,10 @@ import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.RestaurantFoodType
+import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
-import javax.transaction.Transactional
 
 @Service
 class RestaurantAppMutationService(

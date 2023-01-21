@@ -1,7 +1,7 @@
 package com.santaclose.lib.entity.mountainReview
 
+import jakarta.persistence.Embeddable
 import org.hibernate.validator.constraints.Range
-import javax.persistence.Embeddable
 
 @Embeddable
 class MountainRating(

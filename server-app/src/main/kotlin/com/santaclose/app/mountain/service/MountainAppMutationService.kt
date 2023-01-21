@@ -5,9 +5,9 @@ import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountain.type.MountainManagement
+import jakarta.persistence.EntityManager
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.persistence.EntityManager
-import javax.transaction.Transactional
 
 @Service
 class MountainAppMutationService(

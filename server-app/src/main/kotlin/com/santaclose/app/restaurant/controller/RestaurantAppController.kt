@@ -9,6 +9,7 @@ import com.santaclose.app.restaurant.service.RestaurantAppMutationService
 import com.santaclose.app.restaurant.service.RestaurantAppQueryService
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.exception.getOrThrow
+import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -17,7 +18,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import javax.validation.Valid
 
 @Controller
 class RestaurantAppController(

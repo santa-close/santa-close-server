@@ -16,7 +16,7 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
-import javax.persistence.EntityManager
+import jakarta.persistence.EntityManager
 
 inline fun <reified T> EntityManager.findAll(): List<T> {
     val query = criteriaBuilder.createQuery(T::class.java)

@@ -6,10 +6,10 @@ import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppReposit
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
-import javax.transaction.Transactional
 
 @Service
 class RestaurantReviewAppMutationService(

@@ -6,6 +6,7 @@ import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppI
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.exception.getOrThrow
+import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.security.access.prepost.PreAuthorize
@@ -13,7 +14,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import javax.validation.Valid
 
 @Controller
 class MountainReviewAppController(

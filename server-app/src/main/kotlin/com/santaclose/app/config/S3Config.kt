@@ -1,10 +1,8 @@
 package com.santaclose.app.config
 
+import jakarta.validation.constraints.NotBlank
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
-import javax.validation.constraints.NotBlank
 
-@ConstructorBinding
 @ConfigurationProperties(prefix = "s3")
 data class S3Config(
     @field:NotBlank val endPoint: String,

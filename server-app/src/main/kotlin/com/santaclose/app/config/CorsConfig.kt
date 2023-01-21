@@ -16,7 +16,7 @@ class CorsConfig {
             allowCredentials = true
             addAllowedOrigin("https://studio.apollographql.com")
             addAllowedHeader("*")
-            addAllowedMethod(HttpMethod.POST.name)
+            addAllowedMethod(HttpMethod.POST)
         }
 
         return UrlBasedCorsConfigurationSource()
