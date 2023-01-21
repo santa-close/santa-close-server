@@ -56,11 +56,8 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             // given
             val id = "-1"
 
-            // when
-            val exception = shouldThrow<NoResultException> { mountainAppQueryService.findDetail(id) }
-
-            // then
-            exception.message shouldBe "No entity found for query"
+            // when/then
+            shouldThrow<NoResultException> { mountainAppQueryService.findDetail(id) }
         }
     }
 

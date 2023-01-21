@@ -12,9 +12,9 @@ import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverag
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import jakarta.persistence.PersistenceException
 import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
-import java.lang.IllegalArgumentException
 
 @Repository
 class RestaurantReviewAppQueryRepositoryImpl(
@@ -54,7 +54,7 @@ class RestaurantReviewAppQueryRepositoryImpl(
                 associate(RestaurantReview::class, RestaurantRating::class, on(RestaurantReview::rating))
                 where(col(Restaurant::id).equal(restaurantId))
             }
-        } catch (e: IllegalArgumentException) {
+        } catch (e: PersistenceException) {
             RestaurantRatingAverageDto.empty
         }
 }

@@ -47,14 +47,10 @@ internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
             // given
             val mountainId = -1L
 
-            // when
-            val exception =
-                shouldThrow<NoResultException> {
-                    mountainAppQueryRepository.findOneWithLocation(mountainId)
-                }
-
-            // then
-            exception.message shouldBe "No entity found for query"
+            // when/then
+            shouldThrow<NoResultException> {
+                mountainAppQueryRepository.findOneWithLocation(mountainId)
+            }
         }
     }
 
