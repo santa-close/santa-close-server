@@ -12,9 +12,9 @@ import com.santaclose.app.restaurantReview.repository.dto.RestaurantRatingAverag
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurantReview.RestaurantRating
 import com.santaclose.lib.entity.restaurantReview.RestaurantReview
+import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
 import java.lang.IllegalArgumentException
-import javax.persistence.criteria.JoinType
 
 @Repository
 class RestaurantReviewAppQueryRepositoryImpl(

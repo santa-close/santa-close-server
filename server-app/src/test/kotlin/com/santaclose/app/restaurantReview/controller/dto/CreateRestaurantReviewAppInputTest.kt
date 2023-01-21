@@ -3,8 +3,8 @@ package com.santaclose.app.restaurantReview.controller.dto
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
-import javax.validation.ConstraintViolation
-import javax.validation.Validation
+import jakarta.validation.ConstraintViolation
+import jakarta.validation.Validation
 
 internal class CreateRestaurantReviewAppInputTest : StringSpec(
     {

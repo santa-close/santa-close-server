@@ -7,12 +7,12 @@ import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.string.shouldContain
+import jakarta.persistence.EntityManager
+import jakarta.validation.ConstraintViolationException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import javax.persistence.EntityManager
-import javax.validation.ConstraintViolationException
 
 @DataJpaTest
 internal class SampleAppQueryRepositoryImplTest @Autowired constructor(
@@ -43,7 +43,7 @@ internal class SampleAppQueryRepositoryImplTest @Autowired constructor(
                     em.persist(sample)
                 }
 
-            exception.message shouldContain "javax.validation.constraints.Positive"
+            exception.message shouldContain "jakarta.validation.constraints.Positive"
         }
     }
 }

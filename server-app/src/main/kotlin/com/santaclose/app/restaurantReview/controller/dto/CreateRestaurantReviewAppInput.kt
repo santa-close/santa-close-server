@@ -1,9 +1,9 @@
 package com.santaclose.app.restaurantReview.controller.dto
 
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Size
 import org.springframework.format.annotation.NumberFormat
-import javax.validation.Valid
-import javax.validation.constraints.Size
 
 data class CreateRestaurantReviewAppInput(
     @field:NumberFormat(style = NumberFormat.Style.NUMBER) val restaurantId: String,

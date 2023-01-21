@@ -2,7 +2,7 @@ package com.santaclose.lib.converter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import javax.persistence.AttributeConverter
+import jakarta.persistence.AttributeConverter
 
 class StringListConverter : AttributeConverter<List<String>?, String?> {
     companion object {

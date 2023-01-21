@@ -1,10 +1,10 @@
 package com.santaclose.app.restaurant.controller.dto
 
 import com.santaclose.lib.entity.restaurant.type.FoodType
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.Size
 import org.hibernate.validator.constraints.Range
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.Size
 
 data class CreateRestaurantAppInput(
     @field:NotEmpty val mountainIds: List<String>,

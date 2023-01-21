@@ -4,7 +4,7 @@ import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import javax.validation.Validation
+import jakarta.validation.Validation
 
 internal class CreateRestaurantAppInputTest : StringSpec(
     {

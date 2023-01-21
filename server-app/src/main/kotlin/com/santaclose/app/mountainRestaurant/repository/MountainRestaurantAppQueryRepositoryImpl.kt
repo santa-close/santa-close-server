@@ -9,8 +9,8 @@ import com.santaclose.app.mountainRestaurant.repository.dto.LatestRestaurantDto
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
+import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
-import javax.persistence.criteria.JoinType
 
 @Repository
 class MountainRestaurantAppQueryRepositoryImpl(

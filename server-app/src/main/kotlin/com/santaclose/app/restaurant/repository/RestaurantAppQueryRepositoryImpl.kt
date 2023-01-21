@@ -11,8 +11,8 @@ import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
+import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
-import javax.persistence.criteria.JoinType
 
 @Repository
 class RestaurantAppQueryRepositoryImpl(private val springDataQueryFactory: SpringDataQueryFactory) :

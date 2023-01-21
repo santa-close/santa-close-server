@@ -2,7 +2,7 @@ package com.santaclose.app.sample.controller.dto
 
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
-import javax.validation.constraints.Positive
+import jakarta.validation.constraints.Positive
 
 data class CreateSampleAppInput(
     val name: String,

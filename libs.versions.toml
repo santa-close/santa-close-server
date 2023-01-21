@@ -1,6 +1,6 @@
 [versions]
-spring = "2.7.5"
-kotlin = "1.7.21"
+spring = "3.0.1"
+kotlin = "1.7.22"
 kotlinter = "3.12.0"
 arrow = "1.1.3"
 okhttp = "4.10.0"
@@ -37,9 +37,9 @@ jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
 jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 
-hibernate-spatial = { module = "org.hibernate:hibernate-spatial" }
+hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.1.6.Final" }
 
-kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter", version = "2.0.7.RELEASE" }
+kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.0.RELEASE" }
 
 database-h2 = { module = "com.h2database:h2" }
 connector-mysql = { module = "mysql:mysql-connector-java" }

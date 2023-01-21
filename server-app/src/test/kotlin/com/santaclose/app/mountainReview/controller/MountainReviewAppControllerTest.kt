@@ -11,10 +11,10 @@ import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
 import io.kotest.core.spec.style.FreeSpec
 import io.mockk.every
 import io.mockk.justRun
+import jakarta.persistence.NoResultException
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.graphql.test.tester.HttpGraphQlTester
-import javax.persistence.NoResultException
 
 @SpringBootTest
 @AutoConfigureHttpGraphQlTester

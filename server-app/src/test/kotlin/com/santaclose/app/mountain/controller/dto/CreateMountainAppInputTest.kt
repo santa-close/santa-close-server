@@ -3,7 +3,7 @@ package com.santaclose.app.mountain.controller.dto
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
-import javax.validation.Validation
+import jakarta.validation.Validation
 
 internal class CreateMountainAppInputTest : StringSpec(
     {

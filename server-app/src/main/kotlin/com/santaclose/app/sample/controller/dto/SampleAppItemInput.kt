@@ -1,6 +1,6 @@
 package com.santaclose.app.sample.controller.dto
 
-import javax.validation.constraints.Positive
+import jakarta.validation.constraints.Positive
 
 data class SampleAppItemInput(
     @field:Positive val price: Int,

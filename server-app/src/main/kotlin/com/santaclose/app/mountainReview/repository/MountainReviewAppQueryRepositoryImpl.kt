@@ -12,8 +12,8 @@ import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
+import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
-import javax.persistence.criteria.JoinType
 
 @Repository
 class MountainReviewAppQueryRepositoryImpl(

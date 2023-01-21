@@ -4,15 +4,15 @@ import com.santaclose.lib.converter.StringListConverter
 import com.santaclose.lib.entity.BaseEntity
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Convert
-import javax.persistence.Entity
-import javax.persistence.FetchType.LAZY
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
-import javax.validation.constraints.NotNull
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Convert
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType.LAZY
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
+import jakarta.validation.constraints.NotNull
 
 @Entity
 class Restaurant(

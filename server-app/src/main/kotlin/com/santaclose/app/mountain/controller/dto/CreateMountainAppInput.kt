@@ -1,9 +1,9 @@
 package com.santaclose.app.mountain.controller.dto
 
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 import org.hibernate.validator.constraints.Range
-import javax.validation.constraints.Min
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
 
 data class CreateMountainAppInput(
     @field:NotBlank val name: String,

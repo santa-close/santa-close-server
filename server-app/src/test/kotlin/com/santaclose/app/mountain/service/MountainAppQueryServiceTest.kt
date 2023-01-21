@@ -13,12 +13,12 @@ import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import javax.persistence.EntityManager
-import javax.persistence.NoResultException
 
 @DataJpaTest
 internal class MountainAppQueryServiceTest @Autowired constructor(
