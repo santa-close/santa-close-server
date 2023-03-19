@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 
 export const sample = () => ({
-  name: faker.name.findName(),
+  name: faker.name.fullName(),
   price: faker.datatype.number({ min: 0, max: 1000 }),
   status: faker.helpers.arrayElement(['OPEN', 'CLOSE']),
 });

@@ -9,14 +9,18 @@
     "generate": "ts-node mock-server/src/generateIntrospection.ts"
   },
   "dependencies": {
-    "apollo-server": "^3.7.0",
-    "apollo-server-express": "^3.7.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.1",
-    "graphql": "^16.4.0"
+    "@apollo/server": "4.5.0",
+    "@graphql-tools/schema": "9.0.17",
+    "body-parser": "1.20.2",
+    "cors": "2.8.5",
+    "express": "4.18.2",
+    "graphql": "16.6.0",
+    "graphql-tag": "2.12.6"
   },
   "devDependencies": {
     "@faker-js/faker": "7.6.0",
+    "@graphql-tools/mock": "8.7.19",
+    "@types/cors": "2.8.13",
     "@types/express": "4.17.17",
     "@typescript-eslint/eslint-plugin": "5.55.0",
     "@typescript-eslint/parser": "5.55.0",
