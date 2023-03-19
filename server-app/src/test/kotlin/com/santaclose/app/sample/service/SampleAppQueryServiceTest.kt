@@ -1,7 +1,8 @@
 package com.santaclose.app.sample.service
 
 import arrow.core.right
-import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
+import com.navercorp.fixturemonkey.FixtureMonkey
+import com.navercorp.fixturemonkey.kotlin.KotlinPlugin
 import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import com.santaclose.app.sample.controller.dto.SampleAppDetail
 import com.santaclose.app.sample.repository.SampleAppQueryRepository
@@ -21,7 +22,9 @@ internal class SampleAppQueryServiceTest {
     @MockK
     private lateinit var sampleAppQueryRepository: SampleAppQueryRepository
 
-    private val sut = KFixtureMonkey.create()
+    private val sut = FixtureMonkey.builder()
+        .plugin(KotlinPlugin())
+        .build()
 
     @Test
     fun `정상적으로 데이터를 가져온다`() {

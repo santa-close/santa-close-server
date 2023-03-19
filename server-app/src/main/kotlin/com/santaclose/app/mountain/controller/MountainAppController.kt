@@ -32,7 +32,7 @@ class MountainAppController(
         catch {
             mountainAppQueryService.findDetail(id).toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 
     @QueryMapping
@@ -44,7 +44,7 @@ class MountainAppController(
                 .let(MountainAppSummary::by)
                 .toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 
     @MutationMapping
@@ -58,6 +58,6 @@ class MountainAppController(
             mountainAppMutationService.register(input, authentication.id)
             true.toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }

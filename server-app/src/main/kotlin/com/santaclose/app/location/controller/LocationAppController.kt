@@ -27,6 +27,6 @@ class LocationAppController(
         input: LocationAppInput,
     ): Flux<AppLocation> =
         catch { locationAppQueryService.find(input).toFlux() }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }
