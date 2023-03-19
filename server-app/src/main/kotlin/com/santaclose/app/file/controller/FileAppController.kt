@@ -28,7 +28,7 @@ constructor(
     ): ResponseEntity<Any> =
         fileAppService.uploadImage(UploadImageRequest(file))
             .map { UploadImageResponse(it) }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .fold(
                 ifLeft = { ResponseEntity("서버 에러", HttpStatus.INTERNAL_SERVER_ERROR) },
                 ifRight = { ResponseEntity(it, HttpStatus.OK) },

@@ -32,6 +32,6 @@ class RestaurantReviewAppController(
             restaurantReviewAppMutationService.register(input, authentication.id)
             true.toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }

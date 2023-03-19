@@ -30,7 +30,7 @@ class RestaurantAppController(
     @PreAuthorize("hasRole('USER')")
     fun restaurantDetail(@Argument id: String): Mono<RestaurantAppDetail> =
         catch { restaurantAppQueryService.findDetail(id.toLong()).toMono() }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 
     @MutationMapping
@@ -44,7 +44,7 @@ class RestaurantAppController(
             restaurantAppMutationService.createRestaurant(input, authentication.id)
             true.toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 
     @QueryMapping
@@ -56,6 +56,6 @@ class RestaurantAppController(
                 .let(RestaurantAppSummary::by)
                 .toMono()
         }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }

@@ -23,6 +23,6 @@ class AuthAppController(
         authAppService
             .signIn(input.code)
             .flatMap { AppAuthInfo.by(it, jwtConfig.key, jwtConfig.expiredDays) }
-            .tapLeft { logger.error(it.message, it) }
+            .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }
