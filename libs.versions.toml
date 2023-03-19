@@ -1,15 +1,15 @@
 [versions]
-spring = "3.0.2"
-kotlin = "1.8.0"
-kotlinter = "3.13.0"
+spring = "3.0.4"
+kotlin = "1.8.10"
+kotlinter = "3.14.0"
 arrow = "1.1.5"
 okhttp = "4.10.0"
 jjwt = "0.11.5"
 sonarqube = "4.0.0.2929"
 
 ## test
-kotest = "5.5.4"
-mockk = "1.13.3"
+kotest = "5.5.5"
+mockk = "1.13.4"
 
 [libraries]
 spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
@@ -28,7 +28,7 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 
-aws-java-sdk-bom = { module = "com.amazonaws:aws-java-sdk-bom", version = "1.12.389" }
+aws-java-sdk-bom = { module = "com.amazonaws:aws-java-sdk-bom", version = "1.12.430" }
 aws-java-sdk-s3 = { module = "com.amazonaws:aws-java-sdk-s3" }
 
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -37,9 +37,9 @@ jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
 jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 
-hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.1.6.Final" }
+hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.1.7.Final" }
 
-kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.0.RELEASE" }
+kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.1.RELEASE" }
 
 database-h2 = { module = "com.h2database:h2" }
 connector-mysql = { module = "mysql:mysql-connector-java" }
@@ -57,9 +57,9 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-spring-mockk = { module = "com.ninja-squad:springmockk", version = "4.0.0" }
+spring-mockk = { module = "com.ninja-squad:springmockk", version = "4.0.2" }
 
-fixture-monkey-kotlin = { module = "com.navercorp.fixturemonkey:fixture-monkey-kotlin", version = "0.4.11" }
+fixture-monkey-kotlin = { module = "com.navercorp.fixturemonkey:fixture-monkey-kotlin", version = "0.5.2" }
 
 okhttp-mock-webserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
 
