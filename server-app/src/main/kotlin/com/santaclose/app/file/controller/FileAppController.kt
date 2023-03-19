@@ -4,7 +4,6 @@ import com.santaclose.app.file.controller.dto.UploadImageResponse
 import com.santaclose.app.file.service.FileAppService
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.req.UploadImageRequest
-import kotlinx.coroutines.runBlocking
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.multipart.FilePart
@@ -26,7 +25,7 @@ constructor(
 
     @PostMapping("/image")
     @PreAuthorize("hasRole('USER')")
-    fun uploadImage(@RequestPart file: FilePart): Mono<Any> = runBlocking {
+    fun uploadImage(@RequestPart file: FilePart): Mono<Any> =
         fileAppService.uploadImage(UploadImageRequest(file))
             .map { UploadImageResponse(it) }
             .onLeft { logger.error(it.message, it) }
@@ -34,5 +33,4 @@ constructor(
                 ifLeft = { ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).toMono() },
                 ifRight = { it.toMono() },
             )
-    }
 }
