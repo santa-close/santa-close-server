@@ -42,7 +42,7 @@ hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.1
 kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.1.RELEASE" }
 
 database-h2 = { module = "com.h2database:h2" }
-connector-mysql = { module = "mysql:mysql-connector-java" }
+connector-mysql = { module = "com.mysql:mysql-connector-j" }
 
 ## test
 spring-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }

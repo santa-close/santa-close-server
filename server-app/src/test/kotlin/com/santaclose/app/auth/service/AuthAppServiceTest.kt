@@ -2,7 +2,8 @@ package com.santaclose.app.auth.service
 
 import arrow.core.left
 import arrow.core.right
-import com.navercorp.fixturemonkey.kotlin.KFixtureMonkey
+import com.navercorp.fixturemonkey.FixtureMonkey
+import com.navercorp.fixturemonkey.kotlin.KotlinPlugin
 import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import com.santaclose.app.appUser.repository.AppUserAppQueryRepository
 import com.santaclose.app.appUser.repository.AppUserAppRepository
@@ -20,7 +21,9 @@ internal class AuthAppServiceTest : FreeSpec(
         val appUserAppQueryRepository = mockk<AppUserAppQueryRepository>()
         val appUserAppRepository = mockk<AppUserAppRepository>()
         val authManager = mockk<AuthManager>()
-        val sut = KFixtureMonkey.create()
+        val sut = FixtureMonkey.builder()
+            .plugin(KotlinPlugin())
+            .build()
 
         val authAppService =
             AuthAppService(appUserAppQueryRepository, appUserAppRepository, authManager)
