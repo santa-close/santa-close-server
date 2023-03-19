@@ -36,7 +36,6 @@ subprojects {
         implementation(libs.spring.validation)
         implementation(platform(libs.aws.java.sdk.bom))
         implementation(libs.aws.java.sdk.s3)
-        implementation(libs.okhttp)
 
         testImplementation(libs.spring.starter.test) {
             exclude(module = "mockito-core")

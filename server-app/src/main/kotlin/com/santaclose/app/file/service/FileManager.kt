@@ -18,7 +18,7 @@ class FileManager(
             s3Config.credentialsSecretKey,
         )
 
-    suspend fun upload(
+    fun upload(
         path: String,
         data: InputStream,
         contentType: String,

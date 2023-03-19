@@ -10,6 +10,10 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.support.WebClientAdapter
+import org.springframework.web.service.invoker.HttpServiceProxyFactory
+import org.springframework.web.service.invoker.createClient
 
 internal class KakaoAuthTest : FreeSpec(
     {
@@ -18,13 +22,26 @@ internal class KakaoAuthTest : FreeSpec(
 
         beforeSpec {
             server.start()
-            kakaoAuth =
-                KakaoAuth(
-                    clientId = "clientId",
-                    redirectUri = "http://localhost:8080",
-                    tokenUri = "http://localhost:${server.port}",
-                    userUri = "http://localhost:${server.port}",
-                )
+            val webClient = WebClient
+                .builder()
+                .baseUrl("http://localhost:${server.port}")
+                .build()
+            val kakaoAuthService: KakaoAuthService =
+                HttpServiceProxyFactory
+                    .builder(WebClientAdapter.forClient(webClient))
+                    .build()
+                    .createClient()
+            val kakaoApiService: KakaoApiService =
+                HttpServiceProxyFactory
+                    .builder(WebClientAdapter.forClient(webClient))
+                    .build()
+                    .createClient()
+            kakaoAuth = KakaoAuth(
+                kakaoAuthService,
+                kakaoApiService,
+                clientId = "clientId",
+                redirectUri = "redirectUri",
+            )
         }
 
         afterSpec {
@@ -112,7 +129,7 @@ internal class KakaoAuthTest : FreeSpec(
                 )
 
                 // when
-                val result = kakaoAuth.getUser("code")
+                val result = kakaoAuth.getUser("token")
 
                 // then
                 result shouldBeRight user

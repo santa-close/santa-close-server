@@ -4,7 +4,6 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import org.springframework.http.codec.multipart.FilePart
-import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import java.io.InputStream
 import java.time.LocalDate
@@ -23,11 +22,12 @@ data class UploadImageRequest(
     private val fileName: String
         get() = file.filename()
 
-    val fileData: Mono<InputStream>
+    val fileData: InputStream
         get() = file
             .content()
             .toMono()
             .map { it?.asInputStream() ?: throw IllegalStateException("File is null") }
+            .block() ?: throw IllegalStateException("File is null")
 
     val contentType: String
         get() = file.headers().contentType.toString()
