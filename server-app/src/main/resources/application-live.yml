@@ -1,4 +1,13 @@
 spring:
+  graphql:
+    schema:
+      introspection:
+        enabled: true
+      printer:
+        enabled: true
+    graphiql:
+      enabled: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATABASE_URL}
