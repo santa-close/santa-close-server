@@ -1,11 +1,12 @@
 [versions]
-spring = "3.0.4"
+spring = "3.0.5"
 kotlin = "1.8.10"
 kotlinter = "3.14.0"
 arrow = "1.1.5"
 okhttp = "4.10.0"
 jjwt = "0.11.5"
 sonarqube = "4.0.0.2929"
+buildtools-native = "0.9.20"
 
 ## test
 kotest = "5.5.5"
@@ -28,14 +29,14 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 
-aws-java-sdk-bom = { module = "com.amazonaws:aws-java-sdk-bom", version = "1.12.430" }
+aws-java-sdk-bom = { module = "com.amazonaws:aws-java-sdk-bom", version = "1.12.439" }
 aws-java-sdk-s3 = { module = "com.amazonaws:aws-java-sdk-s3" }
 
 jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
 jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 
-hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.1.7.Final" }
+hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.2.0.Final" }
 
 kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.1.RELEASE" }
 
@@ -86,6 +87,8 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+
+buildtools-native = { id = "org.graalvm.buildtools.native", version.ref = "buildtools-native" }
 
 ## etc
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
