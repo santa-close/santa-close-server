@@ -6,7 +6,7 @@ spring:
     password: ${DATABASE_PASSWORD}
 
   jpa:
-    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: validate
       use-new-id-generator-mappings: true
