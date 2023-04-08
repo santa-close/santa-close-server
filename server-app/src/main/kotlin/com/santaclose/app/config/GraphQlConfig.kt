@@ -13,34 +13,26 @@ import graphql.schema.GraphQLScalarType
 import jakarta.persistence.NoResultException
 import jakarta.validation.ValidationException
 import org.springframework.boot.autoconfigure.graphql.GraphQlSourceBuilderCustomizer
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.graphql.execution.ErrorType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.CompletableFuture
 
-@Configuration
-class GraphQlConfig {
-
-    @Bean
-    fun sourceBuilderCustomizer(): GraphQlSourceBuilderCustomizer =
-        GraphQlSourceBuilderCustomizer { builder ->
-            builder.configureRuntimeWiring { wiringBuilder ->
-                wiringBuilder.scalar(datetimeScalar())
-            }
-            builder.configureGraphQl { graphQlBuilder ->
-                graphQlBuilder.defaultDataFetcherExceptionHandler(DataFetcherExceptionHandler)
-            }
-        }
-
-    private fun datetimeScalar(): GraphQLScalarType =
+val graphQlSourceBuilderCustomizer = GraphQlSourceBuilderCustomizer { builder ->
+    val datetimeScalar: GraphQLScalarType =
         GraphQLScalarType
             .newScalar()
             .name("DateTime")
             .description("A type representing a formatted java.time.LocalDateTime")
             .coercing(DateTimeCoercing)
             .build()
+
+    builder.configureRuntimeWiring { wiringBuilder ->
+        wiringBuilder.scalar(datetimeScalar)
+    }
+    builder.configureGraphQl { graphQlBuilder ->
+        graphQlBuilder.defaultDataFetcherExceptionHandler(DataFetcherExceptionHandler)
+    }
 }
 
 private object DateTimeCoercing : Coercing<LocalDateTime, String> {
