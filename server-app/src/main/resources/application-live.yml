@@ -37,3 +37,7 @@ s3:
   credentialsSecretKey: ${S3_CREDENTIALS_SECRET_KEY}
   bucket: ${S3_BUCKET}
   domain: ${S3_DOMAIN}
+
+context:
+  initializer:
+    classes: com.santaclose.app.config.BeansInitializer
