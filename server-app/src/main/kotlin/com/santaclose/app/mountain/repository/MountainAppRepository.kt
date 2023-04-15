@@ -13,3 +13,6 @@ interface MountainAppRepository : JpaRepository<Mountain, Long> {
 
 fun MountainAppRepository.findByLocationIdIns(ids: List<Long>): Either<DBFailure, List<MountainLocationIdDto>> =
     Either.catchDB { findByLocationIdIn(ids) }
+
+fun MountainAppRepository.has(id: Long): Either<DBFailure, Boolean> =
+    Either.catchDB { existsById(id) }

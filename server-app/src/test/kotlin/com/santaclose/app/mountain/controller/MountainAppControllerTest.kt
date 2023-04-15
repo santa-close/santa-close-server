@@ -20,9 +20,7 @@ import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountain.type.MountainManagement
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.justRun
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.graphql.test.tester.HttpGraphQlTester
@@ -95,7 +93,7 @@ internal class MountainAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                justRun { mountainAppMutationService.register(input, session.id) }
+                every { mountainAppMutationService.register(input, session.id) } returns Unit.right()
 
                 // when
                 val response = graphQlTester
@@ -136,7 +134,7 @@ internal class MountainAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                coEvery { mountainAppQueryService.findOneSummary(123) } returns dto.right()
+                every { mountainAppQueryService.findOneSummary(123) } returns dto.right()
 
                 // when
                 val response = graphQlTester

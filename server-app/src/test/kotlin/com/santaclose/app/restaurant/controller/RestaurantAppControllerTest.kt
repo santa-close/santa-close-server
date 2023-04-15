@@ -20,7 +20,6 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.justRun
 import org.springframework.beans.factory.annotation.Autowired
@@ -127,7 +126,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                coEvery { restaurantAppQueryService.findOneSummary(123) } returns dto.right()
+                every { restaurantAppQueryService.findOneSummary(123) } returns dto.right()
 
                 // when
                 val response = graphQlTester

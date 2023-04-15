@@ -1,13 +1,18 @@
 package com.santaclose.app.mountainReview.service
 
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.raise.ensure
 import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.mountain.repository.has
 import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
+import com.santaclose.lib.web.exception.DomainError
+import com.santaclose.lib.web.exception.catchDB
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -18,13 +23,11 @@ class MountainReviewAppMutationService(
 ) {
 
     @Transactional
-    fun register(input: CreateMountainReviewAppInput, userId: Long) {
+    fun register(input: CreateMountainReviewAppInput, userId: Long): Either<DomainError, Unit> = either {
         val id = input.mountainId.toLong()
-        val isExist = mountainAppRepository.existsById(id)
+        val found = mountainAppRepository.has(id).bind()
 
-        if (!isExist) {
-            throw NoResultException("유효하지 않은 mountainId 입니다.")
-        }
+        ensure(found) { DomainError.NotFound("유효하지 않은 mountainId 입니다: $id") }
 
         val rating =
             MountainRating(
@@ -46,6 +49,6 @@ class MountainReviewAppMutationService(
                 appUser = em.getReference(AppUser::class.java, userId),
             )
 
-        em.persist(review)
+        Either.catchDB { em.persist(review) }.bind()
     }
 }
