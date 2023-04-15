@@ -12,6 +12,7 @@ import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.types.shouldBeInstanceOf
 import jakarta.persistence.EntityManager
@@ -52,7 +53,7 @@ internal class LocationAppQueryServiceTest @Autowired constructor(
             val result = locationAppQueryService.find(input)
 
             // then
-            result shouldHaveSize 0
+            result.shouldBeRight() shouldHaveSize 0
         }
 
         @Test
@@ -71,8 +72,10 @@ internal class LocationAppQueryServiceTest @Autowired constructor(
             val result = locationAppQueryService.find(input)
 
             // then
-            result shouldHaveSize 1
-            result.first().shouldBeInstanceOf<MountainAppLocation>()
+            result.shouldBeRight().apply {
+                this shouldHaveSize 1
+                first().shouldBeInstanceOf<MountainAppLocation>()
+            }
         }
 
         @Test
@@ -92,8 +95,10 @@ internal class LocationAppQueryServiceTest @Autowired constructor(
             val result = locationAppQueryService.find(input)
 
             // then
-            result shouldHaveSize 1
-            result.first().shouldBeInstanceOf<RestaurantAppLocation>()
+            result.shouldBeRight().apply {
+                this shouldHaveSize 1
+                first().shouldBeInstanceOf<RestaurantAppLocation>()
+            }
         }
     }
 }

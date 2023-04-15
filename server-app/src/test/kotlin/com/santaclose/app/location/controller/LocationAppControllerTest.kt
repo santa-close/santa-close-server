@@ -1,5 +1,6 @@
 package com.santaclose.app.location.controller
 
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -42,7 +43,7 @@ internal class LocationAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { locationAppQueryService.find(any()) } returns listOf(location)
+                every { locationAppQueryService.find(any()) } returns listOf(location).right()
 
                 // when
                 val response = graphQlTester
