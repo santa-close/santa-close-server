@@ -9,10 +9,7 @@ import com.santaclose.lib.web.exception.getOrThrow
 import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
-import reactor.core.publisher.Flux
-import reactor.kotlin.core.publisher.toFlux
 
 @Controller
 class LocationAppController(
@@ -21,12 +18,12 @@ class LocationAppController(
     private val logger = logger()
 
     @QueryMapping
-    @PreAuthorize("hasRole('USER')")
-    fun locations(
+//    @PreAuthorize("hasRole('USER')")
+    suspend fun locations(
         @Argument @Valid
         input: LocationAppInput,
-    ): Flux<AppLocation> =
-        catch { locationAppQueryService.find(input).toFlux() }
+    ): List<AppLocation> =
+        catch { locationAppQueryService.find(input) }
             .onLeft { logger.error(it.message, it) }
             .getOrThrow()
 }

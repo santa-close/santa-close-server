@@ -5,6 +5,8 @@ import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
+import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
@@ -59,8 +61,8 @@ internal class MountainRestaurantAppQueryRepositoryImplTest @Autowired construct
             val result = mountainRestaurantAppQueryRepository.findRestaurantByMountain(mountain.id, limit)
 
             // then
-            result shouldHaveSize limit
-            result.map { it.id } shouldBe result.map { it.id }.sortedDescending()
+            val list = result.shouldBeRight()
+            list.map { it.id } shouldBeSortedWith compareByDescending { it }
         }
     }
 }

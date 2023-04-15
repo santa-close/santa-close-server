@@ -32,5 +32,5 @@ class ServerRequestParserImpl(private val jwtConfig: JWTConfig) : ServerRequestP
             }
         }
             .mapLeft { logger.info("failed to parse token: token=$token message=${it.message}") }
-            .orNone()
+            .getOrNone()
 }

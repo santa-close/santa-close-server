@@ -7,11 +7,11 @@ import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
-import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,21 +36,20 @@ internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
             val result = mountainAppQueryRepository.findOneWithLocation(mountain.id)
 
             // then
-            result.apply {
+            result.shouldBeRight().apply {
+                this.shouldNotBeNull()
                 id shouldBe mountain.id
                 location shouldBe savedLocation
             }
         }
 
         @Test
-        fun `mountainId 가 일치하는 mountain 이 없을 때 NoResultException 을 반환한다`() {
+        fun `mountainId 가 일치하는 mountain 이 없을 때 null 을 반환한다`() {
             // given
             val mountainId = -1L
 
             // when/then
-            shouldThrow<NoResultException> {
-                mountainAppQueryRepository.findOneWithLocation(mountainId)
-            }
+            mountainAppQueryRepository.findOneWithLocation(mountainId) shouldBeRight null
         }
     }
 

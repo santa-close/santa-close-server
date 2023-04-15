@@ -1,5 +1,6 @@
 package com.santaclose.app.mountain.controller
 
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -61,7 +62,7 @@ internal class MountainAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { mountainAppQueryService.findDetail(mountainId) } returns dto
+                every { mountainAppQueryService.findDetail(mountainId) } returns dto.right()
 
                 // when
                 val response = graphQlTester
@@ -135,7 +136,7 @@ internal class MountainAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                coEvery { mountainAppQueryService.findOneSummary(123) } returns dto
+                coEvery { mountainAppQueryService.findOneSummary(123) } returns dto.right()
 
                 // when
                 val response = graphQlTester

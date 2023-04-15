@@ -10,11 +10,12 @@ import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createMountainReview
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
-import io.kotest.assertions.throwables.shouldThrow
+import com.santaclose.lib.web.exception.DomainError.NotFound
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,19 +46,19 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             val result = mountainAppQueryService.findDetail(mountain.id.toString())
 
             // then
-            result.apply {
+            result.shouldBeRight().apply {
                 name shouldBe mountain.name
                 address shouldBe mountain.location.address
             }
         }
 
         @Test
-        fun `mountainId가 유효하지 않으면 NoResultException 이 발생한다`() {
+        fun `mountainId가 유효하지 않으면 NotFound 에러가 발생한다 `() {
             // given
             val id = "-1"
 
             // when/then
-            shouldThrow<NoResultException> { mountainAppQueryService.findDetail(id) }
+            mountainAppQueryService.findDetail(id) shouldBeLeft NotFound("산이 존재하지 않습니다: $id")
         }
     }
 
@@ -73,7 +74,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             val result = mountainAppQueryService.findOneSummary(mountain.id)
 
             // then
-            result.mountain shouldBe mountain
+            result.shouldBeRight().mountain shouldBe mountain
         }
 
         @Test
@@ -87,8 +88,10 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             val result = mountainAppQueryService.findOneSummary(mountain.id)
 
             // then
-            result.mountainRating.average shouldBe 20.0 / 6
-            result.mountainRating.totalCount shouldBe 1
+            result.shouldBeRight().apply {
+                mountainRating.average shouldBe 20.0 / 6
+                mountainRating.totalCount shouldBe 1
+            }
         }
 
         @Test
@@ -103,8 +106,10 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             val result = mountainAppQueryService.findOneSummary(mountain.id)
 
             // then
-            result.restaurantLocations shouldHaveSize 1
-            result.restaurantLocations.first().id shouldBe restaurant.id
+            result.shouldBeRight().apply {
+                restaurantLocations shouldHaveSize 1
+                restaurantLocations.first().id shouldBe restaurant.id
+            }
         }
     }
 }
