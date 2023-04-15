@@ -13,3 +13,6 @@ interface RestaurantAppRepository : JpaRepository<Restaurant, Long> {
 
 fun RestaurantAppRepository.findByLocationIds(ids: List<Long>): Either<DBFailure, List<RestaurantLocationIdDto>> =
     Either.catchDB { findByLocationIdIn(ids) }
+
+fun RestaurantAppRepository.has(id: Long): Either<DBFailure, Boolean> =
+    Either.catchDB { existsById(id) }

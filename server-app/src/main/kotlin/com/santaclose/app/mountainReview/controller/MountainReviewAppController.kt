@@ -4,7 +4,7 @@ import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppInput
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.exception.monoWithLog
+import com.santaclose.lib.web.exception.monoOrLog
 import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -29,5 +29,5 @@ class MountainReviewAppController(
         mountainAppMutationService
             .register(input, authentication.id)
             .map { true }
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 }

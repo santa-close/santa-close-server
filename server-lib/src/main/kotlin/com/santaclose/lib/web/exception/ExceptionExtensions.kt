@@ -7,7 +7,7 @@ import reactor.kotlin.core.publisher.toMono
 
 fun <A> Either<Throwable, A>.getOrThrow(): A = this.getOrElse { throw it }
 
-fun <A : Any> Either<Throwable, A>.monoWithLog(logger: Logger): Mono<A> = this.fold(
+fun <A : Any> Either<Throwable, A>.monoOrLog(logger: Logger): Mono<A> = this.fold(
     { logger.error(it.message, it); throw it },
     { it.toMono() },
 )

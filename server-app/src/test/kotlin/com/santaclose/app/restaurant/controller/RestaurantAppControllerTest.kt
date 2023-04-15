@@ -21,7 +21,6 @@ import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.justRun
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
@@ -86,7 +85,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                justRun { restaurantAppMutationService.createRestaurant(any(), any()) }
+                every { restaurantAppMutationService.createRestaurant(any(), any()) } returns Unit.right()
 
                 // when
                 val response = graphQlTester

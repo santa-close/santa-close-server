@@ -1,6 +1,10 @@
 package com.santaclose.app.restaurant.service
 
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.raise.ensure
 import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.mountain.repository.has
 import com.santaclose.app.restaurant.controller.dto.CreateRestaurantAppInput
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.location.Location
@@ -8,8 +12,9 @@ import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.RestaurantFoodType
+import com.santaclose.lib.web.exception.DomainError
+import com.santaclose.lib.web.exception.catchDB
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -20,13 +25,12 @@ class RestaurantAppMutationService(
 ) {
 
     @Transactional
-    fun createRestaurant(input: CreateRestaurantAppInput, userId: Long) {
+    fun createRestaurant(input: CreateRestaurantAppInput, userId: Long): Either<DomainError, Unit> = either {
         input.mountainIds.forEach {
             val id = it.toLong()
-            val isExistMountain = mountainAppRepository.existsById(id)
-            if (!isExistMountain) {
-                throw NoResultException("유효하지 않은 mountainId 입니다: $id")
-            }
+            val found = mountainAppRepository.has(id).bind()
+
+            ensure(found) { DomainError.NotFound("유효하지 않은 mountainId 입니다: $id") }
         }
 
         val restaurant =
@@ -46,8 +50,10 @@ class RestaurantAppMutationService(
             )
         }
 
-        em.persist(restaurant)
-        restaurantFoodTypes.forEach(em::persist)
-        mountainRestaurants.forEach(em::persist)
+        Either.catchDB {
+            em.persist(restaurant)
+            restaurantFoodTypes.forEach(em::persist)
+            mountainRestaurants.forEach(em::persist)
+        }.bind()
     }
 }

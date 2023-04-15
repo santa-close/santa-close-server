@@ -7,7 +7,7 @@ import com.santaclose.app.mountain.controller.dto.MountainAppSummary
 import com.santaclose.app.mountain.service.MountainAppMutationService
 import com.santaclose.app.mountain.service.MountainAppQueryService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.exception.monoWithLog
+import com.santaclose.lib.web.exception.monoOrLog
 import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -29,7 +29,7 @@ class MountainAppController(
     fun mountainDetail(@Argument id: String): Mono<MountainAppDetail> =
         mountainAppQueryService
             .findDetail(id)
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
@@ -37,7 +37,7 @@ class MountainAppController(
         mountainAppQueryService
             .findOneSummary(id.toLong())
             .map { MountainAppSummary.by(it) }
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
@@ -49,5 +49,5 @@ class MountainAppController(
         mountainAppMutationService
             .register(input, authentication.id)
             .map { true }
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 }

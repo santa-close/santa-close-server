@@ -1,6 +1,5 @@
 package com.santaclose.app.restaurant.controller
 
-import arrow.core.Either.Companion.catch
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.restaurant.controller.dto.CreateRestaurantAppInput
 import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
@@ -8,8 +7,7 @@ import com.santaclose.app.restaurant.controller.dto.RestaurantAppSummary
 import com.santaclose.app.restaurant.service.RestaurantAppMutationService
 import com.santaclose.app.restaurant.service.RestaurantAppQueryService
 import com.santaclose.lib.logger.logger
-import com.santaclose.lib.web.exception.getOrThrow
-import com.santaclose.lib.web.exception.monoWithLog
+import com.santaclose.lib.web.exception.monoOrLog
 import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -18,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toMono
 
 @Controller
 class RestaurantAppController(
@@ -32,7 +29,7 @@ class RestaurantAppController(
     fun restaurantDetail(@Argument id: String): Mono<RestaurantAppDetail> =
         restaurantAppQueryService
             .findDetail(id.toLong())
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
@@ -41,12 +38,10 @@ class RestaurantAppController(
         input: CreateRestaurantAppInput,
         authentication: Authentication,
     ): Mono<Boolean> =
-        catch {
-            restaurantAppMutationService.createRestaurant(input, authentication.id)
-            true.toMono()
-        }
-            .onLeft { logger.error(it.message, it) }
-            .getOrThrow()
+        restaurantAppMutationService
+            .createRestaurant(input, authentication.id)
+            .map { true }
+            .monoOrLog(logger)
 
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
@@ -54,5 +49,5 @@ class RestaurantAppController(
         restaurantAppQueryService
             .findOneSummary(id.toLong())
             .map(RestaurantAppSummary::by)
-            .monoWithLog(logger)
+            .monoOrLog(logger)
 }
