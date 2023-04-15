@@ -9,6 +9,7 @@ import com.santaclose.app.restaurant.service.RestaurantAppMutationService
 import com.santaclose.app.restaurant.service.RestaurantAppQueryService
 import com.santaclose.lib.logger.logger
 import com.santaclose.lib.web.exception.getOrThrow
+import com.santaclose.lib.web.exception.monoWithLog
 import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -29,9 +30,9 @@ class RestaurantAppController(
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
     fun restaurantDetail(@Argument id: String): Mono<RestaurantAppDetail> =
-        catch { restaurantAppQueryService.findDetail(id.toLong()).toMono() }
-            .onLeft { logger.error(it.message, it) }
-            .getOrThrow()
+        restaurantAppQueryService
+            .findDetail(id.toLong())
+            .monoWithLog(logger)
 
     @MutationMapping
     @PreAuthorize("hasRole('USER')")
@@ -50,12 +51,8 @@ class RestaurantAppController(
     @QueryMapping
     @PreAuthorize("hasRole('USER')")
     fun restaurantSummary(@Argument id: String): Mono<RestaurantAppSummary> =
-        catch {
-            restaurantAppQueryService
-                .findOneSummary(id.toLong())
-                .let(RestaurantAppSummary::by)
-                .toMono()
-        }
-            .onLeft { logger.error(it.message, it) }
-            .getOrThrow()
+        restaurantAppQueryService
+            .findOneSummary(id.toLong())
+            .map(RestaurantAppSummary::by)
+            .monoWithLog(logger)
 }

@@ -7,7 +7,6 @@ import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.arrow.core.shouldBeRight
-import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
@@ -57,7 +56,7 @@ internal class RestaurantAppQueryRepositoryImplTest @Autowired constructor(
             val result = restaurantAppQueryRepository.findOneWithLocation(restaurant.id)
 
             // then
-            assertSoftly(result) {
+            result.shouldBeRight().apply {
                 id shouldBe restaurant.id
                 location.id shouldBe restaurant.location.id
                 location.point shouldBe restaurant.location.point

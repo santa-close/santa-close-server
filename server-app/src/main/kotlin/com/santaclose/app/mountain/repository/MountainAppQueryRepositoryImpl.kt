@@ -14,6 +14,7 @@ import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.web.exception.DomainError.DBFailure
+import com.santaclose.lib.web.exception.catchDB
 import jakarta.persistence.NoResultException
 import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
@@ -39,13 +40,15 @@ class MountainAppQueryRepositoryImpl(
             }
         }
 
-    override fun findLocationByRestaurant(restaurantId: Long): List<MountainLocationDto> =
-        springDataQueryFactory.listQuery {
-            selectMulti(col(Mountain::id), col(Location::point))
-            from(Mountain::class)
-            join(Mountain::mountainRestaurant, JoinType.INNER)
-            join(MountainRestaurant::restaurant, JoinType.INNER)
-            join(Mountain::location, JoinType.INNER)
-            where(col(Restaurant::id).equal(restaurantId))
+    override fun findLocationByRestaurant(restaurantId: Long): Either<DBFailure, List<MountainLocationDto>> =
+        Either.catchDB {
+            springDataQueryFactory.listQuery {
+                selectMulti(col(Mountain::id), col(Location::point))
+                from(Mountain::class)
+                join(Mountain::mountainRestaurant, JoinType.INNER)
+                join(MountainRestaurant::restaurant, JoinType.INNER)
+                join(Mountain::location, JoinType.INNER)
+                where(col(Restaurant::id).equal(restaurantId))
+            }
         }
 }

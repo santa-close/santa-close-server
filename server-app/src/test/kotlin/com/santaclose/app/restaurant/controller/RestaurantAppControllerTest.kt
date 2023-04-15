@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurant.controller
 
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -54,7 +55,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { restaurantAppQueryService.findDetail(any()) } returns detail
+                every { restaurantAppQueryService.findDetail(any()) } returns detail.right()
 
                 // when
                 val response = graphQlTester
@@ -126,7 +127,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                coEvery { restaurantAppQueryService.findOneSummary(123) } returns dto
+                coEvery { restaurantAppQueryService.findOneSummary(123) } returns dto.right()
 
                 // when
                 val response = graphQlTester

@@ -67,8 +67,10 @@ internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
             val result = mountainAppQueryRepository.findLocationByRestaurant(restaurant.id)
 
             // then
-            result shouldHaveSize 1
-            result[0].point.coordinates[0] shouldBe mountain.location.point.coordinate
+            result.shouldBeRight().apply {
+                this shouldHaveSize 1
+                first().point.coordinates[0] shouldBe mountain.location.point.coordinate
+            }
         }
     }
 }

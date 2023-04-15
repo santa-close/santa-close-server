@@ -1,13 +1,14 @@
 package com.santaclose.app.restaurant.service
 
+import arrow.core.Either
+import arrow.core.raise.either
 import com.santaclose.app.mountain.repository.MountainAppQueryRepository
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepository
 import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepository
 import com.santaclose.app.restaurant.service.dto.RestaurantSummaryDto
 import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRepository
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import com.santaclose.lib.web.exception.DomainError
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,28 +21,28 @@ class RestaurantAppQueryService(
     private val restaurantReviewLimit = 5
     private val mountainLimit = 5
 
-    fun findDetail(id: Long): RestaurantAppDetail = runBlocking {
-        val restaurant = restaurantAppQueryRepository.findOneWithLocation(id)
+    fun findDetail(id: Long): Either<DomainError, RestaurantAppDetail> = either {
+        val restaurant = restaurantAppQueryRepository.findOneWithLocation(id).bind()
         val restaurantReviews =
-            async { restaurantReviewAppQueryRepository.findAllByRestaurant(restaurant.id, restaurantReviewLimit) }
+            restaurantReviewAppQueryRepository.findAllByRestaurant(restaurant.id, restaurantReviewLimit).bind()
         val restaurantRatingAverage =
-            async { restaurantReviewAppQueryRepository.findRestaurantRatingAverages(restaurant.id) }
+            restaurantReviewAppQueryRepository.findRestaurantRatingAverages(restaurant.id).bind()
         val mountains =
-            async { mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, mountainLimit) }
+            mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, mountainLimit).bind()
 
         RestaurantAppDetail.by(
             restaurant,
-            restaurantRatingAverage.await(),
-            restaurantReviews.await(),
-            mountains.await(),
+            restaurantRatingAverage,
+            restaurantReviews,
+            mountains,
         )
     }
 
-    fun findOneSummary(id: Long): RestaurantSummaryDto = runBlocking {
-        val mountain = async { restaurantAppQueryRepository.findOneWithLocation(id) }
-        val locations = async { mountainAppQueryRepository.findLocationByRestaurant(id) }
-        val ratings = async { restaurantReviewAppQueryRepository.findRestaurantRatingAverages(id) }
+    fun findOneSummary(id: Long): Either<DomainError, RestaurantSummaryDto> = either {
+        val mountain = restaurantAppQueryRepository.findOneWithLocation(id).bind()
+        val locations = mountainAppQueryRepository.findLocationByRestaurant(id).bind()
+        val ratings = restaurantReviewAppQueryRepository.findRestaurantRatingAverages(id).bind()
 
-        RestaurantSummaryDto(mountain.await(), locations.await(), ratings.await())
+        RestaurantSummaryDto(mountain, locations, ratings)
     }
 }

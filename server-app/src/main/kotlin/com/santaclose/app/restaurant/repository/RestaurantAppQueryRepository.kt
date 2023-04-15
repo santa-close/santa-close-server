@@ -7,5 +7,5 @@ import com.santaclose.lib.web.exception.DomainError.DBFailure
 
 interface RestaurantAppQueryRepository {
     fun findLocationByMountain(mountainId: Long): Either<DBFailure, List<RestaurantLocationDto>>
-    fun findOneWithLocation(id: Long): Restaurant
+    fun findOneWithLocation(id: Long): Either<DBFailure, Restaurant>
 }

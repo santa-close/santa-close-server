@@ -8,7 +8,6 @@ import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -39,8 +38,10 @@ internal class MountainRestaurantAppQueryRepositoryImplTest @Autowired construct
             val result = mountainRestaurantAppQueryRepository.findMountainByRestaurant(restaurant.id, limit)
 
             // then
-            result shouldHaveSize limit
-            result.map { it.id } shouldBe result.map { it.id }.sortedDescending()
+            result.shouldBeRight().apply {
+                this shouldHaveSize limit
+                shouldBeSortedWith(compareByDescending { it.id })
+            }
         }
     }
 

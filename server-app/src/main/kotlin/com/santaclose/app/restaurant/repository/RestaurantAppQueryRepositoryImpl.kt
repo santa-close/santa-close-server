@@ -21,12 +21,14 @@ import org.springframework.stereotype.Repository
 class RestaurantAppQueryRepositoryImpl(private val springDataQueryFactory: SpringDataQueryFactory) :
     RestaurantAppQueryRepository {
 
-    override fun findOneWithLocation(id: Long): Restaurant =
-        springDataQueryFactory.singleQuery {
-            select(entity(Restaurant::class))
-            from(Restaurant::class)
-            where(col(Restaurant::id).equal(id))
-            fetch(Restaurant::location, JoinType.INNER)
+    override fun findOneWithLocation(id: Long): Either<DBFailure, Restaurant> =
+        Either.catchDB {
+            springDataQueryFactory.singleQuery {
+                select(entity(Restaurant::class))
+                from(Restaurant::class)
+                where(col(Restaurant::id).equal(id))
+                fetch(Restaurant::location, JoinType.INNER)
+            }
         }
 
     override fun findLocationByMountain(mountainId: Long): Either<DBFailure, List<RestaurantLocationDto>> =

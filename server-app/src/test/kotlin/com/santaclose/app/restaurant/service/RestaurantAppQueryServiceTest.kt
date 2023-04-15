@@ -11,7 +11,7 @@ import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
-import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -57,7 +57,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
             val result = restaurantAppQueryService.findDetail(restaurant.id)
 
             // then
-            assertSoftly(result) {
+            result.shouldBeRight().apply {
                 name shouldBe restaurant.name
                 address shouldBe restaurant.location.address
                 foodType shouldBe restaurant.restaurantFoodType.map { it.foodType }
@@ -81,7 +81,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
             val result = restaurantAppQueryService.findOneSummary(restaurant.id)
 
             // then
-            result.restaurant shouldBe restaurant
+            result.shouldBeRight().restaurant shouldBe restaurant
         }
 
         @Test
@@ -95,8 +95,10 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
             val result = restaurantAppQueryService.findOneSummary(restaurant.id)
 
             // then
-            result.restaurantRating.average shouldBe 3.0
-            result.restaurantRating.totalCount shouldBe 1
+            result.shouldBeRight().apply {
+                restaurantRating.average shouldBe 3.0
+                restaurantRating.totalCount shouldBe 1
+            }
         }
 
         @Test
@@ -111,8 +113,10 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
             val result = restaurantAppQueryService.findOneSummary(restaurant.id)
 
             // then
-            result.mountainLocations shouldHaveSize 1
-            result.mountainLocations.first().id shouldBe mountain.id
+            result.shouldBeRight().apply {
+                mountainLocations shouldHaveSize 1
+                mountainLocations.first().id shouldBe mountain.id
+            }
         }
     }
 }
