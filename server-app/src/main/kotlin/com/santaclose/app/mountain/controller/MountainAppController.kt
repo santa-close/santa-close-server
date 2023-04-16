@@ -1,5 +1,6 @@
 package com.santaclose.app.mountain.controller
 
+import com.santaclose.app.auth.security.UserAuthorize
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.mountain.controller.dto.CreateMountainAppInput
 import com.santaclose.app.mountain.controller.dto.MountainAppDetail
@@ -12,7 +13,6 @@ import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Mono
@@ -25,14 +25,14 @@ class MountainAppController(
     val logger = logger()
 
     @QueryMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun mountainDetail(@Argument id: String): Mono<MountainAppDetail> =
         mountainAppQueryService
             .findDetail(id)
             .monoOrLog(logger)
 
     @QueryMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun mountainSummary(@Argument id: String): Mono<MountainAppSummary> =
         mountainAppQueryService
             .findOneSummary(id.toLong())
@@ -40,7 +40,7 @@ class MountainAppController(
             .monoOrLog(logger)
 
     @MutationMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun registerMountain(
         @Argument @Valid
         input: CreateMountainAppInput,

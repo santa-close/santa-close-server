@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurant.controller
 
+import com.santaclose.app.auth.security.UserAuthorize
 import com.santaclose.app.auth.security.id
 import com.santaclose.app.restaurant.controller.dto.CreateRestaurantAppInput
 import com.santaclose.app.restaurant.controller.dto.RestaurantAppDetail
@@ -12,7 +13,6 @@ import jakarta.validation.Valid
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Mono
@@ -25,14 +25,14 @@ class RestaurantAppController(
     val logger = logger()
 
     @QueryMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun restaurantDetail(@Argument id: String): Mono<RestaurantAppDetail> =
         restaurantAppQueryService
             .findDetail(id.toLong())
             .monoOrLog(logger)
 
     @MutationMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun createRestaurant(
         @Argument @Valid
         input: CreateRestaurantAppInput,
@@ -44,7 +44,7 @@ class RestaurantAppController(
             .monoOrLog(logger)
 
     @QueryMapping
-    @PreAuthorize("hasRole('USER')")
+    @UserAuthorize
     fun restaurantSummary(@Argument id: String): Mono<RestaurantAppSummary> =
         restaurantAppQueryService
             .findOneSummary(id.toLong())
