@@ -1,5 +1,7 @@
 package com.santaclose.app.mountainReview.controller
 
+import arrow.core.left
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -8,10 +10,9 @@ import com.santaclose.app.mountainReview.controller.dto.CreateMountainReviewAppI
 import com.santaclose.app.mountainReview.service.MountainReviewAppMutationService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
+import com.santaclose.lib.web.exception.DomainError
 import io.kotest.core.spec.style.FreeSpec
 import io.mockk.every
-import io.mockk.justRun
-import jakarta.persistence.NoResultException
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.graphql.test.tester.HttpGraphQlTester
@@ -46,8 +47,9 @@ internal class MountainReviewAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { mountainReviewAppMutationService.register(any(), any()) } throws
-                    NoResultException("no result")
+                every {
+                    mountainReviewAppMutationService.register(any(), any())
+                } returns DomainError.NotFound("no result").left()
 
                 // when
                 val response = graphQlTester
@@ -79,7 +81,7 @@ internal class MountainReviewAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                justRun { mountainReviewAppMutationService.register(any(), session.id) }
+                every { mountainReviewAppMutationService.register(any(), session.id) } returns Unit.right()
 
                 // when
                 val response = graphQlTester

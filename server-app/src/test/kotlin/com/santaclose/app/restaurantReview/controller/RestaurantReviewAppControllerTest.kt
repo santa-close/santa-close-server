@@ -1,5 +1,7 @@
 package com.santaclose.app.restaurantReview.controller
 
+import arrow.core.left
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -9,10 +11,9 @@ import com.santaclose.app.restaurantReview.controller.dto.RestaurantRatingInput
 import com.santaclose.app.restaurantReview.service.RestaurantReviewAppMutationService
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
+import com.santaclose.lib.web.exception.DomainError
 import io.kotest.core.spec.style.FreeSpec
 import io.mockk.every
-import io.mockk.justRun
-import jakarta.persistence.NoResultException
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.graphql.test.tester.HttpGraphQlTester
@@ -49,8 +50,9 @@ internal class RestaurantReviewAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { restaurantReviewAppMutationService.register(any(), any()) } throws
-                    NoResultException("no result")
+                every {
+                    restaurantReviewAppMutationService.register(any(), any())
+                } returns DomainError.NotFound("no result").left()
 
                 // when
                 val response = graphQlTester
@@ -83,7 +85,7 @@ internal class RestaurantReviewAppControllerTest(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                justRun { restaurantReviewAppMutationService.register(any(), any()) }
+                every { restaurantReviewAppMutationService.register(any(), any()) } returns Unit.right()
 
                 // when
                 val response = graphQlTester

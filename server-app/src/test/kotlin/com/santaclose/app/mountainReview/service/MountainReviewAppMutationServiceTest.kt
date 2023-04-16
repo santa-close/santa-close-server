@@ -6,11 +6,11 @@ import com.santaclose.app.mountainReview.repository.MountainReviewAppRepository
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
-import io.kotest.assertions.throwables.shouldThrow
+import com.santaclose.lib.web.exception.DomainError
+import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
 internal class MountainReviewAppMutationServiceTest @Autowired constructor(
-    private val mountainAppRepository: MountainAppRepository,
+    mountainAppRepository: MountainAppRepository,
     private val mountainReviewAppRepository: MountainReviewAppRepository,
     private val em: EntityManager,
 ) {
@@ -28,7 +28,7 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
     @Nested
     inner class Register {
         @Test
-        fun `mountain id가 유효하지 않으면 NoResultException을 반환한다`() {
+        fun `mountain id가 유효하지 않으면 NotFound에러를 반환한다`() {
             // given
             val appUser = em.createAppUser()
             val input =
@@ -47,13 +47,10 @@ internal class MountainReviewAppMutationServiceTest @Autowired constructor(
                 )
 
             // when
-            val exception =
-                shouldThrow<NoResultException> {
-                    mountainReviewAppMutationService.register(input, appUser.id)
-                }
+            val result = mountainReviewAppMutationService.register(input, appUser.id)
 
             // then
-            exception.message shouldBe "유효하지 않은 mountainId 입니다."
+            result shouldBeLeft DomainError.NotFound("유효하지 않은 mountainId 입니다: -1")
         }
 
         @Test

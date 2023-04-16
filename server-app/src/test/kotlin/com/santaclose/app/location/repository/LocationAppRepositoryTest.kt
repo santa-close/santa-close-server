@@ -2,6 +2,7 @@ package com.santaclose.app.location.repository
 
 import com.santaclose.app.util.createLocation
 import com.santaclose.lib.entity.location.Location
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
@@ -38,11 +39,13 @@ class LocationAppRepositoryTest @Autowired constructor(
             )
 
         // when
-        val result = locationAppRepository.findIdsByArea(rectangle)
+        val result = locationAppRepository.findIdsByPolygon(rectangle)
 
         // then
-        result shouldHaveSize 1
-        result.first().id shouldBe location.id
-        result.first().point shouldBe location.point
+        result.shouldBeRight().apply {
+            this shouldHaveSize 1
+            first().id shouldBe location.id
+            first().point shouldBe location.point
+        }
     }
 }

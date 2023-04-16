@@ -3,15 +3,16 @@ package com.santaclose.app.restaurantReview.service
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
 import com.santaclose.app.restaurantReview.controller.dto.CreateRestaurantReviewAppInput
 import com.santaclose.app.restaurantReview.controller.dto.RestaurantRatingInput
-import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppRepository
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createRestaurant
+import com.santaclose.app.util.findAll
+import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import com.santaclose.lib.entity.restaurantReview.type.PriceComment
-import io.kotest.assertions.throwables.shouldThrow
+import com.santaclose.lib.web.exception.DomainError
+import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
-import jakarta.persistence.NoResultException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,17 +20,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
 internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
-    private val restaurantReviewAppRepository: RestaurantReviewAppRepository,
     restaurantRepository: RestaurantAppRepository,
     private val em: EntityManager,
 ) {
     private val restaurantReviewAppMutationService =
-        RestaurantReviewAppMutationService(restaurantReviewAppRepository, restaurantRepository, em)
+        RestaurantReviewAppMutationService(restaurantRepository, em)
 
     @Nested
     inner class Register {
         @Test
-        fun `restaurantId가 유효하지 않으면 NoResultException을 반환한다`() {
+        fun `restaurantId가 유효하지 않으면 NotFound에러를 반환한다`() {
             // given
             val appUser = em.createAppUser()
             val input =
@@ -44,13 +44,10 @@ internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
                 )
 
             // when
-            val exception =
-                shouldThrow<NoResultException> {
-                    restaurantReviewAppMutationService.register(input, appUser.id)
-                }
+            val result = restaurantReviewAppMutationService.register(input, appUser.id)
 
             // then
-            exception.message shouldBe "유효하지 않은 restaurantId 입니다."
+            result shouldBeLeft DomainError.NotFound("유효하지 않은 restaurantId 입니다: ${input.restaurantId}")
         }
 
         @Test
@@ -73,7 +70,7 @@ internal class RestaurantReviewAppMutationServiceTest @Autowired constructor(
             restaurantReviewAppMutationService.register(input, appUser.id)
 
             // then
-            val restaurantReview = restaurantReviewAppRepository.findAll()
+            val restaurantReview = em.findAll<RestaurantReview>()
             restaurantReview shouldHaveSize 1
             restaurantReview[0].apply {
                 restaurant.id.toString() shouldBe input.restaurantId

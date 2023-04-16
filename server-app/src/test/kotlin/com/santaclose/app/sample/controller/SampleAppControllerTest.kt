@@ -9,10 +9,9 @@ import com.santaclose.app.sample.controller.dto.SampleAppItemInput
 import com.santaclose.app.sample.service.SampleAppMutationService
 import com.santaclose.app.sample.service.SampleAppQueryService
 import com.santaclose.lib.entity.sample.type.SampleStatus
+import com.santaclose.lib.web.exception.DomainError
 import io.kotest.core.spec.style.FreeSpec
 import io.mockk.every
-import io.mockk.justRun
-import jakarta.persistence.NoResultException
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.graphql.test.tester.HttpGraphQlTester
@@ -32,7 +31,9 @@ internal class SampleAppControllerTest(
             "데이터가 없는 경우 에러가 발생한다" {
                 // given
                 val input = SampleAppItemInput(price = 123)
-                every { sampleAppQueryService.findByPrice(123) } returns NoResultException("no result").left()
+                every {
+                    sampleAppQueryService.findByPrice(123)
+                } returns DomainError.DBFailure(Error("no result")).left()
 
                 // when
                 val response = graphQlTester
@@ -71,7 +72,7 @@ internal class SampleAppControllerTest(
                 // given
                 val input = CreateSampleAppInput(name = "name", price = 123, status = SampleStatus.CLOSE)
 
-                justRun { sampleAppMutationService.create(any()) }
+                every { sampleAppMutationService.create(any()) } returns Unit.right()
 
                 // when
                 val response = graphQlTester

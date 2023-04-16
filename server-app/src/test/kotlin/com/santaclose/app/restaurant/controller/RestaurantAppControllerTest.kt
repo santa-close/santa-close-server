@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurant.controller
 
+import arrow.core.right
 import arrow.core.some
 import com.ninjasquad.springmockk.MockkBean
 import com.santaclose.app.auth.security.AppSession
@@ -19,9 +20,7 @@ import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.entity.restaurant.type.FoodType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.justRun
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
@@ -54,7 +53,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                every { restaurantAppQueryService.findDetail(any()) } returns detail
+                every { restaurantAppQueryService.findDetail(any()) } returns detail.right()
 
                 // when
                 val response = graphQlTester
@@ -86,7 +85,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                justRun { restaurantAppMutationService.createRestaurant(any(), any()) }
+                every { restaurantAppMutationService.createRestaurant(any(), any()) } returns Unit.right()
 
                 // when
                 val response = graphQlTester
@@ -126,7 +125,7 @@ internal class RestaurantAppControllerTest @Autowired constructor(
                 val session = AppSession(123, AppUserRole.USER)
 
                 every { serverRequestParser.parse(any()) } returns session.some()
-                coEvery { restaurantAppQueryService.findOneSummary(123) } returns dto
+                every { restaurantAppQueryService.findOneSummary(123) } returns dto.right()
 
                 // when
                 val response = graphQlTester

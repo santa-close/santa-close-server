@@ -2,7 +2,7 @@
 spring = "3.0.5"
 kotlin = "1.8.20"
 kotlinter = "3.14.0"
-arrow = "1.1.5"
+arrow = "1.2.0-RC"
 okhttp = "4.10.0"
 jjwt = "0.11.5"
 sonarqube = "4.0.0.2929"

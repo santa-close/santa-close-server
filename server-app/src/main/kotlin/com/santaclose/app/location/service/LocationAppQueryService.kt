@@ -1,14 +1,19 @@
 package com.santaclose.app.location.service
 
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.right
 import com.santaclose.app.location.controller.dto.AppLocation
 import com.santaclose.app.location.controller.dto.LocationAppInput
 import com.santaclose.app.location.controller.dto.MountainAppLocation
 import com.santaclose.app.location.controller.dto.RestaurantAppLocation
 import com.santaclose.app.location.repository.LocationAppRepository
+import com.santaclose.app.location.repository.findIdsByPolygon
 import com.santaclose.app.mountain.repository.MountainAppRepository
+import com.santaclose.app.mountain.repository.findByLocationIdIns
 import com.santaclose.app.restaurant.repository.RestaurantAppRepository
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import com.santaclose.app.restaurant.repository.findByLocationIds
+import com.santaclose.lib.web.exception.DomainError
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,24 +22,22 @@ class LocationAppQueryService(
     private val mountainAppRepository: MountainAppRepository,
     private val restaurantAppRepository: RestaurantAppRepository,
 ) {
-    fun find(input: LocationAppInput): List<AppLocation> {
-        val locations = this.locationAppRepository.findIdsByArea(input.toPolygon())
+    fun find(input: LocationAppInput): Either<DomainError, List<AppLocation>> = either {
+        val locations = locationAppRepository.findIdsByPolygon(input.toPolygon()).bind()
 
         if (locations.isEmpty()) {
-            return emptyList()
+            return emptyList<AppLocation>().right()
         }
 
-        return runBlocking {
-            val ids = locations.map { it.id }
-            val mountains = async { mountainAppRepository.findByLocationIdIn(ids) }
-            val restaurants = async { restaurantAppRepository.findByLocationIdIn(ids) }
+        val ids = locations.map { it.id }
+        val mountains = mountainAppRepository.findByLocationIdIns(ids).bind()
+        val restaurants = restaurantAppRepository.findByLocationIds(ids).bind()
 
-            val findPoint = { id: Long ->
-                locations.find { it.id == id }?.point ?: throw Exception("should have location: id=$id")
-            }
-
-            mountains.await().map { MountainAppLocation.of(it.id, findPoint(it.locationId)) } +
-                restaurants.await().map { RestaurantAppLocation.of(it.id, findPoint(it.locationId)) }
+        val findPoint = { id: Long ->
+            locations.find { it.id == id }?.point ?: raise(DomainError.NotFound("should have location: id=$id"))
         }
+
+        mountains.map { MountainAppLocation.of(it.id, findPoint(it.locationId)) } +
+            restaurants.map { RestaurantAppLocation.of(it.id, findPoint(it.locationId)) }
     }
 }

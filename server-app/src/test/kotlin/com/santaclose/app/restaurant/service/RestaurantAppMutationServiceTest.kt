@@ -24,12 +24,7 @@ internal class RestaurantAppMutationServiceTest @Autowired constructor(
     mountainAppRepository: MountainAppRepository,
     private val em: EntityManager,
 ) {
-
-    private val restaurantAppMutationService =
-        RestaurantAppMutationService(
-            mountainAppRepository,
-            em,
-        )
+    private val restaurantAppMutationService = RestaurantAppMutationService(mountainAppRepository, em)
 
     @Nested
     inner class CreateRestaurant {

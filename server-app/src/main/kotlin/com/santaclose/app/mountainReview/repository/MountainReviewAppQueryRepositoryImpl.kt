@@ -1,5 +1,7 @@
 package com.santaclose.app.mountainReview.repository
 
+import arrow.core.Either
+import arrow.core.recover
 import com.linecorp.kotlinjdsl.query.spec.expression.EntitySpec
 import com.linecorp.kotlinjdsl.querydsl.expression.avg
 import com.linecorp.kotlinjdsl.querydsl.expression.col
@@ -12,6 +14,8 @@ import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
 import com.santaclose.lib.entity.mountain.Mountain
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
+import com.santaclose.lib.web.exception.DomainError.DBFailure
+import com.santaclose.lib.web.exception.catchDB
 import jakarta.persistence.PersistenceException
 import jakarta.persistence.criteria.JoinType
 import org.springframework.stereotype.Repository
@@ -21,19 +25,21 @@ class MountainReviewAppQueryRepositoryImpl(
     private val springDataQueryFactory: SpringDataQueryFactory,
 ) : MountainReviewAppQueryRepository {
 
-    override fun findAllByMountainId(mountainId: Long, limit: Int): List<MountainReview> =
-        springDataQueryFactory.listQuery {
-            val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
-            select(mountainReview)
-            from(mountainReview)
-            fetch(MountainReview::mountain, JoinType.INNER)
-            where(col(Mountain::id).equal(mountainId))
-            orderBy(col(Mountain::id).desc())
-            limit(limit)
+    override fun findAllByMountainId(mountainId: Long, limit: Int): Either<DBFailure, List<MountainReview>> =
+        Either.catchDB {
+            springDataQueryFactory.listQuery {
+                val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
+                select(mountainReview)
+                from(mountainReview)
+                fetch(MountainReview::mountain, JoinType.INNER)
+                where(col(Mountain::id).equal(mountainId))
+                orderBy(col(Mountain::id).desc())
+                limit(limit)
+            }
         }
 
-    override fun findMountainRatingAverages(mountainId: Long): MountainRatingAverageDto =
-        try {
+    override fun findMountainRatingAverages(mountainId: Long): Either<DBFailure, MountainRatingAverageDto> =
+        Either.catch<MountainRatingAverageDto> {
             springDataQueryFactory.singleQuery {
                 val mountainReview: EntitySpec<MountainReview> = entity(MountainReview::class)
                 selectMulti(
@@ -50,7 +56,11 @@ class MountainReviewAppQueryRepositoryImpl(
                 join(MountainReview::mountain, JoinType.INNER)
                 where(col(Mountain::id).equal(mountainId))
             }
-        } catch (e: PersistenceException) {
-            MountainRatingAverageDto.empty
+        }.recover {
+            if (it is PersistenceException) {
+                MountainRatingAverageDto.empty
+            } else {
+                raise(DBFailure(it))
+            }
         }
 }

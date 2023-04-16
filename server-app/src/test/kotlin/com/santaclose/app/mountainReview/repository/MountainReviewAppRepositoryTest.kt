@@ -7,7 +7,9 @@ import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -102,8 +104,10 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, 10)
 
             // then
-            mountainReviews shouldHaveSize count
-            mountainReviews.map { it.appUser.id shouldBe createdAppUser.id }
+            mountainReviews.shouldBeRight().apply {
+                this shouldHaveSize count
+                forAll { it.mountain.id shouldBe mountain.id }
+            }
         }
 
         @Test
@@ -119,7 +123,9 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
             val mountainReviews = mountainReviewAppQueryRepository.findAllByMountainId(mountain.id, limit)
 
             // then
-            mountainReviews shouldHaveSize limit
+            mountainReviews.shouldBeRight().apply {
+                this shouldHaveSize limit
+            }
         }
     }
 }

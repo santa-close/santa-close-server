@@ -8,6 +8,7 @@ import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
 import org.junit.jupiter.api.Nested
@@ -50,7 +51,7 @@ internal class MountainReviewAppQueryRepositoryImplTest @Autowired constructor(
             val dto = mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
 
             // then
-            dto.apply {
+            dto.shouldBeRight().apply {
                 scenery shouldBe 1
                 tree shouldBe 2
                 trail shouldBe 3
@@ -72,7 +73,7 @@ internal class MountainReviewAppQueryRepositoryImplTest @Autowired constructor(
             val dto = mountainReviewAppQueryRepository.findMountainRatingAverages(mountain.id)
 
             // then
-            dto shouldBe MountainRatingAverageDto.empty
+            dto shouldBeRight MountainRatingAverageDto.empty
         }
     }
 }

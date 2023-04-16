@@ -4,7 +4,8 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
-import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManager
@@ -34,8 +35,10 @@ internal class RestaurantReviewAppQueryRepositoryImplTest @Autowired constructor
             val result = restaurantReviewAppQueryRepository.findAllByRestaurant(restaurant.id, limit)
 
             // then
-            result shouldHaveSize limit
-            result.map { it.id } shouldBe result.map { it.id }.sortedDescending()
+            result.shouldBeRight().apply {
+                this shouldHaveSize limit
+                shouldBeSortedWith(compareByDescending { it.id })
+            } shouldHaveSize limit
         }
     }
 
@@ -52,7 +55,7 @@ internal class RestaurantReviewAppQueryRepositoryImplTest @Autowired constructor
             val result = restaurantReviewAppQueryRepository.findRestaurantRatingAverages(restaurant.id)
 
             // then
-            assertSoftly(result) {
+            result.shouldBeRight().apply {
                 val rating = restaurantReview.rating
                 taste shouldBe rating.taste
                 parkingSpace shouldBe rating.parkingSpace

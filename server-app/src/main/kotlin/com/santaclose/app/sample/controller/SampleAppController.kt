@@ -34,5 +34,6 @@ class SampleAppController(
     ): Boolean =
         sampleAppMutationService
             .create(input.toEntity())
-            .run { true }
+            .map { true }
+            .getOrThrow()
 }
