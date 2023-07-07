@@ -9,12 +9,12 @@
     "generate": "ts-node mock-server/src/generateIntrospection.ts"
   },
   "dependencies": {
-    "@apollo/server": "4.6.0",
-    "@graphql-tools/schema": "9.0.18",
+    "@apollo/server": "4.7.5",
+    "@graphql-tools/schema": "9.0.19",
     "body-parser": "1.20.2",
     "cors": "2.8.5",
     "express": "4.18.2",
-    "graphql": "16.6.0",
+    "graphql": "16.7.1",
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
@@ -22,15 +22,15 @@
     "@graphql-tools/mock": "8.7.20",
     "@types/cors": "2.8.13",
     "@types/express": "4.17.17",
-    "@typescript-eslint/eslint-plugin": "5.58.0",
-    "@typescript-eslint/parser": "5.58.0",
-    "date-fns": "2.29.3",
-    "eslint": "8.38.0",
+    "@typescript-eslint/eslint-plugin": "5.61.0",
+    "@typescript-eslint/parser": "5.61.0",
+    "date-fns": "2.30.0",
+    "eslint": "8.44.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
-    "prettier": "2.8.7",
+    "prettier": "2.8.8",
     "ts-node": "10.9.1",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6"
   }
 }
