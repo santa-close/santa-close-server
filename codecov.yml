@@ -1,4 +1,0 @@
-ignore:
-  - "server-lib/src/main/kotlin/com/santaclose/lib/entity"
-  - "server-lib/src/main/kotlin/com/santaclose/lib/converter"
-  - "server-lib/src/main/kotlin/com/santaclose/lib/s3Upload"
