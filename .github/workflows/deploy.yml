@@ -10,6 +10,10 @@ on:
 
 jobs:
   deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     runs-on: ubuntu-latest
 
     steps:
@@ -31,3 +35,15 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/santa-close-server:latest
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/394392330167/locations/global/workloadIdentityPools/github-action/providers/github-action'
+          service_account: 'github-action@santa-close-392208.iam.gserviceaccount.com'
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: santa-close-server
+          image: fermat428/santa-close-server
