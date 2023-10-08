@@ -1,7 +1,7 @@
 [versions]
 spring = "3.1.1"
 kotlin = "1.9.0"
-kotlinter = "3.15.0"
+kotlinter = "4.0.0"
 arrow = "1.2.0-RC"
 okhttp = "4.11.0"
 jjwt = "0.11.5"
