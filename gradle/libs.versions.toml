@@ -38,8 +38,6 @@ jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 
 hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.2.6.Final" }
 
-kotlin-jdsl = { module = "com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta", version = "2.2.1.RELEASE" }
-
 database-h2 = { module = "com.h2database:h2" }
 connector-mysql = { module = "com.mysql:mysql-connector-j" }
 

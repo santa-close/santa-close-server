@@ -3,7 +3,6 @@ package com.santaclose.app.mountainReview.repository
 import arrow.core.Either
 import arrow.core.recover
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
-import com.linecorp.kotlinjdsl.querydsl.expression.avg
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import com.santaclose.app.mountainReview.repository.dto.MountainRatingAverageDto
