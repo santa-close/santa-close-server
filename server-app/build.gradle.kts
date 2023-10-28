@@ -16,6 +16,9 @@ dependencies {
     implementation(libs.spring.data.jpa)
     implementation(libs.hibernate.spatial)
     implementation(libs.kotlin.jdsl)
+    implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.0.0")
+    implementation("com.linecorp.kotlin-jdsl:jpql-render:3.0.0")
+    implementation("com.linecorp.kotlin-jdsl:spring-data-jpa-support:3.0.0")
     implementation(libs.jjwt.api)
 
     runtimeOnly(libs.jjwt.impl)
