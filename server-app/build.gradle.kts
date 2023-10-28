@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.spring.security)
     implementation(libs.spring.data.jpa)
     implementation(libs.hibernate.spatial)
-    implementation(libs.kotlin.jdsl)
+    implementation(libs.bundles.kotlin.jdsl)
     implementation(libs.jjwt.api)
 
     runtimeOnly(libs.jjwt.impl)

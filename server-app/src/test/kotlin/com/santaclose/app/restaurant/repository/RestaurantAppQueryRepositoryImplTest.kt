@@ -1,10 +1,10 @@
 package com.santaclose.app.restaurant.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldHaveSize
@@ -20,7 +20,7 @@ internal class RestaurantAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val restaurantAppQueryRepository =
-        RestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindLocationByMountain {

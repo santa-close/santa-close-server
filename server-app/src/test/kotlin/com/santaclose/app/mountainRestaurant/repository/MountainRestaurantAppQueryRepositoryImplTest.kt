@@ -1,9 +1,9 @@
 package com.santaclose.app.mountainRestaurant.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldBeSortedWith
@@ -19,7 +19,7 @@ internal class MountainRestaurantAppQueryRepositoryImplTest @Autowired construct
     private val em: EntityManager,
 ) {
     private val mountainRestaurantAppQueryRepository =
-        MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainRestaurantAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindMountainByRestaurant {

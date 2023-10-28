@@ -1,8 +1,5 @@
 package com.santaclose.app.util
 
-import com.linecorp.kotlinjdsl.query.creator.CriteriaQueryCreatorImpl
-import com.linecorp.kotlinjdsl.query.creator.SubqueryCreatorImpl
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactoryImpl
 import com.santaclose.lib.entity.appUser.AppUser
 import com.santaclose.lib.entity.appUser.type.AppUserRole
 import com.santaclose.lib.entity.location.Location
@@ -24,12 +21,6 @@ inline fun <reified T> EntityManager.findAll(): List<T> {
 
     return createQuery(query).resultList
 }
-
-fun EntityManager.createQueryFactory() =
-    SpringDataQueryFactoryImpl(
-        criteriaQueryCreator = CriteriaQueryCreatorImpl(this),
-        subqueryCreator = SubqueryCreatorImpl(),
-    )
 
 fun EntityManager.createAppUser(
     user: AppUser = AppUser("name", "email", "socialId", AppUserRole.USER),

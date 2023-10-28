@@ -1,13 +1,9 @@
 package com.santaclose.app.mountain.repository
 
 import arrow.core.Either
-import arrow.core.recover
-import com.linecorp.kotlinjdsl.querydsl.expression.col
-import com.linecorp.kotlinjdsl.querydsl.from.fetch
-import com.linecorp.kotlinjdsl.querydsl.from.join
-import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
-import com.linecorp.kotlinjdsl.spring.data.listQuery
-import com.linecorp.kotlinjdsl.spring.data.singleQuery
+import com.linecorp.kotlinjdsl.dsl.jpql.jpql
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
+import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import com.santaclose.app.mountain.repository.dto.MountainLocationDto
 import com.santaclose.lib.entity.location.Location
 import com.santaclose.lib.entity.mountain.Mountain
@@ -15,40 +11,47 @@ import com.santaclose.lib.entity.mountainRestaurant.MountainRestaurant
 import com.santaclose.lib.entity.restaurant.Restaurant
 import com.santaclose.lib.web.exception.DomainError.DBFailure
 import com.santaclose.lib.web.exception.catchDB
-import jakarta.persistence.NoResultException
-import jakarta.persistence.criteria.JoinType
+import jakarta.persistence.EntityManager
 import org.springframework.stereotype.Repository
 
 @Repository
 class MountainAppQueryRepositoryImpl(
-    private val springDataQueryFactory: SpringDataQueryFactory,
+    private val entityManager: EntityManager,
+    private val jpqlRenderContext: JpqlRenderContext,
 ) : MountainAppQueryRepository {
 
     override fun findOneWithLocation(id: Long): Either<DBFailure, Mountain?> =
-        Either.catch {
-            springDataQueryFactory.singleQuery {
-                select(entity(Mountain::class))
-                from(Mountain::class)
-                fetch(Mountain::location, JoinType.INNER)
-                where(col(Mountain::id).equal(id))
+        Either.catchDB {
+            val query = jpql {
+                select(
+                    entity(Mountain::class),
+                ).from(
+                    entity(Mountain::class),
+                    innerFetchJoin(Mountain::location),
+                ).where(
+                    path(Mountain::id).eq(id),
+                )
             }
-        }.recover {
-            if (it is NoResultException) {
-                null
-            } else {
-                raise(DBFailure(it))
-            }
+
+            entityManager.createQuery(query, jpqlRenderContext).resultList.firstOrNull()
         }
 
     override fun findLocationByRestaurant(restaurantId: Long): Either<DBFailure, List<MountainLocationDto>> =
         Either.catchDB {
-            springDataQueryFactory.listQuery {
-                selectMulti(col(Mountain::id), col(Location::point))
-                from(Mountain::class)
-                join(Mountain::mountainRestaurant, JoinType.INNER)
-                join(MountainRestaurant::restaurant, JoinType.INNER)
-                join(Mountain::location, JoinType.INNER)
-                where(col(Restaurant::id).equal(restaurantId))
+            val query = jpql {
+                selectNew<MountainLocationDto>(
+                    path(Mountain::id),
+                    path(Location::point),
+                ).from(
+                    entity(Mountain::class),
+                    innerJoin(Mountain::mountainRestaurant),
+                    innerJoin(MountainRestaurant::restaurant),
+                    innerJoin(Mountain::location),
+                ).where(
+                    path(Restaurant::id).eq(restaurantId),
+                )
             }
+
+            entityManager.createQuery(query, jpqlRenderContext).resultList
         }
 }

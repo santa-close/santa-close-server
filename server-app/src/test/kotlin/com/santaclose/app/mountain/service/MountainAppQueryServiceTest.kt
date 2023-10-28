@@ -1,5 +1,6 @@
 package com.santaclose.app.mountain.service
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
@@ -8,7 +9,6 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createMountainReview
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.web.exception.DomainError.NotFound
 import io.kotest.assertions.arrow.core.shouldBeLeft
@@ -25,12 +25,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class MountainAppQueryServiceTest @Autowired constructor(
     private val em: EntityManager,
 ) {
+    private val jpqlRenderContext = JpqlRenderContext()
     private val mountainAppQueryService =
         MountainAppQueryService(
-            MountainAppQueryRepositoryImpl(em.createQueryFactory()),
-            MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
-            RestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
-            MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
+            MountainAppQueryRepositoryImpl(em, jpqlRenderContext),
+            MountainReviewAppQueryRepositoryImpl(em, jpqlRenderContext),
+            RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
+            MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
         )
 
     @Nested

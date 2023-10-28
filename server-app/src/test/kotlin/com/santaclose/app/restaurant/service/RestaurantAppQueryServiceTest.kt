@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurant.service
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
@@ -8,7 +9,6 @@ import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRe
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -25,14 +25,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class RestaurantAppQueryServiceTest @Autowired constructor(
     private val em: EntityManager,
 ) {
+    private val jpqlRenderContext = JpqlRenderContext()
     private val restaurantAppQueryRepository =
-        RestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val restaurantReviewAppQueryRepository =
-        RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantReviewAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val mountainRestaurantAppQueryRepository =
-        MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val mountainAppQueryRepository =
-        MountainAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainAppQueryRepositoryImpl(em, jpqlRenderContext)
 
     private val restaurantAppQueryService =
         RestaurantAppQueryService(

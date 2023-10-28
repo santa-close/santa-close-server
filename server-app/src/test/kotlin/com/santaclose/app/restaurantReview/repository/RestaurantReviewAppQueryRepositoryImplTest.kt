@@ -1,7 +1,7 @@
 package com.santaclose.app.restaurantReview.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.util.createAppUser
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -19,7 +19,7 @@ internal class RestaurantReviewAppQueryRepositoryImplTest @Autowired constructor
     private val em: EntityManager,
 ) {
     private val restaurantReviewAppQueryRepository =
-        RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantReviewAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindAllByRestaurant {
