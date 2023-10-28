@@ -1,5 +1,6 @@
 package com.santaclose.app.restaurant.service
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.restaurant.repository.RestaurantAppQueryRepositoryImpl
@@ -26,7 +27,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     private val restaurantAppQueryRepository =
-        RestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantAppQueryRepositoryImpl(em, JpqlRenderContext())
     private val restaurantReviewAppQueryRepository =
         RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
     private val mountainRestaurantAppQueryRepository =

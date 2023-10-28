@@ -1,5 +1,6 @@
 package com.santaclose.app.mountain.service
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.mountain.repository.MountainAppQueryRepositoryImpl
 import com.santaclose.app.mountainRestaurant.repository.MountainRestaurantAppQueryRepositoryImpl
 import com.santaclose.app.mountainReview.repository.MountainReviewAppQueryRepositoryImpl
@@ -29,7 +30,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
         MountainAppQueryService(
             MountainAppQueryRepositoryImpl(em.createQueryFactory()),
             MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
-            RestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
+            RestaurantAppQueryRepositoryImpl(em, JpqlRenderContext()),
             MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
         )
 
