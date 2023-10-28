@@ -1,7 +1,7 @@
 package com.santaclose.app.sample.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.sample.controller.dto.SampleAppDetail
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.sample.Sample
 import com.santaclose.lib.entity.sample.type.SampleStatus
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -18,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class SampleAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
-    private val sampleAppQueryRepository = SampleAppQueryRepositoryImpl(em.createQueryFactory())
+    private val sampleAppQueryRepository = SampleAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindByPrice {
