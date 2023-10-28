@@ -26,14 +26,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class RestaurantAppQueryServiceTest @Autowired constructor(
     private val em: EntityManager,
 ) {
+    private val jpqlRenderContext = JpqlRenderContext()
     private val restaurantAppQueryRepository =
-        RestaurantAppQueryRepositoryImpl(em, JpqlRenderContext())
+        RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val restaurantReviewAppQueryRepository =
         RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
     private val mountainRestaurantAppQueryRepository =
         MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory())
     private val mountainAppQueryRepository =
-        MountainAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainAppQueryRepositoryImpl(em, jpqlRenderContext)
 
     private val restaurantAppQueryService =
         RestaurantAppQueryService(

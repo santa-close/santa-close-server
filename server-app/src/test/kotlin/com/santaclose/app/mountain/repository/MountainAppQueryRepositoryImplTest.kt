@@ -1,10 +1,10 @@
 package com.santaclose.app.mountain.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createLocation
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.entity.location.Location
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -21,7 +21,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class MountainAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
-    private val mountainAppQueryRepository = MountainAppQueryRepositoryImpl(em.createQueryFactory())
+    private val mountainAppQueryRepository = MountainAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindOneWithLocation {
