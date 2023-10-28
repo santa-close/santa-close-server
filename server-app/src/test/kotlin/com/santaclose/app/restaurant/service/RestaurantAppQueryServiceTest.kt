@@ -9,7 +9,6 @@ import com.santaclose.app.restaurantReview.repository.RestaurantReviewAppQueryRe
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.app.util.createRestaurantReview
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -30,7 +29,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
     private val restaurantAppQueryRepository =
         RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val restaurantReviewAppQueryRepository =
-        RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
+        RestaurantReviewAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val mountainRestaurantAppQueryRepository =
         MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val mountainAppQueryRepository =
