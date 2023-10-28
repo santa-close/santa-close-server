@@ -32,7 +32,7 @@ internal class RestaurantAppQueryServiceTest @Autowired constructor(
     private val restaurantReviewAppQueryRepository =
         RestaurantReviewAppQueryRepositoryImpl(em.createQueryFactory())
     private val mountainRestaurantAppQueryRepository =
-        MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext)
     private val mountainAppQueryRepository =
         MountainAppQueryRepositoryImpl(em, jpqlRenderContext)
 

@@ -1,6 +1,6 @@
 package com.santaclose.app.appUser.repository
 
-import com.santaclose.app.util.createQueryFactory
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.lib.entity.appUser.AppUser
 import io.kotest.assertions.arrow.core.shouldBeRight
 import jakarta.persistence.EntityManager
@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 internal class AppUserAppQueryRepositoryImplTest @Autowired constructor(
     private val em: EntityManager,
 ) {
-    private val appUserAppRepository = AppUserAppQueryRepositoryImpl(em.createQueryFactory())
+    private val appUserAppRepository = AppUserAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class FindBySocialId {

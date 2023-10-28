@@ -32,7 +32,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
             MountainAppQueryRepositoryImpl(em, jpqlRenderContext),
             MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
             RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
-            MountainRestaurantAppQueryRepositoryImpl(em.createQueryFactory()),
+            MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
         )
 
     @Nested
