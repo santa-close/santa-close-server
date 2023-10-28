@@ -1,9 +1,9 @@
 package com.santaclose.app.mountainReview.repository
 
+import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainReview
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.lib.entity.mountainReview.MountainRating
 import com.santaclose.lib.entity.mountainReview.MountainReview
 import com.santaclose.lib.entity.mountainReview.type.MountainDifficulty.EASY
@@ -26,7 +26,7 @@ internal class MountainReviewAppRepositoryTest @Autowired constructor(
     private val em: EntityManager,
 ) {
     val mountainReviewAppQueryRepository =
-        MountainReviewAppQueryRepositoryImpl(em.createQueryFactory())
+        MountainReviewAppQueryRepositoryImpl(em, JpqlRenderContext())
 
     @Nested
     inner class Create {

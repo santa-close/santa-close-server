@@ -9,7 +9,6 @@ import com.santaclose.app.util.createAppUser
 import com.santaclose.app.util.createMountain
 import com.santaclose.app.util.createMountainRestaurant
 import com.santaclose.app.util.createMountainReview
-import com.santaclose.app.util.createQueryFactory
 import com.santaclose.app.util.createRestaurant
 import com.santaclose.lib.web.exception.DomainError.NotFound
 import io.kotest.assertions.arrow.core.shouldBeLeft
@@ -30,7 +29,7 @@ internal class MountainAppQueryServiceTest @Autowired constructor(
     private val mountainAppQueryService =
         MountainAppQueryService(
             MountainAppQueryRepositoryImpl(em, jpqlRenderContext),
-            MountainReviewAppQueryRepositoryImpl(em.createQueryFactory()),
+            MountainReviewAppQueryRepositoryImpl(em, jpqlRenderContext),
             RestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
             MountainRestaurantAppQueryRepositoryImpl(em, jpqlRenderContext),
         )

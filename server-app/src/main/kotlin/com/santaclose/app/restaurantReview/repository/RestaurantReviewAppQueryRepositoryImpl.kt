@@ -1,6 +1,7 @@
 package com.santaclose.app.restaurantReview.repository
 
 import arrow.core.Either
+import arrow.core.recover
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
@@ -12,6 +13,7 @@ import com.santaclose.lib.entity.restaurantReview.RestaurantReview
 import com.santaclose.lib.web.exception.DomainError.DBFailure
 import com.santaclose.lib.web.exception.catchDB
 import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceException
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -46,7 +48,7 @@ class RestaurantReviewAppQueryRepositoryImpl(
     }
 
     override fun findRestaurantRatingAverages(restaurantId: Long): Either<DBFailure, RestaurantRatingAverageDto> =
-        Either.catchDB {
+        Either.catch<RestaurantRatingAverageDto> {
             val query = jpql {
                 selectNew<RestaurantRatingAverageDto>(
                     avg(path(RestaurantReview::rating)(RestaurantRating::taste)),
@@ -65,8 +67,12 @@ class RestaurantReviewAppQueryRepositoryImpl(
 
             entityManager
                 .createQuery(query, jpqlRenderContext)
-                .resultList
-                .firstOrNull()
-                ?: RestaurantRatingAverageDto.empty
+                .singleResult
+        }.recover {
+            if (it is PersistenceException) {
+                RestaurantRatingAverageDto.empty
+            } else {
+                raise(DBFailure(it))
+            }
         }
 }
