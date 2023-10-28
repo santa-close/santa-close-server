@@ -41,6 +41,10 @@ hibernate-spatial = { module = "org.hibernate:hibernate-spatial", version = "6.2
 database-h2 = { module = "com.h2database:h2" }
 connector-mysql = { module = "com.mysql:mysql-connector-j" }
 
+kotlin-jdsl-jpql-dsl = { module = "com.linecorp.kotlin-jdsl:jpql-dsl", version = "3.0.0" }
+kotlin-jdsl-jpql-render = { module = "com.linecorp.kotlin-jdsl:jpql-render", version = "3.0.0" }
+kotlin-jdsl-spring-data-jpa-support = { module = "com.linecorp.kotlin-jdsl:spring-data-jpa-support", version = "3.0.0" }
+
 ## test
 spring-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-graphql-test = { module = "org.springframework.graphql:spring-graphql-test" }
@@ -72,6 +76,11 @@ kotlin-libs = [
     "kotlin-reflect",
     "reactor-kotlin-extensions",
     "jackson-module-kotlin",
+]
+kotlin-jdsl = [
+    "kotlin-jdsl-jpql-dsl",
+    "kotlin-jdsl-jpql-render",
+    "kotlin-jdsl-spring-data-jpa-support",
 ]
 
 ## test
